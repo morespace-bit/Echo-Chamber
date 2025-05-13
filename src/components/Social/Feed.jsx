@@ -14,7 +14,6 @@ import Comment from "./Comment";
 import SNavBar from "./SNavBar";
 
 export default function Feed() {
-  const access = "NwOv9pWQXKBglEwy86f3MuovcXmg6_I9j3eREpqFf5U";
   const [img, setImg] = useState([]);
   const [userData, setUserData] = useState(null);
   const [u_id, setUId] = useState(""); // Use state for UID
