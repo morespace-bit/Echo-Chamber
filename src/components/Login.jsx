@@ -22,8 +22,6 @@ export default function Login() {
         password
       );
       navigate("/welcome", { replace: true });
-
-      const user = userCredential.user;
     } catch (error) {
       console.error("Login failed:", error.message);
     }
