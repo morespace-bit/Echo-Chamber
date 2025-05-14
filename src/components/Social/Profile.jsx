@@ -79,15 +79,21 @@ export default function Profile() {
           </div>
         </div>
       </div>
-      <div className="h-screen bg-gray-300 flex  justify-center ">
+
+      {/* the body part of the profile */}
+      <div className="h-screen bg-gray-300 flex  justify-center overflow-x-hidden ">
         {/* the main container */}
 
-        <div className="flex bg-white p-20 w-220 h-110 mt-5 rounded-2xl ">
+        <div className="flex bg-white px-2  h-150 mt-5 rounded-2xl w-100">
           {/* the image and person name */}
-          {/* main container */}
+          {/* main container or the card of the profile */}
           <div className="flex  justify-center items-center flex-col w-full">
-            <div className="rounded-full object-cover overflow-hidden w-40 h-40">
-              <img src={userData.Photo} alt="" className="" />
+            <div className="rounded-full  overflow-hidden w-50 h-50">
+              <img
+                src={userData.Photo}
+                alt=""
+                className="h-full w-full object-center"
+              />
             </div>
             <p className="text-xl font-semibold">{userData.username}</p>
             <button className="mt-1 bg-blue-300 p-2 px-3 rounded-xs flex flex-row gap-2 items-center hover:scale-105 hover:bg-blue-800 cursor-pointer">
@@ -97,24 +103,24 @@ export default function Profile() {
 
             {/* the profile info */}
 
-            <div className="mt-2 flex gap-3 bg-rose-200 py-3 px-3 w-full">
+            <div className=" flex gap-4 bg-gray-200  w-full py-5 justify-center items-center rounded-2xl mt-3 px-2">
               {/* for the job */}
-              <div className="flex gap-2">
+              <div className="flex gap-1">
                 <img src="/job-seeker.png" alt="" className="w-6" />
                 <p>Unemployed</p>
               </div>
 
               {/* relationship status */}
-              <div className="flex gap-2">
+              <div className="flex gap-1">
                 <img src="/heart.png" alt="" className="w-6" />
                 <p>Single</p>
               </div>
 
               {/* location  */}
 
-              <div className="flex gap-2">
+              <div className="flex gap-1">
                 <img src="/location.png" alt="" className="w-6" />
-                <p>Single</p>
+                <p>Kathmandu</p>
               </div>
             </div>
           </div>
