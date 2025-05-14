@@ -16,10 +16,7 @@ export default function Profile() {
     const res = await getDoc(profileRef);
     setUserData(res.data());
     console.log(res.data());
-
-    console.log(userData);
   }
-
   // the use effect function to get the user data
   useEffect(() => {
     // Handle user authentication state change
@@ -42,14 +39,84 @@ export default function Profile() {
   }, [u_id]);
   return (
     <>
-      <SNavBar />
-      <div className="h-screen bg-gray-300">
+      {/* main container */}
+      <div className="bg-white w-full flex px-4 py-6 justify-between items-center md:px-10 sticky top-0 overflow-x-hidden shadow-2xs z-10 dark:bg-gray-700 dark:text-white">
+        {/* logo */}
+        <div>
+          <h1 className="font-black text-xl md:text-3xl text-black dark:text-white font-serif cursor-pointer">
+            Echo-Chamber.
+          </h1>
+        </div>
+
+        {/* search bar */}
+        <div className="bg-gray-200 dark:bg-gray-700 rounded-2xl px-4 py-2 flex gap-2">
+          <img src="/search.svg" alt="" className="invert dark:invert-0" />
+          <input
+            type="text"
+            className="outline-none md:w-50 w-20 lg:w-90 bg-transparent text-black dark:text-white placeholder:text-gray-600 dark:placeholder:text-gray-300"
+            placeholder="Search for vibes and peace"
+          />
+        </div>
+
+        {/* profile and notification */}
+        <div className="flex items-center gap-3 md:gap-10">
+          <img
+            src="/notification.png"
+            alt=""
+            className="w-6 cursor-pointer  "
+            title="Notifications"
+          />
+
+          <div
+            className="rounded-full overflow-hidden w-10 h-10"
+            title="Account"
+          >
+            <img
+              src={userData?.Photo}
+              alt=""
+              className="object-cover w-full h-full cursor-pointer"
+            />
+          </div>
+        </div>
+      </div>
+      <div className="h-screen bg-gray-300 flex  justify-center ">
         {/* the main container */}
 
-        <div className="flex bg-white">
+        <div className="flex bg-white p-20 w-220 h-110 mt-5 rounded-2xl ">
           {/* the image and person name */}
-          <div className="flex">
-            <img src="nepal.jpg" alt="" />
+          {/* main container */}
+          <div className="flex  justify-center items-center flex-col w-full">
+            <div className="rounded-full object-cover overflow-hidden w-40 h-40">
+              <img src={userData.Photo} alt="" className="" />
+            </div>
+            <p className="text-xl font-semibold">{userData.username}</p>
+            <button className="mt-1 bg-blue-300 p-2 px-3 rounded-xs flex flex-row gap-2 items-center hover:scale-105 hover:bg-blue-800 cursor-pointer">
+              <img src="/edit.png" alt="" className="w-5" />
+              Edit profile
+            </button>
+
+            {/* the profile info */}
+
+            <div className="mt-2 flex gap-3 bg-rose-200 py-3 px-3 w-full">
+              {/* for the job */}
+              <div className="flex gap-2">
+                <img src="/job-seeker.png" alt="" className="w-6" />
+                <p>Unemployed</p>
+              </div>
+
+              {/* relationship status */}
+              <div className="flex gap-2">
+                <img src="/heart.png" alt="" className="w-6" />
+                <p>Single</p>
+              </div>
+
+              {/* location  */}
+
+              <div className="flex gap-2">
+                <img src="/location.png" alt="" className="w-6" />
+                <p>Single</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
