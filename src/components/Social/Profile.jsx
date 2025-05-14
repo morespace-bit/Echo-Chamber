@@ -3,10 +3,25 @@ import SNavBar from "./SNavBar";
 import { auth, db } from "../Firebase/config";
 import { getDoc, setDoc, doc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
+import { NavLink } from "react-router-dom";
 
 export default function Profile() {
   const [u_id, setUId] = useState("");
   const [userData, setUserData] = useState({});
+  const [button, setButton] = useState({
+    1: true,
+  });
+
+  // function to toogel for the button such as about post and so on
+
+  function toogle(id) {
+    setButton((pre) => {
+      return {
+        [id]: true,
+      };
+    });
+    console.log(button);
+  }
 
   // function to get user profile
 
@@ -84,45 +99,86 @@ export default function Profile() {
       <div className="h-screen bg-gray-300 flex  justify-center overflow-x-hidden ">
         {/* the main container */}
 
-        <div className="flex bg-white px-2  h-150 mt-5 rounded-2xl w-100">
+        <div className="flex bg-white px-2  h-120 mt-5 rounded-2xl w-100 flex-col items-center ">
           {/* the image and person name */}
           {/* main container or the card of the profile */}
-          <div className="flex  justify-center items-center flex-col w-full">
-            <div className="rounded-full  overflow-hidden w-50 h-50">
-              <img
-                src={userData.Photo}
-                alt=""
-                className="h-full w-full object-center"
-              />
+          <div className="rounded-full  overflow-hidden w-50 h-50 mt-4">
+            <img
+              src={userData.Photo}
+              alt=""
+              className="h-full w-full object-center"
+            />
+          </div>
+          <p className="text-xl font-semibold">{userData.username}</p>
+          <button className="mt-1 bg-blue-300 p-2 px-3 rounded-xs flex flex-row gap-2 items-center hover:scale-105 hover:bg-blue-800 cursor-pointer">
+            <img src="/edit.png" alt="" className="w-5" />
+            Edit profile
+          </button>
+          {/* the profile info */}
+          <div className=" flex gap-4 bg-gray-200  w-full py-5 justify-center items-center rounded-2xl mt-3 px-2">
+            {/* for the job */}
+            <div className="flex gap-1">
+              <img src="/job-seeker.png" alt="" className="w-6" />
+              <p>Unemployed</p>
             </div>
-            <p className="text-xl font-semibold">{userData.username}</p>
-            <button className="mt-1 bg-blue-300 p-2 px-3 rounded-xs flex flex-row gap-2 items-center hover:scale-105 hover:bg-blue-800 cursor-pointer">
-              <img src="/edit.png" alt="" className="w-5" />
-              Edit profile
-            </button>
 
-            {/* the profile info */}
-
-            <div className=" flex gap-4 bg-gray-200  w-full py-5 justify-center items-center rounded-2xl mt-3 px-2">
-              {/* for the job */}
-              <div className="flex gap-1">
-                <img src="/job-seeker.png" alt="" className="w-6" />
-                <p>Unemployed</p>
-              </div>
-
-              {/* relationship status */}
-              <div className="flex gap-1">
-                <img src="/heart.png" alt="" className="w-6" />
-                <p>Single</p>
-              </div>
-
-              {/* location  */}
-
-              <div className="flex gap-1">
-                <img src="/location.png" alt="" className="w-6" />
-                <p>Kathmandu</p>
-              </div>
+            {/* relationship status */}
+            <div className="flex gap-1">
+              <img src="/heart.png" alt="" className="w-6" />
+              <p>Single</p>
             </div>
+
+            {/* location  */}
+
+            <div className="flex gap-1">
+              <img src="/location.png" alt="" className="w-6" />
+              <p>Kathmandu</p>
+            </div>
+          </div>
+          {/* the divider */}
+          <div className="border-1 border-gray-400 w-full mt-3"></div>
+          {/* the nav bar for the profile like about post and so on */}
+          <div className="flex mt-2 items-center justify-between w-full px-4 font-bold">
+            <p
+              onClick={() => {
+                toogle(1);
+              }}
+              className={`cursor-pointer ${
+                button[1] ? `border-b-3  border-blue-300 text-blue-400` : ""
+              }  `}
+            >
+              About
+            </p>
+            <p
+              onClick={() => {
+                toogle(2);
+              }}
+              className={`cursor-pointer ${
+                button[2] ? `border-b-3  border-blue-300 text-blue-400` : ""
+              }  `}
+            >
+              Post
+            </p>
+            <p
+              onClick={() => {
+                toogle(3);
+              }}
+              className={`cursor-pointer ${
+                button[3] ? `border-b-3  border-blue-300 text-blue-400` : ""
+              }  `}
+            >
+              Activity
+            </p>
+            <p
+              onClick={() => {
+                toogle(4);
+              }}
+              className={`cursor-pointer ${
+                button[4] ? `border-b-3  border-blue-300 text-blue-400` : ""
+              }  `}
+            >
+              Events
+            </p>
           </div>
         </div>
       </div>
