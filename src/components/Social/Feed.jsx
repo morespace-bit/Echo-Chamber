@@ -186,7 +186,7 @@ export default function Feed() {
           {post?.map((i) => (
             <div
               key={i?.id}
-              className="flex p-6 bg-white dark:bg-gray-700 mb-5 rounded-xl shadow-xl max-h-180 max-w-150 flex-col"
+              className="flex p-6 bg-white dark:bg-gray-700 mb-5 rounded-xl shadow-xl max-h-200 max-w-150 flex-col"
             >
               <div className="mb-4 flex items-center gap-4">
                 <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-300 dark:border-gray-600">
@@ -204,7 +204,7 @@ export default function Feed() {
               <div className="flex justify-start items-start mb-4">
                 <p className="text-left">{i?.Content}</p>
               </div>
-              <div className="mx-h-140 overflow-hidden rounded-xl">
+              <div className="overflow-hidden object-center rounded-xl">
                 <img src={i?.Url} alt="" className="rounded-xl w-full " />
               </div>
               <div className="border-b-2 border-gray-400 dark:border-gray-600 flex justify-center items-center mt-2"></div>
@@ -242,10 +242,6 @@ export default function Feed() {
           ))}
         </div>
 
-        {/* Right part */}
-        <div className="r-0 t-20 fixed">
-          <h1>Right</h1>
-        </div>
         {imageUpload == true && (
           <CreateFeed
             userData={userData}

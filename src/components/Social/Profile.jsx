@@ -4,6 +4,8 @@ import { auth, db } from "../Firebase/config";
 import { getDoc, setDoc, doc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { NavLink } from "react-router-dom";
+import About from "./About";
+import ProfileFeed from "./ProfileFeed";
 
 export default function Profile() {
   const [u_id, setUId] = useState("");
@@ -96,10 +98,10 @@ export default function Profile() {
       </div>
 
       {/* the body part of the profile */}
-      <div className="h-screen bg-gray-300 flex  justify-center overflow-x-hidden ">
+      <div className="h-full bg-gray-300 flex   overflow-x-hidden flex-col items-center overflow-y-hidden">
         {/* the main container */}
-
-        <div className="flex bg-white px-2  h-120 mt-5 rounded-2xl w-100 flex-col items-center ">
+        {/* the card container */}
+        <div className="flex bg-white px-2  h-105 mt-5 rounded-2xl w-100 flex-col items-center md:w-150">
           {/* the image and person name */}
           {/* main container or the card of the profile */}
           <div className="rounded-full  overflow-hidden w-50 h-50 mt-4">
@@ -147,7 +149,7 @@ export default function Profile() {
                 button[1] ? `border-b-3  border-blue-300 text-blue-400` : ""
               }  `}
             >
-              About
+              Post
             </p>
             <p
               onClick={() => {
@@ -157,7 +159,7 @@ export default function Profile() {
                 button[2] ? `border-b-3  border-blue-300 text-blue-400` : ""
               }  `}
             >
-              Post
+              About
             </p>
             <p
               onClick={() => {
@@ -181,6 +183,8 @@ export default function Profile() {
             </p>
           </div>
         </div>
+        {button[2] && <About />}
+        {button[1] && <ProfileFeed />}
       </div>
     </>
   );

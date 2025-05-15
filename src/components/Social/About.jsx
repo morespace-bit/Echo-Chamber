@@ -1,0 +1,37 @@
+export default function About() {
+  return (
+    <>
+      {/* the main container */}
+      <div className="flex bg-white  mt-5 rounded-xl py-4 w-100 shadow-xl md:w-150 justify-center items-center mb-4">
+        {/* the about section container */}
+        <div className="px-4">
+          <p className="text-xl font-bold">Profile info</p>
+          {/* the overview part */}
+          <div className="flex mt-4 border-blue-300 border-1 rounded-xl flex-col py-2 text-left px-2">
+            <p className=" font-bold">Overview</p>
+            <div className="mt-2 text-gray-800">
+              Hello I am Morespace a webdeveloper based in Nepal
+            </div>
+          </div>
+          {/* the other parts such as date of birth and relatieion ship status so on */}
+          <div className="flex mt-5 border-2 border-gray-300 rounded-xl py-2 px-2 gap-2">
+            <img src="/calendar.png" alt="" className="w-6" />
+            <p>Date of Birth: 8th may, 2025</p>
+          </div>
+
+          <div className="flex mt-5 border-2 border-gray-300 rounded-xl py-2 px-2 gap-2">
+            <img src="/heart.png" alt="" className="w-6" />
+            <p>Status: Broke and single</p>
+          </div>
+
+          <div className="flex mt-5 border-2 border-blue-300 rounded-xl py-2 px-2 gap-2">
+            <img src="/edu.png" alt="" className="w-6" />
+            <p>Education: Pokhara University (BCSIT)</p>
+          </div>
+
+          <div></div>
+        </div>
+      </div>
+    </>
+  );
+}
