@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, replace, useNavigate } from "react-router-dom";
 import { auth } from "../Firebase/config";
 import { signOut } from "firebase/auth";
@@ -8,13 +8,26 @@ function SNavBar({ userData }) {
   const navigate = useNavigate();
 
   // function to change to light mode
+  let onoff = null;
   function light() {
+    onoff = false;
     document.documentElement.classList.remove("dark");
+    localStorage.setItem("onoff", "false");
   }
 
   function dark() {
+    onoff = false;
     document.documentElement.classList.add("dark");
+    localStorage.setItem("onoff", "true");
   }
+
+  useEffect(() => {
+    const value = localStorage.getItem("onoff");
+    console.log(value);
+    if (value === "true") {
+      dark();
+    }
+  });
 
   async function signout() {
     await signOut(auth);
@@ -65,7 +78,7 @@ function SNavBar({ userData }) {
       </div>
 
       {/* profile dropdown box */}
-      <div className="bg-white dark:bg-zinc-900 dark:text-white w-60 fixed right-6 h-80 top-25 shadow-2xl rounded-xl flex p-6 hidden md:block">
+      <div className="bg-white dark:bg-gray-600 dark:text-white w-60 fixed right-6 h-80 top-25 shadow-2xl rounded-xl flex p-6 hidden md:block">
         {/* image + username */}
         <div className="flex gap-3">
           <div
@@ -98,22 +111,14 @@ function SNavBar({ userData }) {
         {/* menu options */}
         <div className="flex flex-col mt-4 gap-3">
           <div className="flex flex-row gap-2 group cursor-pointer">
-            <img
-              src="/settings.png"
-              alt=""
-              className="w-5" // Removed the invert class to make icons visible in both modes
-            />
+            <img src="/settings.png" alt="" className="w-5" />
             <p className="text-gray-500 dark:text-gray-300 group-hover:text-blue-800 dark:group-hover:text-blue-400">
               Settings and privacy
             </p>
           </div>
 
           <div className="flex flex-row gap-2 group cursor-pointer">
-            <img
-              src="/support.png"
-              alt=""
-              className="w-5" // Removed the invert class to make icons visible in both modes
-            />
+            <img src="/support.png" alt="" className="w-5" />
             <p className="text-gray-500 dark:text-gray-300 group-hover:text-blue-800 dark:group-hover:text-blue-400">
               Support and Help
             </p>
@@ -126,11 +131,7 @@ function SNavBar({ userData }) {
           className="flex flex-row gap-2 group mt-3 cursor-pointer"
           onClick={signout}
         >
-          <img
-            src="/signout.png"
-            alt=""
-            className="w-5" // Removed the invert class to make icons visible in both modes
-          />
+          <img src="/signout.png" alt="" className="w-5" />
           <p className="text-gray-500 dark:text-gray-300 group-hover:text-blue-800 dark:group-hover:text-blue-400">
             Sign out
           </p>

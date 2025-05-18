@@ -14,6 +14,24 @@ export default function Profile() {
     1: true,
   });
 
+  // function to set the user profile details
+
+  async function Upload() {
+    if (!url || !username) {
+      alert("Please upload an image and enter a username before submitting.");
+      return;
+    }
+
+    // Save user data to Firestore using setDoc
+    const userRef = doc(db, "User", u_id);
+    await setDoc(userRef, {
+      username: username,
+      Photo: url,
+    });
+
+    navigate("/welcome", { replace: true });
+  }
+
   // function to toogel for the button such as about post and so on
 
   function toogle(id) {
@@ -106,12 +124,12 @@ export default function Profile() {
           {/* main container or the card of the profile */}
           <div className="rounded-full  overflow-hidden w-50 h-50 mt-4">
             <img
-              src={userData.Photo}
+              src={userData?.Photo}
               alt=""
               className="h-full w-full object-center"
             />
           </div>
-          <p className="text-xl font-semibold">{userData.username}</p>
+          <p className="text-xl font-semibold">{userData?.username}</p>
           <button className="mt-1 bg-blue-300 p-2 px-3 rounded-xs flex flex-row gap-2 items-center hover:scale-105 hover:bg-blue-800 cursor-pointer">
             <img src="/edit.png" alt="" className="w-5" />
             Edit profile
