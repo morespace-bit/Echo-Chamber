@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, replace, useNavigate } from "react-router-dom";
 import { auth } from "../Firebase/config";
 import { signOut } from "firebase/auth";
 import { Navigate } from "react-router-dom";
 
 function SNavBar({ userData }) {
+  const [isOpen, setOpen] = useState(false);
   const navigate = useNavigate();
 
   // function to change to light mode
@@ -65,6 +66,9 @@ function SNavBar({ userData }) {
           />
 
           <div
+            onClick={() => {
+              setOpen((pre) => !pre);
+            }}
             className="rounded-full overflow-hidden w-10 h-10"
             title="Account"
           >
@@ -155,6 +159,84 @@ function SNavBar({ userData }) {
           />
         </div>
       </div>
+
+      {isOpen && (
+        <div className="bg-white dark:bg-gray-600 dark:text-white max-w-xs w-full fixed right-4 top-24 shadow-2xl rounded-xl p-4 flex flex-col gap-4 sm:w-60 sm:p-6 sm:right-6 sm:top-25 md:hidden">
+          {/* image + username */}
+          <div className="flex gap-3 items-center">
+            <div
+              className="rounded-full overflow-hidden w-12 h-12"
+              title="Account"
+            >
+              <img
+                src={userData?.Photo}
+                alt="User Avatar"
+                className="object-cover w-full h-full cursor-pointer"
+              />
+            </div>
+            <div className="flex flex-col">
+              <p className="text-lg font-semibold">{userData?.username}</p>
+              <p className="text-xs text-gray-600 dark:text-gray-400">
+                A Peace lover
+              </p>
+            </div>
+          </div>
+
+          {/* profile button */}
+          <Link to="/profile" className="w-full">
+            <button className="bg-blue-200 dark:bg-blue-800 text-black dark:text-white p-2 rounded w-full cursor-pointer hover:bg-blue-700 dark:hover:bg-blue-600 transition">
+              View profile
+            </button>
+          </Link>
+
+          {/* menu options */}
+          <div className="flex flex-col gap-3">
+            <div className="flex items-center gap-2 group cursor-pointer">
+              <img src="/settings.png" alt="Settings" className="w-5" />
+              <p className="text-gray-500 dark:text-gray-300 group-hover:text-blue-800 dark:group-hover:text-blue-400">
+                Settings and privacy
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2 group cursor-pointer">
+              <img src="/support.png" alt="Support" className="w-5" />
+              <p className="text-gray-500 dark:text-gray-300 group-hover:text-blue-800 dark:group-hover:text-blue-400">
+                Support and Help
+              </p>
+            </div>
+          </div>
+
+          {/* signout section */}
+          <div className="border-b border-gray-400 dark:border-gray-600 w-full" />
+          <div
+            className="flex items-center gap-2 group cursor-pointer"
+            onClick={signout}
+          >
+            <img src="/signout.png" alt="Sign out" className="w-5" />
+            <p className="text-gray-500 dark:text-gray-300 group-hover:text-blue-800 dark:group-hover:text-blue-400">
+              Sign out
+            </p>
+          </div>
+          <div className="border-b border-gray-400 dark:border-gray-600 w-full" />
+
+          {/* dark mode toggle */}
+          <div className="flex justify-around items-center mt-2">
+            <p className="text-base">Mode:</p>
+            <img
+              src="/night-mode.png"
+              alt="Dark"
+              className="w-8 hover:bg-gray-400 dark:hover:bg-gray-600 rounded cursor-pointer"
+              onClick={dark}
+            />
+            <img
+              src="/light.png"
+              alt="Light"
+              className="w-8 hover:bg-gray-400 dark:hover:bg-gray-600 rounded cursor-pointer"
+              onClick={light}
+            />
+          </div>
+        </div>
+      )}
     </>
   );
 }
