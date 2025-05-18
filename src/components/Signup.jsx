@@ -120,25 +120,22 @@ export default function Signup() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6 }}
             >
-              <div className="hidden md:block">
-                <button className="flex justify-center items-center space-x-4 border-2 border-gray-300 py-2 hover:shadow-2xl duration-150 ease-in-out md:px-8">
-                  <img
-                    src={"/facebook.png"}
-                    alt="facebook-icon"
-                    className="w-10"
-                  />
-                  <p>Facebook</p>
-                </button>
-              </div>
-              <div className="hidden md:block">
-                <button
-                  onClick={google}
-                  className="flex justify-center items-center space-x-4 border-2 border-gray-300 py-2 hover:shadow-2xl duration-150 ease-in-out md:px-8"
-                >
-                  <img src={"/google.png"} alt="google-icon" className="w-10" />
-                  <p>Google</p>
-                </button>
-              </div>
+              <button className="flex justify-center items-center space-x-4 border-2 border-gray-300 py-2 hover:shadow-2xl duration-150 ease-in-out md:px-8">
+                <img
+                  src={"/facebook.png"}
+                  alt="facebook-icon"
+                  className="w-10"
+                />
+                <p>Facebook</p>
+              </button>
+
+              <button
+                onClick={google}
+                className="flex justify-center items-center space-x-4 border-2 border-gray-300 py-2 hover:shadow-2xl duration-150 ease-in-out md:px-8"
+              >
+                <img src={"/google.png"} alt="google-icon" className="w-10" />
+                <p>Google</p>
+              </button>
             </motion.div>
             <Link to="/login" replace={true}>
               <div className="flex justify-center items-center">
