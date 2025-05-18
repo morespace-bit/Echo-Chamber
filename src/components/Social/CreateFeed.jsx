@@ -5,6 +5,7 @@ import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 function CreateFeed({ userData, setImageUpload, u_id, getPost }) {
   const [content, setContent] = useState(null);
   const [url, setUrl] = useState("");
+  const [loding, setLoding] = useState(false);
 
   // function to upload to cloudniary
 
@@ -14,6 +15,7 @@ function CreateFeed({ userData, setImageUpload, u_id, getPost }) {
     data.append("file", file);
     data.append("upload_preset", "file-upload");
     data.append("coud_name", "dvxidzrno");
+    setLoding(true);
 
     const res = await fetch(
       "https://api.cloudinary.com/v1_1/dvxidzrno/image/upload",
@@ -24,6 +26,7 @@ function CreateFeed({ userData, setImageUpload, u_id, getPost }) {
     );
     const upload = await res.json();
     setUrl(upload.url);
+    setLoding(false);
   }
 
   // the actual function to upload to firebase
@@ -89,12 +92,18 @@ function CreateFeed({ userData, setImageUpload, u_id, getPost }) {
 
         {/* Post Button */}
         <div className="w-full flex items-center justify-center mt-4">
-          <button
-            className="bg-blue-300 dark:bg-blue-800 text-black dark:text-white w-full rounded-xl p-2 hover:bg-blue-500 dark:hover:bg-blue-600 transition duration-75 ease-in active:scale-95 hover:scale-105"
-            onClick={uploadFirebase}
-          >
-            Post
-          </button>
+          {loding ? (
+            <button className="bg-blue-300 dark:bg-blue-800 text-black dark:text-white w-full rounded-xl p-2 hover:bg-blue-500 dark:hover:bg-blue-600 transition duration-75 ease-in active:scale-95 hover:scale-105">
+              Image is being processed
+            </button>
+          ) : (
+            <button
+              className="bg-blue-300 dark:bg-blue-800 text-black dark:text-white w-full rounded-xl p-2 hover:bg-blue-500 dark:hover:bg-blue-600 transition duration-75 ease-in active:scale-95 hover:scale-105"
+              onClick={uploadFirebase}
+            >
+              Post
+            </button>
+          )}
         </div>
       </div>
     </div>

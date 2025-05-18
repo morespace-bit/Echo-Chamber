@@ -22,6 +22,7 @@ export default function Feed() {
   const [likedPost, setLikedPost] = useState({});
   const [commentPost, setCommentPost] = useState({});
   const [likesOfPost, setLikesOfPost] = useState(null);
+  const [loding, setLoding] = useState(false);
 
   // function to generate random likes
   const genLikes = (id) => {
