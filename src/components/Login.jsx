@@ -122,29 +122,21 @@ export default function Login() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6 }}
             >
-              <button className="flex justify-center items-center space-x-4 border-2 border-gray-300 py-2 hover:shadow-2xl duration-150 ease-in-out md:px-8">
-                <img
-                  src={"/facebook.png"}
-                  alt="facebook-icon"
-                  className="w-10"
-                />
-                <p>Facebook</p>
-              </button>
+              <div className="hidden md:block">
+                <button className="flex justify-center items-center space-x-4 border-2 border-gray-300 py-2 hover:shadow-2xl duration-150 ease-in-out md:px-8">
+                  <img
+                    src={"/facebook.png"}
+                    alt="facebook-icon"
+                    className="w-10"
+                  />
+                  <p>Facebook</p>
+                </button>
+              </div>
+
               <div className="hidden md:block">
                 <button
                   className="flex justify-center items-center space-x-4 border-2 border-gray-300 py-2 hover:shadow-2xl duration-150 ease-in-out md:px-8"
                   onClick={googleLogin}
-                >
-                  <img src={"/google.png"} alt="google-icon" className="w-10" />
-                  <p>Google</p>
-                </button>
-              </div>
-
-              {/* for mobile devices login page */}
-              <div className="block md:hidden">
-                <button
-                  className="flex justify-center items-center space-x-4 border-2 border-gray-300 py-2 hover:shadow-2xl duration-150 ease-in-out md:px-8"
-                  onClick={googleLoginMbl}
                 >
                   <img src={"/google.png"} alt="google-icon" className="w-10" />
                   <p>Google</p>

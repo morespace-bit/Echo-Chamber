@@ -43,7 +43,7 @@ function HomeNav() {
               </Link>
             </div>
           </div>
-          <Link to="/login">
+          <Link to="/signup">
             <button className="bg-white py-2 px-5 cursor-pointer hover:bg-sky-400 hover:text-white rounded-xs duration-100 ease-initial font-semibold hover:shadow-2xl shadow-cyan-200">
               Login
             </button>

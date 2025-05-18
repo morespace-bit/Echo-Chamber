@@ -120,29 +120,33 @@ export default function Signup() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6 }}
             >
-              <button className="flex justify-center items-center space-x-4 border-2 border-gray-300 py-2 hover:shadow-2xl duration-150 ease-in-out md:px-8">
-                <img
-                  src={"/facebook.png"}
-                  alt="facebook-icon"
-                  className="w-10"
-                />
-                <p>Facebook</p>
-              </button>
-              <button
-                onClick={google}
-                className="flex justify-center items-center space-x-4 border-2 border-gray-300 py-2 hover:shadow-2xl duration-150 ease-in-out md:px-8"
-              >
-                <img src={"/google.png"} alt="google-icon" className="w-10" />
-                <p>Google</p>
-              </button>
+              <div className="hidden md:block">
+                <button className="flex justify-center items-center space-x-4 border-2 border-gray-300 py-2 hover:shadow-2xl duration-150 ease-in-out md:px-8">
+                  <img
+                    src={"/facebook.png"}
+                    alt="facebook-icon"
+                    className="w-10"
+                  />
+                  <p>Facebook</p>
+                </button>
+              </div>
+              <div className="hidden md:block">
+                <button
+                  onClick={google}
+                  className="flex justify-center items-center space-x-4 border-2 border-gray-300 py-2 hover:shadow-2xl duration-150 ease-in-out md:px-8"
+                >
+                  <img src={"/google.png"} alt="google-icon" className="w-10" />
+                  <p>Google</p>
+                </button>
+              </div>
             </motion.div>
-            <div className="flex justify-center items-center">
-              <button className="bg-blue-300 rounded-2xl p-4 hover:bg-blue-800 duration-75 ease-in">
-                <Link to="/login" replace={true}>
+            <Link to="/login" replace={true}>
+              <div className="flex justify-center items-center">
+                <button className="bg-blue-300 rounded-2xl p-4 hover:bg-blue-800 duration-75 ease-in">
                   already signed in
-                </Link>
-              </button>
-            </div>
+                </button>
+              </div>
+            </Link>
           </motion.div>
           <motion.div
             className=" hidden md:block "
