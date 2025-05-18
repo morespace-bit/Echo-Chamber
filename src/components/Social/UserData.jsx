@@ -8,6 +8,7 @@ import { useEffect } from "react";
 
 function UserData() {
   const [u_id, setUId] = useState("");
+  const [loding, setLoading] = useState(false);
   useEffect(() => {
     // Handle user authentication state change
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -36,7 +37,7 @@ function UserData() {
     data.append("file", file);
     data.append("upload_preset", "file-upload");
     data.append("cloud_name", "dvxidzrno");
-
+    setLoading(true);
     const res = await fetch(
       "https://api.cloudinary.com/v1_1/dvxidzrno/image/upload",
       {
@@ -46,6 +47,7 @@ function UserData() {
     );
     const uploaded = await res.json();
     setUrl(uploaded.url);
+    setLoading(false);
   }
 
   // Upload data to Firebase Firestore
@@ -83,12 +85,19 @@ function UserData() {
             placeholder="upload a profile picture"
           />
         </div>
-        <button
-          onClick={Upload}
-          className="bg-green-300 p-4 rounded-2xl font-semibold text-xl hover:scale-105 active:scale-95 duration-100 ease-in cursor-pointer"
-        >
-          Next
-        </button>
+        {loding ? (
+          <button className="bg-green-300 p-4 rounded-2xl font-semibold text-xl hover:scale-105 active:scale-95 duration-100 ease-in cursor-pointer">
+            {" "}
+            Image is processing.
+          </button>
+        ) : (
+          <button
+            onClick={Upload}
+            className="bg-green-300 p-4 rounded-2xl font-semibold text-xl hover:scale-105 active:scale-95 duration-100 ease-in cursor-pointer"
+          >
+            Next
+          </button>
+        )}
       </div>
     </div>
   );

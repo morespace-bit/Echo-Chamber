@@ -144,7 +144,7 @@ export default function Login() {
               <div className="block md:hidden">
                 <button
                   className="flex justify-center items-center space-x-4 border-2 border-gray-300 py-2 hover:shadow-2xl duration-150 ease-in-out md:px-8"
-                  onClick={googleLogin}
+                  onClick={googleLoginMbl}
                 >
                   <img src={"/google.png"} alt="google-icon" className="w-10" />
                   <p>Google</p>
