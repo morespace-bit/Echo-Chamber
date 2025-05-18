@@ -1,6 +1,7 @@
 import { Link, replace, useNavigate } from "react-router-dom";
 import {
   signInWithPopup,
+  signInWithRedirect,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
@@ -31,6 +32,16 @@ export default function Login() {
   async function googleLogin() {
     try {
       await signInWithPopup(auth, googleProvider);
+      navigate("/feed", { replace: true });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  // login function with google with mobile
+  async function googleLoginMbl() {
+    try {
+      await signInWithRedirect(auth, googleProvider);
       navigate("/feed", { replace: true });
     } catch (err) {
       console.log(err);
@@ -119,13 +130,26 @@ export default function Login() {
                 />
                 <p>Facebook</p>
               </button>
-              <button
-                className="flex justify-center items-center space-x-4 border-2 border-gray-300 py-2 hover:shadow-2xl duration-150 ease-in-out md:px-8"
-                onClick={googleLogin}
-              >
-                <img src={"/google.png"} alt="google-icon" className="w-10" />
-                <p>Google</p>
-              </button>
+              <div className="hidden md:block">
+                <button
+                  className="flex justify-center items-center space-x-4 border-2 border-gray-300 py-2 hover:shadow-2xl duration-150 ease-in-out md:px-8"
+                  onClick={googleLogin}
+                >
+                  <img src={"/google.png"} alt="google-icon" className="w-10" />
+                  <p>Google</p>
+                </button>
+              </div>
+
+              {/* for mobile devices login page */}
+              <div className="block md:hidden">
+                <button
+                  className="flex justify-center items-center space-x-4 border-2 border-gray-300 py-2 hover:shadow-2xl duration-150 ease-in-out md:px-8"
+                  onClick={googleLogin}
+                >
+                  <img src={"/google.png"} alt="google-icon" className="w-10" />
+                  <p>Google</p>
+                </button>
+              </div>
             </motion.div>
             {/* if not signed in yet */}
             <div className="flex justify-center items-center">
