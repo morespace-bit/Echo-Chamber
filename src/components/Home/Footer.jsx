@@ -12,7 +12,7 @@ export default function Footer() {
     >
       {/* the noise image */}
       <div className="py-5  flex justify-center overflow-hidden w-full md:px-3">
-        <div className="w-115 h-120 overflow-hidden rounded-2xl bg-[url('noisebg.jpg')] bg-cover bg-left-bottom flex items-center justify-center md:w-full">
+        <div className="w-115 h-120 overflow-hidden rounded-2xl bg-[url('noise.jpg')] bg-cover bg-left-bottom flex items-center justify-center md:w-full">
           <motion.p
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
