@@ -120,13 +120,14 @@ function SNavBar({ userData }) {
               Settings and privacy
             </p>
           </div>
-
-          <div className="flex flex-row gap-2 group cursor-pointer">
-            <img src="/support.png" alt="" className="w-5" />
-            <p className="text-gray-500 dark:text-gray-300 group-hover:text-blue-800 dark:group-hover:text-blue-400">
-              Support and Help
-            </p>
-          </div>
+          <Link to="/support">
+            <div className="flex flex-row gap-2 group cursor-pointer">
+              <img src="/support.png" alt="" className="w-5" />
+              <p className="text-gray-500 dark:text-gray-300 group-hover:text-blue-800 dark:group-hover:text-blue-400">
+                Support and Help
+              </p>
+            </div>
+          </Link>
         </div>
 
         {/* signout section */}

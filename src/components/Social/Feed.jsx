@@ -12,12 +12,14 @@ import { onAuthStateChanged } from "firebase/auth";
 import CreateFeed from "./CreateFeed";
 import Comment from "./Comment";
 import SNavBar from "./SNavBar";
+import CreateFeedText from "./CreateFeedText";
 
 export default function Feed() {
   const [img, setImg] = useState([]);
   const [userData, setUserData] = useState(null);
   const [u_id, setUId] = useState(""); // Use state for UID
   const [imageUpload, setImageUpload] = useState(false);
+  const [textUpload, setTextUpload] = useState(false);
   const [post, setPost] = useState(null);
   const [likedPost, setLikedPost] = useState({});
   const [commentPost, setCommentPost] = useState({});
@@ -164,7 +166,7 @@ export default function Feed() {
               <div
                 className="flex flex-row items-center gap-1 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 rounded-xl duration-75 ease-in p-2"
                 onClick={() => {
-                  setImageUpload((pre) => !pre);
+                  setTextUpload((pre) => !pre);
                 }}
               >
                 <img src={"/thought-bubble.png"} alt="" className="h-10" />
@@ -173,7 +175,7 @@ export default function Feed() {
               <div
                 className="flex flex-row items-center gap-1 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 rounded-xl duration-75 ease-in p-2"
                 onClick={() => {
-                  setImageUpload((pre) => !pre);
+                  setTextUpload((pre) => !pre);
                 }}
               >
                 <img src={"/activity.png"} alt="" className="h-10" />
@@ -246,6 +248,15 @@ export default function Feed() {
           <CreateFeed
             userData={userData}
             setImageUpload={setImageUpload}
+            u_id={u_id}
+            getPost={getPost}
+          />
+        )}
+
+        {textUpload && (
+          <CreateFeedText
+            userData={userData}
+            setTextUpload={setTextUpload}
             u_id={u_id}
             getPost={getPost}
           />
