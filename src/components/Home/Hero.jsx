@@ -27,7 +27,7 @@ function Hero() {
               Echo-Chamber. Community
             </p>
             <p className="mt-3 text-[17px] font-semibold text-white font-sans">
-              This is the place to share peace and vibes and have turly fun.
+              This is the place to share peace and vibes and have truly fun.
             </p>
             <p className="text-[17px] font-semibold text-white font-sans">
               A non-political place!
