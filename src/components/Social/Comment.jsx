@@ -87,7 +87,7 @@ export default function Comment({ userData, postId, open, close }) {
 
       {/* the comments of all the people mapped */}
       {open[postId] && (
-        <div className="absolute bg-white dark:bg-gray-800 shadow-2xl shadow-blue-200 w-105 rounded-xl h-115 overflow-y-auto md:w-150">
+        <div className="absolute bg-white dark:bg-gray-800 shadow-2xl shadow-blue-200 w-90 rounded-xl h-115 overflow-y-auto md:w-150">
           <div className="mt-3 justify-center items-center flex gap-5 relative">
             <h2 className="text-xl font-semibold dark:text-white">Comments</h2>
             <img
