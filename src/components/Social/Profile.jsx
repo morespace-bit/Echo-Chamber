@@ -126,7 +126,7 @@ export default function Profile() {
             <img
               src={userData?.Photo}
               alt=""
-              className="h-full w-full object-center"
+              className="h-full w-full object-cover"
             />
           </div>
           <p className="text-xl font-semibold">{userData?.username}</p>

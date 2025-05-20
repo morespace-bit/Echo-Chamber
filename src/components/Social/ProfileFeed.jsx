@@ -92,11 +92,13 @@ export default function ProfileFeed() {
   }, [u_id]);
   return (
     <>
+      {/* // the main container of the body part */}
       {post?.map((i) => (
         <div
           key={i?.id}
-          className="flex p-6 bg-white dark:bg-gray-700 mb-5 rounded-xl shadow-xl max-h-200  flex-col mt-3"
+          className="flex p-6 bg-white dark:bg-gray-700 mb-5 rounded-xl shadow-xl max-h-200  flex-col mt-3 max-w-150"
         >
+          {/* upper part */}
           <div className="mb-4 flex items-center gap-4">
             <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-300 dark:border-gray-600">
               <img
