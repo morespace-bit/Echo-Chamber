@@ -11,14 +11,14 @@ import {
 } from "react-router-dom";
 
 import App from "./App.jsx";
-import Signup from "./components/Signup.jsx";
-import Login from "./components/Login.jsx";
+import Signup from "./components/Auth/Signup.jsx";
+import Login from "./components/Auth/Login.jsx";
 import Forlogin from "./components/Animation/Forlogin.jsx";
 import UserData from "./components/Social/UserData.jsx";
 import Feed from "./components/Social/Feed.jsx";
-import Profile from "./components/Social/Profile.jsx";
 import Homepage from "./components/Home/Homepage.jsx";
 import Support from "./components/Home/Support.jsx";
+import Profile from "./components/Social/Profile/Profile.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(

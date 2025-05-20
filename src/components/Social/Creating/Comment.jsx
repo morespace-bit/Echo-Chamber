@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { db, auth } from "../Firebase/config";
+import { db } from "../../Firebase/config";
 import {
   collection,
   doc,

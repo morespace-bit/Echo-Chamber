@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { auth, googleProvider } from "../components/Firebase/config.js";
-import { login, logout } from "../store/Features/authSlice.js";
+import { auth, googleProvider } from "../Firebase/config.js";
+import { login, logout } from "../../store/Features/authSlice.js";
 import { useDispatch, useSelector } from "react-redux";
 import {
   signInWithPopup,

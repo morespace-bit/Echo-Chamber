@@ -1,5 +1,5 @@
 import React from "react";
-import { db, auth } from "../Firebase/config";
+import { db, auth } from "../../Firebase/config";
 
 function ProfileData() {
   // function to set the user profile details

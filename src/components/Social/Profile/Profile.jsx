@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import SNavBar from "./SNavBar";
-import { auth, db } from "../Firebase/config";
+import { auth, db } from "../../Firebase/config";
 import { getDoc, setDoc, doc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { NavLink } from "react-router-dom";

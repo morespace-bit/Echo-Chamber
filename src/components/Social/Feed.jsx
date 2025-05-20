@@ -9,11 +9,10 @@ import {
   getDoc,
 } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
-import CreateFeed from "./CreateFeed";
-import Comment from "./Comment";
+import CreateFeed from "./Creating/CreateFeed";
+import Comment from "./Creating/Comment";
 import SNavBar from "./SNavBar";
-import CreateFeedText from "./CreateFeedText";
-
+import CreateFeedText from "./Creating/CreateFeedText";
 export default function Feed() {
   const [img, setImg] = useState([]);
   const [userData, setUserData] = useState(null);

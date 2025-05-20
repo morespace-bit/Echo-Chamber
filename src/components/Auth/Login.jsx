@@ -5,7 +5,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { auth, googleProvider } from "./Firebase/config";
+import { auth, googleProvider } from "../Firebase/config";
 import { useState } from "react";
 import { motion } from "framer-motion";
 

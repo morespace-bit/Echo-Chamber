@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { db, auth } from "../Firebase/config";
+import { db, auth } from "../../Firebase/config";
 import {
   getDocs,
   collection,
@@ -9,7 +9,7 @@ import {
   getDoc,
 } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
-import Comment from "./Comment";
+import Comment from "../Creating/Comment";
 
 export default function ProfileFeed() {
   const [img, setImg] = useState([]);
