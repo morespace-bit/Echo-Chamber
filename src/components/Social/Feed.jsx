@@ -7,6 +7,10 @@ import {
   query,
   orderBy,
   getDoc,
+  updateDoc,
+  increment,
+  arrayUnion,
+  arrayRemove,
 } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import CreateFeed from "./Creating/CreateFeed";
@@ -14,7 +18,6 @@ import Comment from "./Creating/Comment";
 import SNavBar from "./SNavBar";
 import CreateFeedText from "./Creating/CreateFeedText";
 export default function Feed() {
-  const [img, setImg] = useState([]);
   const [userData, setUserData] = useState(null);
   const [u_id, setUId] = useState(""); // Use state for UID
   const [imageUpload, setImageUpload] = useState(false);
@@ -22,28 +25,40 @@ export default function Feed() {
   const [post, setPost] = useState(null);
   const [likedPost, setLikedPost] = useState({});
   const [commentPost, setCommentPost] = useState({});
-  const [likesOfPost, setLikesOfPost] = useState(null);
+  const [likesOfPost, setLikesOfPost] = useState({});
 
-  // function to generate random likes
-  const genLikes = (id) => {
-    let likes = Math.floor(Math.random() * 500 + 1);
-
-    setLikesOfPost((pre) => ({
-      ...pre,
-      [id]: likes,
-    }));
-  };
-
-  // function to set liked and unlike ui
-  const like = (id) => {
+  // function to set liked and unlike ui also to update the firebase store for no of likes
+  const like = async (id) => {
     setLikedPost((pre) => {
-      return {
+      const updated = {
         ...pre,
         [id]: !pre[id],
       };
+      localStorage.setItem("likedPost", JSON.stringify(updated));
+      return updated;
     });
-    console.log(likedPost);
   };
+
+  // function to like the post and send it to firebase
+
+  async function likeUnlike(id) {
+    const postRef = doc(db, "Post", id);
+
+    // function to like the post
+    if (!likedPost[id]) {
+      await updateDoc(postRef, {
+        Likes: increment(1),
+        likedBy: arrayUnion(u_id),
+      });
+    } else {
+      // function to remove the like
+
+      await updateDoc(postRef, {
+        Likes: increment(-1),
+        likedBy: arrayRemove(u_id),
+      });
+    }
+  }
 
   const comment = (id) => {
     setCommentPost((pre) => {
@@ -93,6 +108,9 @@ export default function Feed() {
   useEffect(() => {
     getUserProfile();
     getPost();
+    const item = localStorage.getItem("likedPost");
+    const stored = item ? JSON.parse(item) : {};
+    setLikedPost(stored);
   }, [u_id]);
 
   return (
@@ -214,6 +232,7 @@ export default function Feed() {
                   className="flex flex-row gap-2 items-center cursor-pointer"
                   onClick={() => {
                     like(i.id);
+                    likeUnlike(i.id);
                   }}
                 >
                   <img
@@ -221,7 +240,7 @@ export default function Feed() {
                     alt=""
                     className="h-6 hover:shadow-4xl hover:shadow-rose-500 duration-75 ease-in active:scale-95 hover:scale-120"
                   />
-                  <p>Likes </p>
+                  <p>Likes {i.Likes}</p>
                 </div>
                 <div
                   className="flex flex-row gap-2 items-center cursor-pointer hover:shadow-4xl hover:shadow-rose-500 duration-75 ease-in active:scale-95 hover:scale-120"
