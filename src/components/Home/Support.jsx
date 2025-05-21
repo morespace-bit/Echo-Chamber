@@ -14,6 +14,7 @@ export default function Support() {
   const [qs, setQs] = useState([]);
   const [o, setO] = useState({});
   const [userQ, setUserQ] = useState("");
+  const [loding, setLoding] = useState(false);
   const [response, Setresponse] = useState(
     "Ask me any questions related to Echo-Chamber?"
   );
@@ -23,7 +24,7 @@ export default function Support() {
   const ai = new GoogleGenAI({ apiKey: apiKey });
   async function aires() {
     const role = `You are Echo, the AI assistant for Echo Chamber, a peaceful, non-political social platform focused on genuine conversations and shared interests. Answer questions clearly and briefly, emphasizing Echo Chamber's values of respect, privacy, user control, and peaceful interactions. Always mention that Echo Chamber is free, with no political content allowed, and that users can customize their feeds, report toxic behavior, and enjoy a safe, non-toxic environment. Let users know the platform works well on mobile browsers but doesn’t have a mobile app yet. Ensure data privacy and user safety in every response. If a question is unrelated to the platform, reply with: “I’m here to help with Echo Chamber—ask me anything about the platform!” For political questions, politely redirect by saying: “Echo Chamber is designed to be a non-political space, focused on meaningful conversations around shared interests.” If asked about toxic behavior or inappropriate content, respond: “Echo Chamber is committed to a respectful, safe environment. If you encounter toxic behavior, you can report it, and our team will review it promptly.”c`;
-
+    setLoding(true);
     const user = ` Here is the first question ${userQ}`;
     const response = await ai.models.generateContent({
       model: "gemini-2.0-flash",
@@ -31,11 +32,13 @@ export default function Support() {
     });
     Setresponse(response.text);
     console.log(response.text);
+    setLoding(false);
   }
 
   // function to get the questions form firebaser database
   async function getQuestions() {
     const qRef = collection(db, "faqs");
+
     const res = await getDocs(qRef);
     let data = res.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
     setQs(data);
@@ -147,6 +150,20 @@ export default function Support() {
             {/* AI Response */}
             {response && (
               <div className="bg-rose-200 p-5 rounded-lg shadow-inner mt-5 text-left">
+                {loding ? (
+                  <>
+                    <p>Your question is being processed plese wait.</p>
+                    <div
+                      class="animate-spin inline-block size-6 border-3 border-current border-t-transparent text-blue-600 rounded-full dark:text-blue-500"
+                      role="status"
+                      aria-label="loading"
+                    >
+                      <span class="sr-only">Loading...</span>
+                    </div>{" "}
+                  </>
+                ) : (
+                  ""
+                )}
                 <ReackMarkdown children={response} />
               </div>
             )}
