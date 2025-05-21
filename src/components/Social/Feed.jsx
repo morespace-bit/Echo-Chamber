@@ -273,7 +273,7 @@ export default function Feed() {
                     alt=""
                     className="h-6 hover:shadow-4xl hover:shadow-rose-500 duration-75 ease-in active:scale-95 hover:scale-120"
                   />
-                  <p>Likes {likesOfPost?.[i.id] ?? 0}</p>
+                  <p>Likes {likesOfPost?.[i.id]}</p>
                 </div>
                 <div
                   className="flex flex-row gap-2 items-center cursor-pointer hover:shadow-4xl hover:shadow-rose-500 duration-75 ease-in active:scale-95 hover:scale-120"

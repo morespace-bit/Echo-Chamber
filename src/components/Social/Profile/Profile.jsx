@@ -115,10 +115,10 @@ export default function Profile() {
       </div>
 
       {/* the body part of the profile */}
-      <div className="h-full bg-gray-300 flex   overflow-x-hidden flex-col items-center overflow-y-hidden">
+      <div className="h-full bg-gray-300 flex   overflow-x-hidden flex-col items-center overflow-y-hidden dark:bg-zinc-500">
         {/* the main container */}
         {/* the card container */}
-        <div className="flex bg-white px-2  h-105 mt-5 rounded-2xl w-100 flex-col items-center md:w-150">
+        <div className="flex bg-white px-2  h-105 mt-5 rounded-2xl w-100 flex-col items-center md:w-150 dark:bg-gray-600">
           {/* the image and person name */}
           {/* main container or the card of the profile */}
           <div className="rounded-full  overflow-hidden w-50 h-50 mt-4">
@@ -134,7 +134,7 @@ export default function Profile() {
             Edit profile
           </button>
           {/* the profile info */}
-          <div className=" flex gap-4 bg-gray-200  w-full py-5 justify-center items-center rounded-2xl mt-3 px-2">
+          <div className=" flex gap-4 bg-gray-200  w-full py-5 justify-center items-center rounded-2xl mt-3 px-2 dark:bg-gray-400">
             {/* for the job */}
             <div className="flex gap-1">
               <img src="/job-seeker.png" alt="" className="w-6" />

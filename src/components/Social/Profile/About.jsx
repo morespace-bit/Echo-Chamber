@@ -2,7 +2,7 @@ export default function About() {
   return (
     <>
       {/* the main container */}
-      <div className="flex bg-white  mt-5 rounded-xl py-4 w-100 shadow-xl md:w-150 justify-center items-center mb-4">
+      <div className="flex bg-white  mt-5 rounded-xl py-4 w-100 shadow-xl md:w-150 justify-center items-center mb-4 dark:bg-gray-600">
         {/* the about section container */}
         <div className="px-4">
           <p className="text-xl font-bold">Profile info</p>
