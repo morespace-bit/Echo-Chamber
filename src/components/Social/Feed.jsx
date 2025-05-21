@@ -37,6 +37,8 @@ export default function Feed() {
       localStorage.setItem("likedPost", JSON.stringify(updated));
       return updated;
     });
+
+    setLikesOfPost((pre) => {});
   };
 
   // function to like the post and send it to firebase
@@ -44,20 +46,22 @@ export default function Feed() {
   async function likeUnlike(id) {
     const postRef = doc(db, "Post", id);
 
-    // function to like the post
     if (!likedPost[id]) {
+      // like
       await updateDoc(postRef, {
         Likes: increment(1),
         likedBy: arrayUnion(u_id),
       });
     } else {
-      // function to remove the like
-
+      // unlike
       await updateDoc(postRef, {
         Likes: increment(-1),
         likedBy: arrayRemove(u_id),
       });
     }
+    getLikes();
+
+    console.log(id);
   }
 
   const comment = (id) => {
@@ -81,6 +85,26 @@ export default function Feed() {
     }
   }
 
+  // getting the likes form the firebase data
+
+  async function getLikes() {
+    let postRef = collection(db, "Post");
+    let q = query(postRef, orderBy("CreatedAt", "desc"));
+    let res = await getDocs(q);
+    let data = res.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+    setPost(data);
+    console.log(data[0].id);
+
+    // loop to set the likes the likesOfPost object
+    let likesMap = {};
+    for (let i = 0; i < data.length; i++) {
+      likesMap[data[i].id] = data[i].Likes;
+    }
+
+    setLikesOfPost(likesMap);
+    console.log(likesMap);
+  }
+
   // getting user post form the firebase firestore
   async function getPost() {
     let postRef = collection(db, "Post");
@@ -89,6 +113,15 @@ export default function Feed() {
     let data = res.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
     setPost(data);
     console.log(data[0].id);
+
+    // loop to set the likes the likesOfPost object
+    let likesMap = {};
+    for (let i = 0; i < data.length; i++) {
+      likesMap[data[i].id] = data[i].Likes;
+    }
+
+    setLikesOfPost(likesMap);
+    console.log(likesMap);
   }
 
   useEffect(() => {
@@ -240,7 +273,7 @@ export default function Feed() {
                     alt=""
                     className="h-6 hover:shadow-4xl hover:shadow-rose-500 duration-75 ease-in active:scale-95 hover:scale-120"
                   />
-                  <p>Likes {i.Likes}</p>
+                  <p>Likes {likesOfPost?.[i.id] ?? 0}</p>
                 </div>
                 <div
                   className="flex flex-row gap-2 items-center cursor-pointer hover:shadow-4xl hover:shadow-rose-500 duration-75 ease-in active:scale-95 hover:scale-120"
