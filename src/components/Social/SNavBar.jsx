@@ -1,12 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { Link, replace, useNavigate } from "react-router-dom";
-import { auth } from "../Firebase/config";
+import { auth, db } from "../Firebase/config";
+import { onAuthStateChanged } from "firebase/auth";
 import { signOut } from "firebase/auth";
 import { Navigate } from "react-router-dom";
 
-function SNavBar({ userData }) {
+function SNavBar() {
   const [isOpen, setOpen] = useState(false);
+  const [userData, setUserData] = useState(null);
+  const [u_id, setUId] = useState("");
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Handle user authentication state change
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log("User UID:", user.uid);
+        setUId(user.uid); // Set the UID in state
+      } else {
+        console.log("No user logged in");
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   // function to change to light mode
   let onoff = null;
@@ -22,12 +40,25 @@ function SNavBar({ userData }) {
     localStorage.setItem("onoff", "true");
   }
 
+  // geting user profile form firebase
+  async function getUserProfile() {
+    if (!u_id) return;
+    const profileRef = doc(db, "User", u_id);
+    const res = await getDoc(profileRef);
+    if (res.exists()) {
+      setUserData(res.data());
+    } else {
+      console.log("No profile found");
+    }
+  }
+
   useEffect(() => {
     const value = localStorage.getItem("onoff");
     console.log(value);
     if (value === "true") {
       dark();
     }
+    getUserProfile();
   });
 
   async function signout() {

@@ -19,20 +19,25 @@ import Feed from "./components/Social/Feed.jsx";
 import Homepage from "./components/Home/Homepage.jsx";
 import Support from "./components/Home/Support.jsx";
 import Profile from "./components/Social/Profile/Profile.jsx";
+import SocialPage from "./components/Social/Pages/SocialPage.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path="/userdata" element={<UserData />} />
-      <Route path="/welcome" element={<Forlogin />} />
-      <Route path="/feed" element={<Feed />} />
+      <Route path="userdata" element={<UserData />} />
+      <Route path="welcome" element={<Forlogin />} />
       <Route path="/" element={<App />}>
         <Route index element={<Homepage />} />
-        <Route path="/support" element={<Support />} />
+        <Route path="support" element={<Support />} />
       </Route>
       <Route path="signup" element={<Signup />} />
       <Route path="login" element={<Login />} />
-      <Route path="profile" element={<Profile />} />
+      {/* the router for the profile page and social page of the social folder */}
+
+      <Route path="socialPage" element={<SocialPage />}>
+        <Route path="feed" element={<Feed />} />
+        <Route path="profile" element={<Profile />} />
+      </Route>
     </>
   )
 );

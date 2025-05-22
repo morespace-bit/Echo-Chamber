@@ -148,7 +148,6 @@ export default function Feed() {
 
   return (
     <div className="bg-gray-200 dark:bg-gray-800 text-black dark:text-white">
-      <SNavBar userData={userData} />
       <div className="flex w-full md:justify-between items-center justify-center flex-9/12 overflow-x-hidden overflow-y-auto">
         {/* Left part */}
         <div className="hidden md:block fixed left-0 top-30 h-full">

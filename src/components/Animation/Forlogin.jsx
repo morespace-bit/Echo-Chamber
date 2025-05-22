@@ -6,7 +6,7 @@ function Forlogin() {
   const navigate = useNavigate();
   useEffect(() => {
     setTimeout(() => {
-      navigate("/feed", { replace: true });
+      navigate("/SocialPage", { replace: true });
     }, 5000);
   }, []);
   return (

@@ -32,7 +32,7 @@ export default function Login() {
   async function googleLogin() {
     try {
       await signInWithPopup(auth, googleProvider);
-      navigate("/feed", { replace: true });
+      navigate("/SocialPage", { replace: true });
     } catch (err) {
       console.log(err);
     }
