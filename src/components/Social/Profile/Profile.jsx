@@ -5,6 +5,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { NavLink } from "react-router-dom";
 import About from "./About";
 import ProfileFeed from "./ProfileFeed";
+import EditProfile from "./EditProfile";
 
 export default function Profile() {
   const [u_id, setUId] = useState("");
@@ -115,7 +116,7 @@ export default function Profile() {
       </div>
 
       {/* the body part of the profile */}
-      <div className="h-full bg-gray-300 flex   overflow-x-hidden flex-col items-center overflow-y-hidden dark:bg-zinc-500">
+      <div className="h-full bg-gray-300 flex  relative overflow-x-hidden flex-col items-center overflow-y-hidden dark:bg-zinc-500">
         {/* the main container */}
         {/* the card container */}
         <div className="flex bg-white px-2  h-105 mt-5 rounded-2xl w-100 flex-col items-center md:w-150 dark:bg-gray-600">
@@ -133,6 +134,11 @@ export default function Profile() {
             <img src="/edit.png" alt="" className="w-5" />
             Edit profile
           </button>
+
+          {/* the edit profile component  */}
+
+          <EditProfile />
+
           {/* the profile info */}
           <div className=" flex gap-4 bg-gray-200  w-full py-5 justify-center items-center rounded-2xl mt-3 px-2 dark:bg-gray-400">
             {/* for the job */}
