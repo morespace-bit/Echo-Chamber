@@ -14,6 +14,8 @@ export default function Profile() {
     1: true,
   });
 
+  const [editProfile, setEditProfile] = useState(false);
+
   // function to set the user profile details
 
   async function Upload() {
@@ -130,15 +132,19 @@ export default function Profile() {
             />
           </div>
           <p className="text-xl font-semibold">{userData?.username}</p>
-          <button className="mt-1 bg-blue-300 p-2 px-3 rounded-xs flex flex-row gap-2 items-center hover:scale-105 hover:bg-blue-800 cursor-pointer">
+          <button
+            onClick={() => {
+              setEditProfile((pre) => !pre);
+            }}
+            className="mt-1 bg-blue-300 p-2 px-3 rounded-xs flex flex-row gap-2 items-center hover:scale-105 hover:bg-blue-800 cursor-pointer"
+          >
             <img src="/edit.png" alt="" className="w-5" />
             Edit profile
           </button>
 
           {/* the edit profile component  */}
 
-          <EditProfile />
-
+          {editProfile && <EditProfile setEditProfile={setEditProfile} />}
           {/* the profile info */}
           <div className=" flex gap-4 bg-gray-200  w-full py-5 justify-center items-center rounded-2xl mt-3 px-2 dark:bg-gray-400">
             {/* for the job */}
