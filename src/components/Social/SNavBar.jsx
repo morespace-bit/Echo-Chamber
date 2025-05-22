@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, replace, useNavigate } from "react-router-dom";
 import { auth, db } from "../Firebase/config";
+import { doc, getDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { signOut } from "firebase/auth";
 import { Navigate } from "react-router-dom";
@@ -113,7 +114,7 @@ function SNavBar() {
       </div>
 
       {/* profile dropdown box */}
-      <div className="bg-white dark:bg-gray-600 dark:text-white w-60 fixed right-6 h-80 top-25 shadow-2xl rounded-xl flex p-6 hidden md:block">
+      <div className="bg-white dark:bg-gray-600 dark:text-white w-60 fixed right-6 h-80 top-25 shadow-2xl rounded-xl flex p-6 hidden md:block z-10">
         {/* image + username */}
         <div className="flex gap-3">
           <div
@@ -192,8 +193,9 @@ function SNavBar() {
         </div>
       </div>
 
+      {/* for the mobiel version */}
       {isOpen && (
-        <div className="bg-white dark:bg-gray-600 dark:text-white max-w-xs w-full fixed right-4 top-24 shadow-2xl rounded-xl p-4 flex flex-col gap-4 sm:w-60 sm:p-6 sm:right-6 sm:top-25 md:hidden">
+        <div className="bg-white dark:bg-gray-600 dark:text-white max-w-xs w-full fixed right-4 top-24 shadow-2xl rounded-xl p-4 flex flex-col gap-4 sm:w-60 sm:p-6 sm:right-6 sm:top-25 md:hidden z-10">
           {/* image + username */}
           <div className="flex gap-3 items-center">
             <div
@@ -215,7 +217,7 @@ function SNavBar() {
           </div>
 
           {/* profile button */}
-          <Link to="/profile" className="w-full">
+          <Link to="/SocialPage/profile" className="w-full">
             <button className="bg-blue-200 dark:bg-blue-800 text-black dark:text-white p-2 rounded w-full cursor-pointer hover:bg-blue-700 dark:hover:bg-blue-600 transition">
               View profile
             </button>

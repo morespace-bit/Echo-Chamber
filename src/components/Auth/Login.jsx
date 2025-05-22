@@ -22,7 +22,7 @@ export default function Login() {
         email,
         password
       );
-      navigate("/welcome", { replace: true });
+      navigate("/SocialPage/feed", { replace: true });
     } catch (error) {
       console.error("Login failed:", error.message);
     }
@@ -32,7 +32,7 @@ export default function Login() {
   async function googleLogin() {
     try {
       await signInWithPopup(auth, googleProvider);
-      navigate("/SocialPage", { replace: true });
+      navigate("/SocialPage/feed", { replace: true });
     } catch (err) {
       console.log(err);
     }
