@@ -90,6 +90,15 @@ export default function ProfileFeed() {
     getUserProfile();
     getPost();
   }, [u_id]);
+
+  if (post?.length === 0) {
+    return (
+      <div className="h-80 w-150 bg-gray-100 mt-2 rounded-xl flex justify-center items-center">
+        <p>No post by user yet.</p>
+      </div>
+    );
+  }
+
   return (
     <>
       {/* // the main container of the body part */}

@@ -18,21 +18,21 @@ export default function Profile() {
 
   // function to set the user profile details
 
-  async function Upload() {
-    if (!url || !username) {
-      alert("Please upload an image and enter a username before submitting.");
-      return;
-    }
+  // async function Upload() {
+  //   if (!url || !username) {
+  //     alert("Please upload an image and enter a username before submitting.");
+  //     return;
+  //   }
 
-    // Save user data to Firestore using setDoc
-    const userRef = doc(db, "User", u_id);
-    await setDoc(userRef, {
-      username: username,
-      Photo: url,
-    });
+  //   // Save user data to Firestore using setDoc
+  //   const userRef = doc(db, "User", u_id);
+  //   await setDoc(userRef, {
+  //     username: username,
+  //     Photo: url,
+  //   });
 
-    navigate("/welcome", { replace: true });
-  }
+  //   navigate("/welcome", { replace: true });
+  // }
 
   // function to toogel for the button such as about post and so on
 
@@ -103,7 +103,9 @@ export default function Profile() {
 
           {/* the edit profile component  */}
 
-          {editProfile && <EditProfile setEditProfile={setEditProfile} />}
+          {editProfile && (
+            <EditProfile setEditProfile={setEditProfile} u_id={u_id} />
+          )}
           {/* the profile info */}
           <div className=" flex gap-4 bg-gray-200  w-full py-5 justify-center items-center rounded-2xl mt-3 px-2 dark:bg-gray-400">
             {/* for the job */}
