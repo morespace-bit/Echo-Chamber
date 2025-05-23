@@ -21,15 +21,6 @@ export default function ProfileFeed() {
   const [commentPost, setCommentPost] = useState({});
   const [likesOfPost, setLikesOfPost] = useState(null);
 
-  const genLikes = (id) => {
-    let likes = Math.floor(Math.random() * 500 + 1);
-
-    setLikesOfPost((pre) => ({
-      ...pre,
-      [id]: likes,
-    }));
-  };
-
   // function to set liked and unlike ui
   const like = (id) => {
     setLikedPost((pre) => {
@@ -93,7 +84,7 @@ export default function ProfileFeed() {
 
   if (post?.length === 0) {
     return (
-      <div className="h-80 w-150 bg-gray-100 mt-2 rounded-xl flex justify-center items-center">
+      <div className="h-80 w-150 bg-gray-100 mt-2 rounded-xl flex justify-center items-center dark:bg-gray-600 dark:text-white">
         <p>No post by user yet.</p>
       </div>
     );

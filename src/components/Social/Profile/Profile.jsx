@@ -77,7 +77,7 @@ export default function Profile() {
   return (
     <>
       {/* the body part of the profile */}
-      <div className="h-full bg-gray-300 flex  relative overflow-x-hidden flex-col items-center overflow-y-hidden dark:bg-zinc-500">
+      <div className="h-full bg-gray-200 flex  relative overflow-x-hidden flex-col items-center overflow-y-hidden dark:bg-gray-900">
         {/* the main container */}
         {/* the card container */}
         <div className="flex bg-white px-2  h-105 mt-5 rounded-2xl w-100 flex-col items-center md:w-150 dark:bg-gray-600">
@@ -111,7 +111,7 @@ export default function Profile() {
             />
           )}
           {/* the profile info */}
-          <div className=" flex gap-4 bg-gray-200  w-full py-5 justify-center items-center rounded-2xl mt-3 px-2 dark:bg-gray-400">
+          <div className=" flex gap-4 bg-gray-200  w-full py-5 justify-center items-center rounded-2xl mt-3 px-2 dark:bg-gray-400 capitalize">
             {/* for the job */}
             <div className="flex gap-1">
               <img src="/job-seeker.png" alt="" className="w-6" />

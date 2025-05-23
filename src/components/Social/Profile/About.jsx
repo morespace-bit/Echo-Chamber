@@ -3,14 +3,14 @@ export default function About({ userData }) {
   return (
     <>
       {/* the main container */}
-      <div className="flex bg-white  mt-5 rounded-xl py-4 w-100 shadow-xl md:w-150 justify-center items-center mb-4 dark:bg-gray-600">
+      <div className="flex bg-white  mt-5 rounded-xl py-4 w-100 shadow-xl md:w-150 justify-center items-center mb-4 dark:bg-gray-600 text-left dark:text-white  ">
         {/* the about section container */}
         <div className="px-4">
           <p className="text-xl font-bold">Profile info</p>
           {/* the overview part */}
           <div className="flex mt-4 border-blue-300 border-1 rounded-xl flex-col py-2 text-left px-2">
             <p className=" font-bold">Overview</p>
-            <div className="mt-2 text-gray-800">
+            <div className="mt-2 text-gray-800 dark:text-white">
               {userData.bio ? userData.bio : "NA"}
             </div>
           </div>

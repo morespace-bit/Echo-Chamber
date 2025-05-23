@@ -73,9 +73,11 @@ function SNavBar() {
       <div className="bg-white w-full flex px-4 py-6 justify-between items-center md:px-10 sticky top-0 overflow-x-hidden shadow-2xs z-10 dark:bg-gray-700 dark:text-white">
         {/* logo */}
         <div>
-          <h1 className="font-black text-xl md:text-3xl text-black dark:text-white font-serif cursor-pointer">
-            Echo-Chamber.
-          </h1>
+          <Link to="feed">
+            <h1 className="font-black text-xl md:text-3xl text-black dark:text-white font-serif cursor-pointer">
+              Echo-Chamber.
+            </h1>
+          </Link>
         </div>
 
         {/* search bar */}
