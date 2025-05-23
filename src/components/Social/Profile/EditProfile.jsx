@@ -47,7 +47,7 @@ export default function EditProfile({ setEditProfile, u_id, getUserProfile }) {
   return (
     <>
       {/* the main container */}
-      <div className="absolute z-10 top-40 bg-white w-90 p-4 rounded-xl shadow-2xl shadow-blue-400 ">
+      <div className="absolute z-10 top-40 bg-white w-90 p-4 rounded-xl shadow-2xl shadow-blue-400 dark:bg-gray-900 dark:text-white ">
         {/* the user data form  */}
 
         <form
