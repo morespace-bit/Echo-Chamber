@@ -85,10 +85,10 @@ export default function EditProfile({ setEditProfile, u_id, getUserProfile }) {
               className="border-2 border-black rounded-xl p-2"
               {...register("relation")}
             >
-              <option value="single">Single</option>
-              <option value="married">Married</option>
-              <option value="inrelationshipt">In relationship</option>
-              <option value="broke">Broke</option>
+              <option value="Single">Single</option>
+              <option value="Married">Married</option>
+              <option value="In Relationship">In relationship</option>
+              <option value="Broke">Broke</option>
             </select>
           </label>
 
