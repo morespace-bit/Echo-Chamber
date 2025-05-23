@@ -5,11 +5,10 @@ import { setDoc, doc, updateDoc } from "firebase/firestore";
 import { data } from "react-router-dom";
 import { useState } from "react";
 
-export default function EditProfile({ setEditProfile, u_id }) {
+export default function EditProfile({ setEditProfile, u_id, getUserProfile }) {
   // function to get form data form form uisng the useForm hook
   const [loding, setLoding] = useState(false);
 
-  const [data, setData] = useState({});
   const {
     register,
     handleSubmit,
@@ -18,13 +17,11 @@ export default function EditProfile({ setEditProfile, u_id }) {
   } = useForm();
 
   const onSubmit = (data) => {
-    setData(data);
-    console.log(data);
-    Upload();
+    Upload(data);
   };
 
   // function to set the data about user in the firebase in the User doc
-  async function Upload() {
+  async function Upload(data) {
     console.log(data);
     if (!data) {
       alert("Please upload");
@@ -42,8 +39,9 @@ export default function EditProfile({ setEditProfile, u_id }) {
       relation: data.relation,
       dob: data.dob,
     });
+    getUserProfile();
     setLoding(false);
-    setEditProfile((per) => !pre);
+    setEditProfile((pre) => !pre);
   }
 
   return (

@@ -104,27 +104,31 @@ export default function Profile() {
           {/* the edit profile component  */}
 
           {editProfile && (
-            <EditProfile setEditProfile={setEditProfile} u_id={u_id} />
+            <EditProfile
+              setEditProfile={setEditProfile}
+              u_id={u_id}
+              getUserProfile={getUserProfile}
+            />
           )}
           {/* the profile info */}
           <div className=" flex gap-4 bg-gray-200  w-full py-5 justify-center items-center rounded-2xl mt-3 px-2 dark:bg-gray-400">
             {/* for the job */}
             <div className="flex gap-1">
               <img src="/job-seeker.png" alt="" className="w-6" />
-              <p>Unemployed</p>
+              <p>{userData.employment ? userData.employment : "NA"}</p>
             </div>
 
             {/* relationship status */}
             <div className="flex gap-1">
               <img src="/heart.png" alt="" className="w-6" />
-              <p>Single</p>
+              <p>{userData.relation ? userData.relation : "NA"}</p>
             </div>
 
             {/* location  */}
 
             <div className="flex gap-1">
               <img src="/location.png" alt="" className="w-6" />
-              <p>Kathmandu</p>
+              <p>{userData.location ? userData.location : "NA"}</p>
             </div>
           </div>
           {/* the divider */}
@@ -173,7 +177,7 @@ export default function Profile() {
             </p>
           </div>
         </div>
-        {button[2] && <About />}
+        {button[2] && <About userData={userData} />}
         {button[1] && <ProfileFeed />}
       </div>
     </>

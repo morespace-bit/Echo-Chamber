@@ -1,4 +1,5 @@
-export default function About() {
+export default function About({ userData }) {
+  console.log(userData);
   return (
     <>
       {/* the main container */}
@@ -10,23 +11,23 @@ export default function About() {
           <div className="flex mt-4 border-blue-300 border-1 rounded-xl flex-col py-2 text-left px-2">
             <p className=" font-bold">Overview</p>
             <div className="mt-2 text-gray-800">
-              Hello I am Morespace a webdeveloper based in Nepal
+              {userData.bio ? userData.bio : "NA"}
             </div>
           </div>
           {/* the other parts such as date of birth and relatieion ship status so on */}
           <div className="flex mt-5 border-2 border-gray-300 rounded-xl py-2 px-2 gap-2">
             <img src="/calendar.png" alt="" className="w-6" />
-            <p>Date of Birth: 8th may, 2025</p>
+            <p>Date of Birth: {userData.dob ? userData.dob : "NA"}</p>
           </div>
 
           <div className="flex mt-5 border-2 border-gray-300 rounded-xl py-2 px-2 gap-2">
             <img src="/heart.png" alt="" className="w-6" />
-            <p>Status: Broke and single</p>
+            <p>Status: {userData.relation ? userData.relation : "NA"}</p>
           </div>
 
           <div className="flex mt-5 border-2 border-blue-300 rounded-xl py-2 px-2 gap-2">
             <img src="/edu.png" alt="" className="w-6" />
-            <p>Education: Pokhara University (BCSIT)</p>
+            <p>Education: {userData.education ? userData.education : "NA"}</p>
           </div>
 
           <div></div>
