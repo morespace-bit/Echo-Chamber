@@ -3,9 +3,9 @@ export default function About({ userData }) {
   return (
     <>
       {/* the main container */}
-      <div className="flex bg-white  mt-5 rounded-xl py-4 w-100 shadow-xl md:w-150 justify-center items-center mb-4 dark:bg-gray-600 text-left dark:text-white  ">
+      <div className="flex bg-zinc-400  mt-5 rounded-xl py-4  shadow-xl  justify-center items-center mb-4 dark:bg-gray-600 text-left dark:text-white w-100 md:w-150 ">
         {/* the about section container */}
-        <div className="px-4">
+        <div className="px-4 w-full">
           <p className="text-xl font-bold">Profile info</p>
           {/* the overview part */}
           <div className="flex mt-4 border-blue-300 border-1 rounded-xl flex-col py-2 text-left px-2">
