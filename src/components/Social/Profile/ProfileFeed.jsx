@@ -11,7 +11,7 @@ import {
 import { onAuthStateChanged } from "firebase/auth";
 import Comment from "../Creating/Comment";
 
-export default function ProfileFeed() {
+export default function ProfileFeed({ id }) {
   const [img, setImg] = useState([]);
   const [userData, setUserData] = useState(null);
   const [u_id, setUId] = useState(""); // Use state for UID
@@ -53,8 +53,8 @@ export default function ProfileFeed() {
 
   // geting user profile form firebase
   async function getUserProfile() {
-    if (!u_id) return;
-    const profileRef = doc(db, "User", u_id);
+    if (!id) return;
+    const profileRef = doc(db, "User", id);
     const res = await getDoc(profileRef);
     if (res.exists()) {
       setUserData(res.data());
@@ -63,19 +63,19 @@ export default function ProfileFeed() {
     }
   }
 
-  useEffect(() => {
-    // Handle user authentication state change
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        console.log("User UID:", user.uid);
-        setUId(user.uid); // Set the UID in state
-      } else {
-        console.log("No user logged in");
-      }
-    });
+  // useEffect(() => {
+  //   // Handle user authentication state change
+  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
+  //     if (user) {
+  //       console.log("User UID:", user.uid);
+  //       setUId(user.uid); // Set the UID in state
+  //     } else {
+  //       console.log("No user logged in");
+  //     }
+  //   });
 
-    return () => unsubscribe();
-  }, []);
+  //   return () => unsubscribe();
+  // }, []);
 
   useEffect(() => {
     getUserProfile();

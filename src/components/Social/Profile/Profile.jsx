@@ -6,6 +6,7 @@ import { NavLink } from "react-router-dom";
 import About from "./About";
 import ProfileFeed from "./ProfileFeed";
 import EditProfile from "./EditProfile";
+import { useParams } from "react-router-dom";
 
 export default function Profile() {
   const [u_id, setUId] = useState("");
@@ -15,6 +16,9 @@ export default function Profile() {
   });
 
   const [editProfile, setEditProfile] = useState(false);
+
+  const { id } = useParams();
+  console.log(id);
 
   // function to set the user profile details
 
@@ -48,27 +52,27 @@ export default function Profile() {
   // function to get user profile
 
   async function getUserProfile() {
-    if (!u_id) return;
-    const profileRef = doc(db, "User", u_id);
+    if (!id) return;
+    const profileRef = doc(db, "User", id);
     const res = await getDoc(profileRef);
     setUserData(res.data());
     console.log(res.data());
   }
   // the use effect function to get the user data
-  useEffect(() => {
-    // Handle user authentication state change
+  // useEffect(() => {
+  //   // Handle user authentication state change
 
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        console.log("User UID:", user.uid);
-        setUId(user.uid); // Set the UID in state
-      } else {
-        console.log("No user logged in");
-      }
-    });
+  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
+  //     if (user) {
+  //       console.log("User UID:", user.uid);
+  //       setUId(user.uid); // Set the UID in state
+  //     } else {
+  //       console.log("No user logged in");
+  //     }
+  //   });
 
-    return () => unsubscribe();
-  }, []);
+  //   return () => unsubscribe();
+  // }, []);
 
   // the useeffect funtion to load data on the first mounting of the data
   useEffect(() => {
@@ -83,7 +87,10 @@ export default function Profile() {
         <div className="flex bg-white px-2  h-105 mt-5 rounded-2xl w-100 flex-col items-center md:w-150 dark:bg-gray-600">
           {/* the image and person name */}
           {/* main container or the card of the profile */}
-          <div className="rounded-full  overflow-hidden w-50 h-50 mt-4">
+          <div
+            className="rounded-full  overflow-hidden w-50 h-50 mt-4"
+            title="Visit profile"
+          >
             <img
               src={userData?.Photo}
               alt=""
@@ -91,15 +98,19 @@ export default function Profile() {
             />
           </div>
           <p className="text-xl font-semibold">{userData?.username}</p>
-          <button
-            onClick={() => {
-              setEditProfile((pre) => !pre);
-            }}
-            className="mt-1 bg-blue-300 p-2 px-3 rounded-xs flex flex-row gap-2 items-center hover:scale-105 hover:bg-blue-800 cursor-pointer"
-          >
-            <img src="/edit.png" alt="" className="w-5" />
-            Edit profile
-          </button>
+          {u_id === id ? (
+            <button
+              onClick={() => {
+                setEditProfile((pre) => !pre);
+              }}
+              className="mt-1 bg-blue-300 p-2 px-3 rounded-xs flex flex-row gap-2 items-center hover:scale-105 hover:bg-blue-800 cursor-pointer"
+            >
+              <img src="/edit.png" alt="" className="w-5" />
+              Edit profile
+            </button>
+          ) : (
+            " Peace is always the option"
+          )}
 
           {/* the edit profile component  */}
 
@@ -178,7 +189,7 @@ export default function Profile() {
           </div>
         </div>
         {button[2] && <About userData={userData} />}
-        {button[1] && <ProfileFeed />}
+        {button[1] && <ProfileFeed id={id} />}
       </div>
     </>
   );

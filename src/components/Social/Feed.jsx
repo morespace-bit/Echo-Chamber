@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { auth, db } from "../Firebase/config";
+import { Link } from "react-router-dom";
 import {
   collection,
   doc,
@@ -240,13 +241,18 @@ export default function Feed() {
               className="flex p-6 bg-white dark:bg-gray-700 mb-5 rounded-xl shadow-xl max-h-200 max-w-150 flex-col"
             >
               <div className="mb-4 flex items-center gap-4">
-                <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-300 dark:border-gray-600">
-                  <img
-                    src={i.Profile}
-                    alt="profile-icon"
-                    className="object-cover h-full w-full"
-                  />
-                </div>
+                <Link to={`/SocialPage/profile/${i.Uid}`}>
+                  <div
+                    className="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-300 dark:border-gray-600 cursor-pointer hover:scale-105 active:scale-95"
+                    title="Visit profile"
+                  >
+                    <img
+                      src={i.Profile}
+                      alt="profile-icon"
+                      className="object-cover h-full w-full"
+                    />
+                  </div>
+                </Link>
                 <div className="flex flex-col">
                   <p className="tracking-widest">{i?.Username}</p>
                   <p className="text-xs">4 hours ago</p>

@@ -36,7 +36,7 @@ const router = createBrowserRouter(
 
       <Route path="socialPage" element={<SocialPage />}>
         <Route path="feed" element={<Feed />} />
-        <Route path="profile" element={<Profile />} />
+        <Route path="profile/:id" element={<Profile />} />
       </Route>
     </>
   )
