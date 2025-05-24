@@ -47,7 +47,7 @@ export default function ProfileFeed({ id }) {
     let q = query(postRef, orderBy("CreatedAt", "desc"));
     let res = await getDocs(q);
     let data = res.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-    const filtred = data.filter((d) => d.Uid === u_id);
+    const filtred = data.filter((d) => d.Uid === id);
     setPost(filtred);
   }
 
@@ -63,19 +63,19 @@ export default function ProfileFeed({ id }) {
     }
   }
 
-  // useEffect(() => {
-  //   // Handle user authentication state change
-  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
-  //     if (user) {
-  //       console.log("User UID:", user.uid);
-  //       setUId(user.uid); // Set the UID in state
-  //     } else {
-  //       console.log("No user logged in");
-  //     }
-  //   });
+  useEffect(() => {
+    // Handle user authentication state change
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log("User UID:", user.uid);
+        setUId(user.uid); // Set the UID in state
+      } else {
+        console.log("No user logged in");
+      }
+    });
 
-  //   return () => unsubscribe();
-  // }, []);
+    return () => unsubscribe();
+  }, []);
 
   useEffect(() => {
     getUserProfile();

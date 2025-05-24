@@ -59,20 +59,20 @@ export default function Profile() {
     console.log(res.data());
   }
   // the use effect function to get the user data
-  // useEffect(() => {
-  //   // Handle user authentication state change
+  useEffect(() => {
+    // Handle user authentication state change
 
-  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
-  //     if (user) {
-  //       console.log("User UID:", user.uid);
-  //       setUId(user.uid); // Set the UID in state
-  //     } else {
-  //       console.log("No user logged in");
-  //     }
-  //   });
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log("User UID:", user.uid);
+        setUId(user.uid); // Set the UID in state
+      } else {
+        console.log("No user logged in");
+      }
+    });
 
-  //   return () => unsubscribe();
-  // }, []);
+    return () => unsubscribe();
+  }, []);
 
   // the useeffect funtion to load data on the first mounting of the data
   useEffect(() => {
@@ -98,7 +98,7 @@ export default function Profile() {
             />
           </div>
           <p className="text-xl font-semibold">{userData?.username}</p>
-          {u_id === id ? (
+          {u_id == id ? (
             <button
               onClick={() => {
                 setEditProfile((pre) => !pre);
@@ -109,7 +109,7 @@ export default function Profile() {
               Edit profile
             </button>
           ) : (
-            " Peace is always the option"
+            " Peace is always the option."
           )}
 
           {/* the edit profile component  */}
