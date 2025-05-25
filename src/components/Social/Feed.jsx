@@ -248,7 +248,7 @@ export default function Feed() {
               <Link to={`/SocialPage/profile/${i.Uid}`}>
                 <div className="mb-4 flex items-center gap-4 group">
                   <div
-                    className="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-300 dark:border-gray-600 cursor-pointer hover:scale-105 active:scale-95"
+                    className="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-300 dark:border-gray-600 cursor-pointer group-hover:scale-110 active:scale-95"
                     title="Visit profile"
                   >
                     <img
@@ -258,7 +258,7 @@ export default function Feed() {
                     />
                   </div>
 
-                  <div className="flex flex-col">
+                  <div className="flex flex-col group-hover:scale-105">
                     <p className="tracking-widest">{i?.Username}</p>
                     <p className="text-xs">
                       {dayjs(i.CreatedAt.toDate()).fromNow()}

@@ -80,7 +80,7 @@ export default function ProfileFeed({ id }) {
   useEffect(() => {
     getUserProfile();
     getPost();
-  }, [u_id]);
+  }, [id]);
 
   if (post?.length === 0) {
     return (

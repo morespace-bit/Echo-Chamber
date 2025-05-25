@@ -77,7 +77,7 @@ export default function Profile() {
   // the useeffect funtion to load data on the first mounting of the data
   useEffect(() => {
     getUserProfile();
-  }, [u_id]);
+  }, [id]);
   return (
     <>
       {/* the body part of the profile */}
