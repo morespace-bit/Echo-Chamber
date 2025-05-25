@@ -189,10 +189,10 @@ export default function Feed() {
   }
 
   return (
-    <div className="bg-gray-200 dark:bg-gray-800 text-black dark:text-white">
+    <div className="bg-gray-200 dark:bg-gray-800 text-black dark:text-white overflow-x-hidden">
       <div className="flex w-full md:justify-between items-center justify-center flex-9/12 overflow-x-hidden overflow-y-auto">
         {/* Left part */}
-        <div className="hidden md:block fixed left-0 top-30 h-full">
+        <div className="hidden md:block fixed left-0 top-30 h-full overflow-x-hidden">
           {/* card container */}
           <div className="flex flex-col p-5 bg-gray-100 dark:bg-gray-700 rounded-2xl ml-4 shadow-2xl h-[80%] mb-4">
             <div className="flex flex-row items-center gap-2 hover:bg-gray-300 dark:hover:bg-gray-600 p-3 rounded-xl cursor-pointer">
@@ -224,7 +224,7 @@ export default function Feed() {
         </div>
 
         {/* Center part */}
-        <div className="w-full text-center p-6 flex justify-center items-center flex-col overflow-y-auto mx-h-[100%]">
+        <div className="w-full text-center p-6 flex justify-center items-center flex-col overflow-y-auto overflow-x-hidden">
           {/* Create feed and user name part */}
           <div className="flex p-6 bg-white dark:bg-gray-700 mb-5 rounded-xl shadow-xl max-w-150 flex-col gap-4">
             <div className="flex flex-row gap-6">
