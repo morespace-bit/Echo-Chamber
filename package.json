@@ -13,6 +13,7 @@
     "@google/genai": "^0.13.0",
     "@reduxjs/toolkit": "^2.7.0",
     "@tailwindcss/vite": "^4.1.4",
+    "dayjs": "^1.11.13",
     "dotenv": "^16.5.0",
     "firebase": "^11.6.1",
     "framer-motion": "^12.11.0",
@@ -22,6 +23,7 @@
     "react-markdown": "^10.1.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.5.2",
+    "relative-time": "^1.0.0",
     "tailwindcss": "^4.1.4"
   },
   "devDependencies": {

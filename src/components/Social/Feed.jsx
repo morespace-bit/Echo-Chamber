@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 import { auth, db } from "../Firebase/config";
 import { Link } from "react-router-dom";
 import {
@@ -27,6 +29,9 @@ export default function Feed() {
   const [likedPost, setLikedPost] = useState({});
   const [commentPost, setCommentPost] = useState({});
   const [likesOfPost, setLikesOfPost] = useState({});
+
+  // for the timestamp such as this many hours ago and so on
+  dayjs.extend(relativeTime);
 
   // function to set liked and unlike ui also to update the firebase store for no of likes
   const like = async (id) => {
@@ -240,8 +245,8 @@ export default function Feed() {
               key={i?.id}
               className="flex p-6 bg-white dark:bg-gray-700 mb-5 rounded-xl shadow-xl max-h-200 max-w-150 flex-col"
             >
-              <div className="mb-4 flex items-center gap-4">
-                <Link to={`/SocialPage/profile/${i.Uid}`}>
+              <Link to={`/SocialPage/profile/${i.Uid}`}>
+                <div className="mb-4 flex items-center gap-4 group">
                   <div
                     className="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-300 dark:border-gray-600 cursor-pointer hover:scale-105 active:scale-95"
                     title="Visit profile"
@@ -252,12 +257,16 @@ export default function Feed() {
                       className="object-cover h-full w-full"
                     />
                   </div>
-                </Link>
-                <div className="flex flex-col">
-                  <p className="tracking-widest">{i?.Username}</p>
-                  <p className="text-xs">4 hours ago</p>
+
+                  <div className="flex flex-col">
+                    <p className="tracking-widest">{i?.Username}</p>
+                    <p className="text-xs">
+                      {dayjs(i.CreatedAt.toDate()).fromNow()}
+                    </p>
+                  </div>
                 </div>
-              </div>
+              </Link>
+
               <div className="flex justify-start items-start mb-4">
                 <p className="text-left">{i?.Content}</p>
               </div>
