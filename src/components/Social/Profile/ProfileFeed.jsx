@@ -7,6 +7,8 @@ import {
   query,
   doc,
   getDoc,
+  limit,
+  startAfter,
 } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import Comment from "../Creating/Comment";
