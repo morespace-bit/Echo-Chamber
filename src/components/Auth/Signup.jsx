@@ -73,7 +73,7 @@ export default function Signup() {
               </h1>
               <p className="font-thin px-6 text-gray-600">
                 Log in to Exprience the world of non-toxic world. We beieve this
-                will be a journey.
+                will be a happy journey.
               </p>
             </div>
             {/* Input type or email */}
@@ -103,7 +103,7 @@ export default function Signup() {
               <p className="text-blue-800 md:justify-end">Forget Password</p>
               <button
                 onClick={createUser}
-                className="px-4 py-5 w-full md:w-50 border border-gray-500 rounded-xs  bg-sky-700 text-white  hover:shadow-2xl shadow-blue-800/50"
+                className="px-4 cursor-pointer py-5 w-full md:w-50 border border-gray-500 rounded-xs  bg-sky-700 text-white  hover:shadow-2xl shadow-blue-800/50"
               >
                 Next
               </button>
@@ -120,7 +120,11 @@ export default function Signup() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6 }}
             >
-              <button className="flex justify-center items-center space-x-4 border-2 border-gray-300 py-2 hover:shadow-2xl duration-150 ease-in-out md:px-8">
+              <button
+                className="flex 
+              cursor-pointer
+              justify-center items-center space-x-4 border-2 border-gray-300 py-2 hover:shadow-2xl duration-150 ease-in-out md:px-8"
+              >
                 <img
                   src={"/facebook.png"}
                   alt="facebook-icon"
@@ -131,7 +135,9 @@ export default function Signup() {
 
               <button
                 onClick={google}
-                className="flex justify-center items-center space-x-4 border-2 border-gray-300 py-2 hover:shadow-2xl duration-150 ease-in-out md:px-8"
+                className="flex 
+                cursor-pointer
+                justify-center items-center space-x-4 border-2 border-gray-300 py-2 hover:shadow-2xl duration-150 ease-in-out md:px-8 shadow-xl shadow-blue-500"
               >
                 <img src={"/google.png"} alt="google-icon" className="w-10" />
                 <p>Google</p>
@@ -139,7 +145,7 @@ export default function Signup() {
             </motion.div>
             <Link to="/login" replace={true}>
               <div className="flex justify-center items-center">
-                <button className="bg-blue-300 rounded-2xl p-4 hover:bg-blue-800 duration-75 ease-in">
+                <button className="bg-sky-700 rounded p-4 hover:bg-blue-800 duration-75 ease-in capitalize cursor-pointer text-white">
                   already signed in
                 </button>
               </div>
