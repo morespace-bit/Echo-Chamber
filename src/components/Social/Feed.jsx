@@ -307,8 +307,10 @@ export default function Feed() {
               <div className="flex justify-start items-start mb-4">
                 <p className="text-left">{i?.Content}</p>
               </div>
-              <div className="overflow-hidden object-center rounded-xl">
-                <img src={i?.Url} alt="" className="rounded-xl w-full " />
+              <div className="overflow-hidden rounded-xl">
+                {i?.Url && (
+                  <img src={i?.Url} className="rounded-xl w-auto h-auto " />
+                )}
               </div>
               <div className="border-b-2 border-gray-400 dark:border-gray-600 flex justify-center items-center mt-2"></div>
               <div className="flex flex-row px-2 py-2 justify-around">

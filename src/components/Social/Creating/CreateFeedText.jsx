@@ -7,7 +7,7 @@ function CreateFeedText({ userData, setTextUpload, u_id, getPost }) {
   const [url, setUrl] = useState("");
   const [loding, setLoding] = useState(false);
 
-  // function to upload to cloudniary
+  // function to upload to cloudniary not needed here as it is only for text thing
 
   // the actual function to upload to firebase
 
