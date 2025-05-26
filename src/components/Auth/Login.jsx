@@ -77,7 +77,7 @@ export default function Login() {
               </h1>
               <p className="font-thin px-6 text-gray-600">
                 Log in to Exprience the world of non-toxic world. We beieve this
-                will be a journey.
+                will be a happy journey.
               </p>
             </div>
             {/* Input type or email */}
@@ -106,7 +106,9 @@ export default function Login() {
                 onClick={() => {
                   login(email, password);
                 }}
-                className="px-4 py-5 w-full md:w-50 border border-gray-500 rounded-xs  bg-sky-700 text-white  hover:shadow-2xl shadow-blue-800/50"
+                className="px-4 py-5 
+                cursor-pointer
+                w-full md:w-50 border border-gray-500 rounded-xs  bg-sky-700 text-white  hover:shadow-2xl shadow-blue-800/50"
               >
                 Next
               </button>
@@ -132,7 +134,11 @@ export default function Login() {
               </button>
 
               <button
-                className="flex justify-center items-center space-x-4 border-2 border-gray-300 py-2 hover:shadow-2xl duration-150 ease-in-out md:px-8"
+                className="flex
+                cursor-pointer
+                shadow-xl
+                shadow-blue-500
+                justify-center items-center space-x-4 border-2 border-gray-300 py-2 hover:shadow-2xl duration-150 ease-in-out md:px-8"
                 onClick={googleLogin}
               >
                 <img src={"/google.png"} alt="google-icon" className="w-10" />
@@ -141,11 +147,11 @@ export default function Login() {
             </motion.div>
             {/* if not signed in yet */}
             <div className="flex justify-center items-center">
-              <button className="bg-blue-300 rounded-2xl p-4 hover:bg-blue-800 duration-75 ease-in">
-                <Link to="/signup" replace={true}>
+              <Link to="/signup" replace={true}>
+                <button className="bg-sky-700 rounded p-4 hover:bg-blue-800 duration-75 ease-in capitalize text-white cursor-pointer">
                   not signed in yet
-                </Link>
-              </button>
+                </button>
+              </Link>
             </div>
           </motion.div>
           <motion.div
