@@ -35,6 +35,7 @@ export default function Feed() {
   // to simulate pagination kind of thing like
 
   const [page, setPage] = useState(5);
+
   // for the timestamp such as this many hours ago and so on
   dayjs.extend(relativeTime);
 
@@ -70,7 +71,7 @@ export default function Feed() {
         likedBy: arrayRemove(u_id),
       });
     }
-    getLikes();
+    getPost();
 
     console.log(id);
   }
@@ -98,23 +99,23 @@ export default function Feed() {
 
   // getting the likes form the firebase data
 
-  async function getLikes() {
-    let postRef = collection(db, "Post");
-    let q = query(postRef, orderBy("CreatedAt", "desc"));
-    let res = await getDocs(q);
-    let data = res.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-    setPost(data);
-    console.log(data[0].id);
+  // async function getLikes() {
+  //   let postRef = collection(db, "Post");
+  //   let q = query(postRef, orderBy("CreatedAt", "desc"));
+  //   let res = await getDocs(q);
+  //   let data = res.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+  //   setPost(data);
+  //   console.log(data[0].id);
 
-    // loop to set the likes the likesOfPost object
-    let likesMap = {};
-    for (let i = 0; i < data.length; i++) {
-      likesMap[data[i].id] = data[i].Likes;
-    }
+  //   // loop to set the likes the likesOfPost object
+  //   let likesMap = {};
+  //   for (let i = 0; i < data.length; i++) {
+  //     likesMap[data[i].id] = data[i].Likes;
+  //   }
 
-    setLikesOfPost(likesMap);
-    console.log(likesMap);
-  }
+  //   setLikesOfPost(likesMap);
+  //   console.log(likesMap);
+  // }
 
   // getting user post form the firebase firestore
   async function getPost() {
