@@ -5,11 +5,13 @@ import { doc, getDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { signOut } from "firebase/auth";
 import { Navigate } from "react-router-dom";
+import Noti from "./Noti";
 
 function SNavBar() {
   const [isOpen, setOpen] = useState(false);
   const [userData, setUserData] = useState(null);
   const [u_id, setUId] = useState("");
+  const [noti, setNoti] = useState(false);
 
   const navigate = useNavigate();
 
@@ -93,9 +95,12 @@ function SNavBar() {
         {/* profile and notification */}
         <div className="flex items-center gap-3 md:gap-10">
           <img
+            onClick={() => {
+              setNoti((pre) => !pre);
+            }}
             src="/notification.png"
             alt=""
-            className="w-6 cursor-pointer  "
+            className="w-6 cursor-pointer  hover:scale-105 active:scale-95 transition-all  "
             title="Notifications"
           />
 
@@ -115,85 +120,89 @@ function SNavBar() {
         </div>
       </div>
 
+      {/* The notification dropdown */}
+      {noti && <Noti />}
       {/* profile dropdown box */}
-      <div className="bg-white dark:bg-gray-600 dark:text-white w-60 fixed right-6 h-80 top-25 shadow-2xl rounded-xl flex p-6 hidden md:block z-10">
-        {/* image + username */}
-        <div className="flex gap-3">
-          <div
-            className="rounded-full overflow-hidden w-12 h-12"
-            title="Account"
-          >
-            <img
-              src={userData?.Photo}
-              alt=""
-              className="object-cover w-full h-full cursor-pointer"
-            />
-          </div>
-          <div className="flex flex-col gap-0">
-            <p className="text-xl font-semibold text-left">
-              {userData?.username}
-            </p>
-            <p className="text-left text-xs text-gray-600 dark:text-gray-400">
-              A Peace lover
-            </p>
-          </div>
-        </div>
-
-        {/* profile button */}
-        <Link to={`/SocialPage/profile/${u_id}`}>
-          <button className="mt-2 bg-blue-200 dark:bg-blue-800 text-black dark:text-white p-2 rounded w-full cursor-pointer hover:bg-blue-700 dark:hover:bg-blue-600 transition">
-            View profile
-          </button>
-        </Link>
-
-        {/* menu options */}
-        <div className="flex flex-col mt-4 gap-3">
-          <div className="flex flex-row gap-2 group cursor-pointer">
-            <img src="/settings.png" alt="" className="w-5" />
-            <p className="text-gray-500 dark:text-gray-300 group-hover:text-blue-800 dark:group-hover:text-blue-400">
-              Settings and privacy
-            </p>
-          </div>
-          <Link to="/support">
-            <div className="flex flex-row gap-2 group cursor-pointer">
-              <img src="/support.png" alt="" className="w-5" />
-              <p className="text-gray-500 dark:text-gray-300 group-hover:text-blue-800 dark:group-hover:text-blue-400">
-                Support and Help
+      {noti == false && (
+        <div className="bg-white dark:bg-gray-600 dark:text-white w-60 fixed right-6 h-80 top-25 shadow-2xl rounded-xl flex p-6 hidden md:block z-10">
+          {/* image + username */}
+          <div className="flex gap-3">
+            <div
+              className="rounded-full overflow-hidden w-12 h-12"
+              title="Account"
+            >
+              <img
+                src={userData?.Photo}
+                alt=""
+                className="object-cover w-full h-full cursor-pointer"
+              />
+            </div>
+            <div className="flex flex-col gap-0">
+              <p className="text-xl font-semibold text-left">
+                {userData?.username}
+              </p>
+              <p className="text-left text-xs text-gray-600 dark:text-gray-400">
+                A Peace lover
               </p>
             </div>
+          </div>
+
+          {/* profile button */}
+          <Link to={`/SocialPage/profile/${u_id}`}>
+            <button className="mt-2 bg-blue-200 dark:bg-blue-800 text-black dark:text-white p-2 rounded w-full cursor-pointer hover:bg-blue-700 dark:hover:bg-blue-600 transition">
+              View profile
+            </button>
           </Link>
-        </div>
 
-        {/* signout section */}
-        <div className="border-b border-gray-400 dark:border-gray-600 w-full mt-4"></div>
-        <div
-          className="flex flex-row gap-2 group mt-3 cursor-pointer"
-          onClick={signout}
-        >
-          <img src="/signout.png" alt="" className="w-5" />
-          <p className="text-gray-500 dark:text-gray-300 group-hover:text-blue-800 dark:group-hover:text-blue-400">
-            Sign out
-          </p>
-        </div>
-        <div className="border-b border-gray-400 dark:border-gray-600 w-full mt-4 mb-4"></div>
+          {/* menu options */}
+          <div className="flex flex-col mt-4 gap-3">
+            <div className="flex flex-row gap-2 group cursor-pointer">
+              <img src="/settings.png" alt="" className="w-5" />
+              <p className="text-gray-500 dark:text-gray-300 group-hover:text-blue-800 dark:group-hover:text-blue-400">
+                Settings and privacy
+              </p>
+            </div>
+            <Link to="/support">
+              <div className="flex flex-row gap-2 group cursor-pointer">
+                <img src="/support.png" alt="" className="w-5" />
+                <p className="text-gray-500 dark:text-gray-300 group-hover:text-blue-800 dark:group-hover:text-blue-400">
+                  Support and Help
+                </p>
+              </div>
+            </Link>
+          </div>
 
-        {/* dark mode toggle */}
-        <div className="flex flex-row justify-around items-center">
-          <p className="text-xl">Mode:</p>
-          <img
-            src="/night-mode.png"
-            alt="Dark"
-            className="w-8 hover:bg-gray-400 dark:hover:bg-gray-600 rounded cursor-pointer"
-            onClick={dark}
-          />
-          <img
-            src="/light.png"
-            alt="Light"
-            className="w-8 hover:bg-gray-400 dark:hover:bg-gray-600 rounded cursor-pointer"
-            onClick={light}
-          />
+          {/* signout section */}
+          <div className="border-b border-gray-400 dark:border-gray-600 w-full mt-4"></div>
+          <div
+            className="flex flex-row gap-2 group mt-3 cursor-pointer"
+            onClick={signout}
+          >
+            <img src="/signout.png" alt="" className="w-5" />
+            <p className="text-gray-500 dark:text-gray-300 group-hover:text-blue-800 dark:group-hover:text-blue-400">
+              Sign out
+            </p>
+          </div>
+          <div className="border-b border-gray-400 dark:border-gray-600 w-full mt-4 mb-4"></div>
+
+          {/* dark mode toggle */}
+          <div className="flex flex-row justify-around items-center">
+            <p className="text-xl">Mode:</p>
+            <img
+              src="/night-mode.png"
+              alt="Dark"
+              className="w-8 hover:bg-gray-400 dark:hover:bg-gray-600 rounded cursor-pointer"
+              onClick={dark}
+            />
+            <img
+              src="/light.png"
+              alt="Light"
+              className="w-8 hover:bg-gray-400 dark:hover:bg-gray-600 rounded cursor-pointer"
+              onClick={light}
+            />
+          </div>
         </div>
-      </div>
+      )}
 
       {/* for the mobiel version */}
       {isOpen && (
