@@ -107,8 +107,9 @@ function SNavBar() {
           <div
             onClick={() => {
               setOpen((pre) => !pre);
+              setNoti(false);
             }}
-            className="rounded-full overflow-hidden w-10 h-10"
+            className="rounded-full overflow-hidden w-10 h-10  hover:scale-105 active:scale-95 transition-all"
             title="Account"
           >
             <img
