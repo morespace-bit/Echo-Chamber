@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { db } from "../../Firebase/config";
+import { FaReply } from "react-icons/fa";
+
 import {
   collection,
   doc,
@@ -105,10 +107,11 @@ export default function Comment({ userData, postId, open, close }) {
               <p className="text-2xl dark:text-white">No comments</p>
             </div>
           )}
-
+          {/* // the actual comment being mapped here */}
           {comment.map((c) => {
             return (
-              <div className="flex gap-3 mt-2 p-2" key={c.id}>
+              // the main container of the comment
+              <div className="flex gap-3 mt-2 p-2  " key={c.id}>
                 {/* image of the person */}
                 <div className="rounded-full overflow-hidden object-cover w-8 h-8 ">
                   <img
@@ -118,11 +121,19 @@ export default function Comment({ userData, postId, open, close }) {
                   />
                 </div>
                 {/* the content and username */}
-                <div className="bg-gray-300 dark:bg-gray-600 flex flex-col p-3 rounded-2xl">
+                <div className="bg-gray-300 dark:bg-gray-600 flex flex-col p-3 rounded-2xl relative">
                   <h2 className="text-black dark:text-white text-xl font-semibold text-left ">
                     {c.username}
                   </h2>
                   <p className="text-black dark:text-white">{c.content}</p>
+
+                  {/* the reply button */}
+                  <div></div>
+                  {/* the reply button */}
+                </div>
+                <div className=" flex flex-row gap-2 items-center hover:scale-105 cursor-pointer transition-all">
+                  <FaReply />
+                  <p>reply</p>
                 </div>
               </div>
             );
