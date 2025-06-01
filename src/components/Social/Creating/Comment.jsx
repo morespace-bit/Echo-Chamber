@@ -12,10 +12,12 @@ import {
   addDoc,
   getDocs,
 } from "firebase/firestore";
+import Reply from "./Reply";
 
 export default function Comment({ userData, postId, open, close }) {
   const [content, setContent] = useState("");
   const [comment, setComment] = useState([]);
+  const [isReply, setIsReply] = useState({});
 
   // getting the comments form the firebase database
   const getComment = async () => {
@@ -28,6 +30,12 @@ export default function Comment({ userData, postId, open, close }) {
     }));
     setComment(data);
   };
+
+  // function and state to track whcih reply button is active
+
+  function replyOpen(comment_id) {
+    setIsReply((pre) => ({ ...pre, [comment_id]: !pre[comment_id] }));
+  }
 
   // posting the data to the firebase databse
   const PostComment = async () => {
@@ -54,8 +62,8 @@ export default function Comment({ userData, postId, open, close }) {
 
   return (
     <>
-      {/* main container for comment */}
-      <div className="flex w-full  dark:bg-gray-800 mt-3 flex-col p-3 rounded-xl dark:shadow-xl">
+      {/* main container for comment add commetn*/}
+      <div className="flex w-full  dark:bg-gray-800 mt-3 flex-col p-3 rounded-xl dark:shadow-xl overflow-x-hidden overflow-y-hidden">
         {/* now the add a comment section */}
         <div className="flex items-center gap-3">
           {/* div for making the profile pic circle */}
@@ -67,7 +75,7 @@ export default function Comment({ userData, postId, open, close }) {
             />
           </div>
           {/* the comment input type div */}
-          <div className="flex items-center flex-1 min-w-70 max-w-170 md:w-120 bg-gray-200 dark:bg-gray-700 rounded-xl p-2 cursor-pointer">
+          <div className="flex items-center flex-1 min-w-70 max-w-170 md:w-120 bg-gray-200 dark:bg-gray-700 rounded-xl p-2 cursor-pointer overflow-y-hidden">
             <input
               type="text"
               className="w-full outline-none px-2 bg-transparent text-black dark:text-white cursor-pointer"
@@ -110,31 +118,60 @@ export default function Comment({ userData, postId, open, close }) {
           {/* // the actual comment being mapped here */}
           {comment.map((c) => {
             return (
-              // the main container of the comment
-              <div className="flex gap-3 mt-2 p-2  " key={c.id}>
-                {/* image of the person */}
-                <div className="rounded-full overflow-hidden object-cover w-8 h-8 ">
-                  <img
-                    src={c.Photo}
-                    alt="user-profile"
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-                {/* the content and username */}
-                <div className="bg-gray-300 dark:bg-gray-600 flex flex-col p-3 rounded-2xl relative">
-                  <h2 className="text-black dark:text-white text-xl font-semibold text-left ">
-                    {c.username}
-                  </h2>
-                  <p className="text-black dark:text-white">{c.content}</p>
+              // the main container for the comment and reply
+              <div className="flex flex-col">
+                {/* // the main container of the comment and reply button */}
+                <div className="flex gap-3 mt-2 p-2  " key={c.id}>
+                  {/* image of the person */}
+                  <div className="rounded-full overflow-hidden object-cover w-8 h-8 ">
+                    <img
+                      src={c.Photo}
+                      alt="user-profile"
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                  {/* the content and username */}
+                  <div className="bg-gray-300 dark:bg-gray-600 flex flex-col p-3 rounded-2xl relative">
+                    <h2 className="text-black dark:text-white text-xl font-semibold text-left ">
+                      {c.username}
+                    </h2>
+                    <p className="text-black dark:text-white">{c.content}</p>
 
-                  {/* the reply button */}
-                  <div></div>
-                  {/* the reply button */}
+                    {/* the reply button */}
+                    <div></div>
+                    {/* the reply button */}
+                  </div>
+                  <div
+                    className=" flex flex-row gap-2 items-center hover:scale-105 cursor-pointer transition-all"
+                    onClick={() => {
+                      replyOpen(c.id);
+                    }}
+                  >
+                    <FaReply />
+                    <p>reply</p>
+                  </div>
                 </div>
-                <div className=" flex flex-row gap-2 items-center hover:scale-105 cursor-pointer transition-all">
-                  <FaReply />
-                  <p>reply</p>
-                </div>
+                {/* the add reply section */}
+
+                {isReply[c.id] && (
+                  <div className="flex items-center flex-1 min-w-60 max-w-120 md:w-120 bg-gray-200 dark:bg-gray-700 rounded-xl p-2 cursor-pointer ml-7 mr-2">
+                    <input
+                      type="text"
+                      className="w-full outline-none px-2 bg-transparent text-black dark:text-white cursor-pointer"
+                      placeholder="Add a reply..."
+                      value={content}
+                      onChange={(e) => {
+                        setContent(e.target.value);
+                      }}
+                    />
+                    <button
+                      className="p-2 bg-blue-300 dark:bg-blue-600 px-4 rounded-2xl hover:bg-blue-500 dark:hover:bg-blue-700 hover:scale-105 active:scale-95 duration-75 ease-in cursor-pointer"
+                      onClick={PostComment}
+                    >
+                      Add
+                    </button>
+                  </div>
+                )}
               </div>
             );
           })}
