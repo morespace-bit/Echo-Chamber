@@ -329,7 +329,7 @@ export default function Feed() {
                   <p>Likes {likesOfPost?.[i.id]}</p>
                 </div>
                 <div
-                  className="flex flex-row gap-2 items-center cursor-pointer hover:shadow-4xl hover:shadow-rose-500 duration-75 ease-in active:scale-95 hover:scale-120"
+                  className="flex flex-row gap-2 items-center cursor-pointer hover:shadow-4xl hover:shadow-rose-500 duration-75 ease-in active:scale-95 hover:scale-105"
                   onClick={() => {
                     comment(i.id);
                   }}
