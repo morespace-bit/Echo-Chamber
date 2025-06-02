@@ -155,12 +155,12 @@ export default function Login() {
             </div>
           </motion.div>
           <motion.div
-            className=" hidden md:block "
+            className=" hidden md:block md:flex justify-center items-center h-150"
             initial={{ x: 100, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.7 }}
           >
-            <img src={"/water.jpg"} alt="" className="h-170" />
+            <img src={"/welcome.png"} alt="" className="h-100" />
           </motion.div>
         </motion.div>
       </motion.div>
