@@ -18,6 +18,8 @@ export default function Comment({ userData, postId, open, close }) {
   const [content, setContent] = useState("");
   const [comment, setComment] = useState([]);
   const [isReply, setIsReply] = useState({});
+  const [reply, setReply] = useState("");
+  const [repLoding, setRepLoading] = useState(false);
 
   // getting the comments form the firebase database
   const getComment = async () => {
@@ -37,7 +39,7 @@ export default function Comment({ userData, postId, open, close }) {
     setIsReply((pre) => ({ ...pre, [comment_id]: !pre[comment_id] }));
   }
 
-  // posting the data to the firebase databse
+  // posting the comment data to the firebase databse
   const PostComment = async () => {
     if (content.trim().length === 0) {
       alert("Please enter a comment");
@@ -54,6 +56,32 @@ export default function Comment({ userData, postId, open, close }) {
     setContent((pre) => {
       return (pre = "");
     });
+  };
+
+  // function to post the reply to the firebase database
+
+  const replyPost = async (comment_id) => {
+    if (reply.trim().length === 0) {
+      alert("Please enter a valid content");
+      return;
+    }
+    setRepLoading(true);
+
+    const replyRef = collection(
+      doc(collection(doc(db, "Post", postId), "comment"), comment_id),
+      "reply"
+    );
+
+    await addDoc(replyRef, {
+      username: userData.username,
+      Photo: userData.Photo,
+      content: reply,
+      Timestamp: serverTimestamp(),
+    });
+
+    setRepLoading(false);
+    setIsReply(false);
+    setReply("Add reply...");
   };
 
   useEffect(() => {
@@ -119,7 +147,7 @@ export default function Comment({ userData, postId, open, close }) {
           {comment.map((c) => {
             return (
               // the main container for the comment and reply
-              <div className="flex flex-col">
+              <div className="flex flex-col" key={c.id}>
                 {/* // the main container of the comment and reply button */}
                 <div className="flex gap-3 mt-2 p-2  " key={c.id}>
                   {/* image of the person */}
@@ -154,21 +182,23 @@ export default function Comment({ userData, postId, open, close }) {
                 {/* the add reply section */}
 
                 {isReply[c.id] && (
-                  <div className="flex items-center flex-1 min-w-60 max-w-120 md:w-120 bg-gray-200 dark:bg-gray-700 rounded-xl p-2 cursor-pointer ml-7 mr-2">
+                  <div className="flex items-center flex-1 min-w-60 max-w-120 md:w-120 bg-gray-200 dark:bg-gray-700 rounded-xl p-2 cursor-pointer ml-7 mr-20">
                     <input
                       type="text"
                       className="w-full outline-none px-2 bg-transparent text-black dark:text-white cursor-pointer"
                       placeholder="Add a reply..."
-                      value={content}
+                      value={reply}
                       onChange={(e) => {
-                        setContent(e.target.value);
+                        setReply(e.target.value);
                       }}
                     />
                     <button
                       className="p-2 bg-blue-300 dark:bg-blue-600 px-4 rounded-2xl hover:bg-blue-500 dark:hover:bg-blue-700 hover:scale-105 active:scale-95 duration-75 ease-in cursor-pointer"
-                      onClick={PostComment}
+                      onClick={() => {
+                        replyPost(c.id);
+                      }}
                     >
-                      Add
+                      {setRepLoading == true ? " plese Wait" : "Add"}
                     </button>
                   </div>
                 )}
