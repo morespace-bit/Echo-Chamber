@@ -19,6 +19,7 @@ export default function Comment({ userData, postId, open, close }) {
   const [comment, setComment] = useState([]);
   const [isReply, setIsReply] = useState({});
   const [reply, setReply] = useState("");
+  const [trackReply, setTrackReply] = useState({});
   const [repLoding, setRepLoading] = useState(false);
 
   // getting the comments form the firebase database
@@ -37,6 +38,11 @@ export default function Comment({ userData, postId, open, close }) {
 
   function replyOpen(comment_id) {
     setIsReply((pre) => ({ ...pre, [comment_id]: !pre[comment_id] }));
+  }
+
+  // function to track which comment reply post is active
+  function replyTrack(comment_id) {
+    setTrackReply((pre) => ({ ...pre, [comment_id]: !pre[comment_id] }));
   }
 
   // posting the comment data to the firebase databse
@@ -147,7 +153,7 @@ export default function Comment({ userData, postId, open, close }) {
           {comment.map((c) => {
             return (
               // the main container for the comment and reply
-              <div className="flex flex-col" key={c.id}>
+              <div className="flex flex-col relative" key={c.id}>
                 {/* // the main container of the comment and reply button */}
                 <div className="flex gap-3 mt-2 p-2  " key={c.id}>
                   {/* image of the person */}
@@ -159,15 +165,22 @@ export default function Comment({ userData, postId, open, close }) {
                     />
                   </div>
                   {/* the content and username */}
-                  <div className="bg-gray-300 dark:bg-gray-600 flex flex-col p-3 rounded-2xl relative">
+                  <div className="bg-gray-300 dark:bg-gray-600 flex flex-col pt-3 px-3 pb-0 rounded-2xl relative">
                     <h2 className="text-black dark:text-white text-xl font-semibold text-left ">
                       {c.username}
                     </h2>
-                    <p className="text-black dark:text-white">{c.content}</p>
+                    <div className="flex flex-col items-center justify-center">
+                      <p className="text-black dark:text-white">{c.content}</p>
 
-                    {/* the reply button */}
-                    <div></div>
-                    {/* the reply button */}
+                      <p
+                        className="text  w-20 hover:scale-105 cursor-pointer  rounded-xl underline active:scale-95 transition-all"
+                        onClick={() => {
+                          replyTrack(c.id);
+                        }}
+                      >
+                        replies
+                      </p>
+                    </div>
                   </div>
                   <div
                     className=" flex flex-row gap-2 items-center hover:scale-105 cursor-pointer transition-all"
@@ -175,6 +188,7 @@ export default function Comment({ userData, postId, open, close }) {
                       replyOpen(c.id);
                     }}
                   >
+                    {/* the reply button */}
                     <FaReply />
                     <p>reply</p>
                   </div>
@@ -202,6 +216,9 @@ export default function Comment({ userData, postId, open, close }) {
                     </button>
                   </div>
                 )}
+
+                {/* this is the div to show the user to click to show the replies */}
+                {trackReply[c.id] == true && <Reply />}
               </div>
             );
           })}
