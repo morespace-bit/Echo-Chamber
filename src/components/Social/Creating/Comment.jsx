@@ -170,7 +170,9 @@ export default function Comment({ userData, postId, open, close }) {
                       {c.username}
                     </h2>
                     <div className="flex flex-col items-center justify-center">
-                      <p className="text-black dark:text-white">{c.content}</p>
+                      <p className="text-black dark:text-white text-left bg-pink-100 rounded-2xl p-2">
+                        {c.content}
+                      </p>
 
                       <p
                         className="text  w-20 hover:scale-105 cursor-pointer  rounded-xl underline active:scale-95 transition-all"

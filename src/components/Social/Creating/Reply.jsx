@@ -91,7 +91,9 @@ const Reply = ({ useData, postId, cmtId }) => {
                   {c.username}
                 </h2>
                 <div className="flex flex-col items-center justify-center">
-                  <p className="text-black dark:text-white">{c.content}</p>
+                  <p className="text-black dark:text-white text-left bg-pink-100 rounded-2xl p-2 mb-2">
+                    {c.content}
+                  </p>
                 </div>
               </div>
             </div>
