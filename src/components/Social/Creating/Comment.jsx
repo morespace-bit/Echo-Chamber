@@ -218,7 +218,9 @@ export default function Comment({ userData, postId, open, close }) {
                 )}
 
                 {/* this is the div to show the user to click to show the replies */}
-                {trackReply[c.id] == true && <Reply />}
+                {trackReply[c.id] == true && (
+                  <Reply userData={userData} postId={postId} cmtId={c.id} />
+                )}
               </div>
             );
           })}
