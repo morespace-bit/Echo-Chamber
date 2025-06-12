@@ -15,6 +15,7 @@ import {
   arrayUnion,
   arrayRemove,
   limit,
+  startAfter,
 } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import CreateFeed from "./Creating/CreateFeed";
@@ -34,8 +35,7 @@ export default function Feed() {
 
   // to simulate pagination kind of thing like
 
-  const [page, setPage] = useState(5);
-  const [offset,setOffset] = useState(0);
+  const [last, setLast] = useState({});
 
   // for the timestamp such as this many hours ago and so on
   dayjs.extend(relativeTime);
@@ -73,8 +73,6 @@ export default function Feed() {
       });
     }
     getPost();
-
-    console.log(id);
   }
 
   const comment = (id) => {
@@ -94,7 +92,6 @@ export default function Feed() {
     if (res.exists()) {
       setUserData(res.data());
     } else {
-      console.log("No profile found");
     }
   }
 
@@ -106,7 +103,7 @@ export default function Feed() {
   //   let res = await getDocs(q);
   //   let data = res.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
   //   setPost(data);
-  //   console.log(data[0].id);
+  //
 
   //   // loop to set the likes the likesOfPost object
   //   let likesMap = {};
@@ -115,18 +112,18 @@ export default function Feed() {
   //   }
 
   //   setLikesOfPost(likesMap);
-  //   console.log(likesMap);
+  //
   // }
 
-  // getting user post form the firebase firestore
+  // getting user post form the firebase firestore initial loading
   async function getPost() {
     let postRef = collection(db, "Post");
-    let q = query(postRef, orderBy("CreatedAt", "desc"), limit(page),offset(offset));
+    let q = query(postRef, orderBy("CreatedAt", "desc"), limit(5));
     let res = await getDocs(q);
+    setLast(res.docs[res.docs.length - 1]);
     let data = res.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-    setPost(prev=>[...prev,data]);
+    setPost(data);
     setLoadmore(false);
-    console.log(data[0].id);
 
     // loop to set the likes the likesOfPost object
     let likesMap = {};
@@ -135,22 +132,44 @@ export default function Feed() {
     }
 
     setLikesOfPost(likesMap);
-    console.log(likesMap);
+  }
+
+  // pagineted data fetching
+
+  async function getPostPaginated() {
+    console.log("pagination func");
+    let postRef = collection(db, "Post");
+    let q = query(
+      postRef,
+      orderBy("CreatedAt", "desc"),
+      limit(5),
+      startAfter(last)
+    );
+    let res = await getDocs(q);
+    setLast(res.docs[res.docs.length - 1]);
+    let data = res.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+    setPost((pre) => [...pre, ...data]);
+    console.log(post);
+    setLoadmore(false);
+
+    // loop to set the likes the likesOfPost object
+    let likesMap = {};
+    for (let i = 0; i < data.length; i++) {
+      likesMap[data[i].id] = data[i].Likes;
+    }
+
+    setLikesOfPost(likesMap);
   }
 
   // to get the user id
   useEffect(() => {
-    // Handle user authentication state change
+    // handle user authentication state change
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log("User UID:", user.uid);
         setUId(user.uid); // Set the UID in state
       } else {
-        console.log("No user logged in");
       }
     });
-
-    return () => unsubscribe();
   }, []);
 
   useEffect(() => {
@@ -159,7 +178,7 @@ export default function Feed() {
     const item = localStorage.getItem("likedPost");
     const stored = item ? JSON.parse(item) : {};
     setLikedPost(stored);
-  }, [u_id, page]);
+  }, [u_id]);
 
   if (post === null) {
     return (
@@ -351,8 +370,7 @@ export default function Feed() {
           <button
             className="bg-black p-1 text-white hover:scale-105 cursor-pointer  "
             onClick={() => {
-              setOffset((pre) => pre + 5);
-              console.log(page);
+              getPostPaginated();
               setLoadmore((pre) => !pre);
             }}
           >
