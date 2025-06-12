@@ -24,13 +24,11 @@ import SNavBar from "./SNavBar";
 import CreateFeedText from "./Creating/CreateFeedText";
 export default function Feed() {
   const [userData, setUserData] = useState(null);
-  const [u_id, setUId] = useState(""); // Use state for UID
+  const [u_id, setU_id] = useState(""); // Use state for UID
   const [imageUpload, setImageUpload] = useState(false);
   const [textUpload, setTextUpload] = useState(false);
   const [post, setPost] = useState(null);
-  const [likedPost, setLikedPost] = useState({});
   const [commentPost, setCommentPost] = useState({});
-  const [likesOfPost, setLikesOfPost] = useState({});
   const [loadmore, setLoadmore] = useState(false);
 
   // to simulate pagination kind of thing like
@@ -41,39 +39,20 @@ export default function Feed() {
   dayjs.extend(relativeTime);
 
   // function to set liked and unlike ui also to update the firebase store for no of likes
-  const like = async (id) => {
-    setLikedPost((pre) => {
-      const updated = {
-        ...pre,
-        [id]: !pre[id],
-      };
-      localStorage.setItem("likedPost", JSON.stringify(updated));
-      return updated;
-    });
+  // const like = async (id) => {
+  //   setLikedPost((pre) => {
+  //     const updated = {
+  //       ...pre,
+  //       [id]: !pre[id],
+  //     };
+  //     localStorage.setItem("likedPost", JSON.stringify(updated));
+  //     return updated;
+  //   });
 
-    setLikesOfPost((pre) => {});
-  };
+  //   setLikesOfPost((pre) => {});
+  // };
 
   // function to like the post and send it to firebase
-
-  async function likeUnlike(id) {
-    const postRef = doc(db, "Post", id);
-
-    if (!likedPost[id]) {
-      // like
-      await updateDoc(postRef, {
-        Likes: increment(1),
-        likedBy: arrayUnion(u_id),
-      });
-    } else {
-      // unlike
-      await updateDoc(postRef, {
-        Likes: increment(-1),
-        likedBy: arrayRemove(u_id),
-      });
-    }
-    getPost();
-  }
 
   const comment = (id) => {
     setCommentPost((pre) => {
@@ -126,12 +105,6 @@ export default function Feed() {
     setLoadmore(false);
 
     // loop to set the likes the likesOfPost object
-    let likesMap = {};
-    for (let i = 0; i < data.length; i++) {
-      likesMap[data[i].id] = data[i].Likes;
-    }
-
-    setLikesOfPost(likesMap);
   }
 
   // pagineted data fetching
@@ -149,16 +122,9 @@ export default function Feed() {
     setLast(res.docs[res.docs.length - 1]);
     let data = res.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
     setPost((pre) => [...pre, ...data]);
+    console.log(data);
     console.log(post);
     setLoadmore(false);
-
-    // loop to set the likes the likesOfPost object
-    let likesMap = {};
-    for (let i = 0; i < data.length; i++) {
-      likesMap[data[i].id] = data[i].Likes;
-    }
-
-    setLikesOfPost(likesMap);
   }
 
   // to get the user id
@@ -166,7 +132,7 @@ export default function Feed() {
     // handle user authentication state change
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        setUId(user.uid); // Set the UID in state
+        setU_id(user.uid); // Set the UID in state
       } else {
       }
     });
@@ -175,9 +141,6 @@ export default function Feed() {
   useEffect(() => {
     getUserProfile();
     getPost();
-    const item = localStorage.getItem("likedPost");
-    const stored = item ? JSON.parse(item) : {};
-    setLikedPost(stored);
   }, [u_id]);
 
   if (post === null) {
@@ -337,16 +300,37 @@ export default function Feed() {
                 <div
                   className="flex flex-row gap-2 items-center cursor-pointer"
                   onClick={() => {
-                    like(i.id);
+                    async function likeUnlike(id) {
+                      console;
+                      const postRef = doc(db, "Post", id);
+
+                      if (!i.likedBy.includes(u_id)) {
+                        // like
+                        await updateDoc(postRef, {
+                          Likes: increment(1),
+                          likedBy: arrayUnion(u_id),
+                        });
+                      } else {
+                        // unlike
+                        console.log("unlike run");
+                        await updateDoc(postRef, {
+                          Likes: increment(-1),
+                          likedBy: arrayRemove(u_id),
+                        });
+                      }
+                      getPost();
+                    }
                     likeUnlike(i.id);
                   }}
                 >
                   <img
-                    src={likedPost[i.id] ? "/red-love.png" : "/love.png"}
+                    src={
+                      i.likedBy.includes(u_id) ? "/red-love.png" : "/love.png"
+                    }
                     alt=""
                     className="h-6 hover:shadow-4xl hover:shadow-rose-500 duration-75 ease-in active:scale-95 hover:scale-120"
                   />
-                  <p>Likes {likesOfPost?.[i.id]}</p>
+                  <p>Likes {i?.Likes}</p>
                 </div>
                 <div
                   className="flex flex-row gap-2 items-center cursor-pointer hover:shadow-4xl hover:shadow-rose-500 duration-75 ease-in active:scale-95 hover:scale-105"
