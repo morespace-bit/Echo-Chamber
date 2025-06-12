@@ -35,6 +35,7 @@ export default function Feed() {
   // to simulate pagination kind of thing like
 
   const [page, setPage] = useState(5);
+  const [offset,setOffset] = useState(0);
 
   // for the timestamp such as this many hours ago and so on
   dayjs.extend(relativeTime);
@@ -120,10 +121,10 @@ export default function Feed() {
   // getting user post form the firebase firestore
   async function getPost() {
     let postRef = collection(db, "Post");
-    let q = query(postRef, orderBy("CreatedAt", "desc"), limit(page));
+    let q = query(postRef, orderBy("CreatedAt", "desc"), limit(page),offset(offset));
     let res = await getDocs(q);
     let data = res.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-    setPost(data);
+    setPost(prev=>[...prev,data]);
     setLoadmore(false);
     console.log(data[0].id);
 
@@ -350,7 +351,7 @@ export default function Feed() {
           <button
             className="bg-black p-1 text-white hover:scale-105 cursor-pointer  "
             onClick={() => {
-              setPage((pre) => pre + 5);
+              setOffset((pre) => pre + 5);
               console.log(page);
               setLoadmore((pre) => !pre);
             }}
