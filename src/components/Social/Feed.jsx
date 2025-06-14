@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { auth, db } from "../Firebase/config";
@@ -29,7 +29,13 @@ export default function Feed() {
   const [textUpload, setTextUpload] = useState(false);
   const [post, setPost] = useState(null);
   const [commentPost, setCommentPost] = useState({});
-  const [loadmore, setLoadmore] = useState(false);
+  const [loadmore, setLoadmore] = useState(true);
+  const [more, setMore] = useState(true);
+
+  // using use reff to make the infinite loding stuff happen
+
+  const buttonRef = useRef(null);
+  console.log(buttonRef);
 
   // to simulate pagination kind of thing like
 
@@ -37,22 +43,6 @@ export default function Feed() {
 
   // for the timestamp such as this many hours ago and so on
   dayjs.extend(relativeTime);
-
-  // function to set liked and unlike ui also to update the firebase store for no of likes
-  // const like = async (id) => {
-  //   setLikedPost((pre) => {
-  //     const updated = {
-  //       ...pre,
-  //       [id]: !pre[id],
-  //     };
-  //     localStorage.setItem("likedPost", JSON.stringify(updated));
-  //     return updated;
-  //   });
-
-  //   setLikesOfPost((pre) => {});
-  // };
-
-  // function to like the post and send it to firebase
 
   const comment = (id) => {
     setCommentPost((pre) => {
@@ -74,27 +64,6 @@ export default function Feed() {
     }
   }
 
-  // getting the likes form the firebase data
-
-  // async function getLikes() {
-  //   let postRef = collection(db, "Post");
-  //   let q = query(postRef, orderBy("CreatedAt", "desc"));
-  //   let res = await getDocs(q);
-  //   let data = res.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-  //   setPost(data);
-  //
-
-  //   // loop to set the likes the likesOfPost object
-  //   let likesMap = {};
-  //   for (let i = 0; i < data.length; i++) {
-  //     likesMap[data[i].id] = data[i].Likes;
-  //   }
-
-  //   setLikesOfPost(likesMap);
-  //
-  // }
-
-  // getting user post form the firebase firestore initial loading
   async function getPost() {
     let postRef = collection(db, "Post");
     let q = query(postRef, orderBy("CreatedAt", "desc"), limit(5));
@@ -119,6 +88,14 @@ export default function Feed() {
       startAfter(last)
     );
     let res = await getDocs(q);
+    // a method provided by firebase to see if there are dcos or it is empty
+    if (res.empty) {
+      setMessage("No more data");
+      // setMore(false);
+      // setLoadmore(false);
+      setLoadmore(false);
+      return;
+    }
     setLast(res.docs[res.docs.length - 1]);
     let data = res.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
     setPost((pre) => [...pre, ...data]);
@@ -138,10 +115,41 @@ export default function Feed() {
     });
   }, []);
 
+  // use effect to load initial data
+
   useEffect(() => {
     getUserProfile();
     getPost();
   }, [u_id]);
+
+  // useEffect to do the infinite scrool using the intersection observer
+  useEffect(() => {
+    // if (!more) {
+    //   return;
+    // }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry.isIntersecting) {
+          // now doing the paganeted call to the funcion
+          // setLoadmore(true);
+          getPostPaginated();
+        }
+      },
+      { threshold: 1 }
+    );
+
+    if (buttonRef.current) {
+      observer.observe(buttonRef.current);
+    }
+  }, [buttonRef.current]);
+
+  // useEffect(() => {
+  //   if (more && loadmore) {
+  //     // calling the pagineted data
+  //     getPostPaginated();
+  //   }
+  // }, [more, loadmore]);
 
   if (post === null) {
     return (
@@ -352,6 +360,7 @@ export default function Feed() {
           ))}
 
           <button
+            ref={buttonRef}
             className="bg-black p-1 text-white hover:scale-105 cursor-pointer  "
             onClick={() => {
               getPostPaginated();
