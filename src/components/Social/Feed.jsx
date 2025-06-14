@@ -29,7 +29,7 @@ export default function Feed() {
   const [textUpload, setTextUpload] = useState(false);
   const [post, setPost] = useState(null);
   const [commentPost, setCommentPost] = useState({});
-  const [loadmore, setLoadmore] = useState(true);
+  const [loadmore, setLoadmore] = useState(false);
   const [more, setMore] = useState(true);
 
   // using use reff to make the infinite loding stuff happen
@@ -89,13 +89,13 @@ export default function Feed() {
     );
     let res = await getDocs(q);
     // a method provided by firebase to see if there are dcos or it is empty
-    if (res.empty) {
-      setMessage("No more data");
-      // setMore(false);
-      // setLoadmore(false);
-      setLoadmore(false);
-      return;
-    }
+    // if (res.empty) {
+    //   setMessage("No more data");
+    //   // setMore(false);
+    //   // setLoadmore(false);
+    //   setLoadmore(false);
+    //   return;
+    // }
     setLast(res.docs[res.docs.length - 1]);
     let data = res.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
     setPost((pre) => [...pre, ...data]);
@@ -123,26 +123,26 @@ export default function Feed() {
   }, [u_id]);
 
   // useEffect to do the infinite scrool using the intersection observer
-  useEffect(() => {
-    // if (!more) {
-    //   return;
-    // }
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        if (entry.isIntersecting) {
-          // now doing the paganeted call to the funcion
-          // setLoadmore(true);
-          getPostPaginated();
-        }
-      },
-      { threshold: 1 }
-    );
+  // useEffect(() => {
+  //   // if (!more) {
+  //   //   return;
+  //   // }
+  //   const observer = new IntersectionObserver(
+  //     (entries) => {
+  //       const entry = entries[0];
+  //       if (entry.isIntersecting) {
+  //         // now doing the paganeted call to the funcion
+  //         // setLoadmore(true);
+  //         getPostPaginated();
+  //       }
+  //     },
+  //     { threshold: 1 }
+  //   );
 
-    if (buttonRef.current) {
-      observer.observe(buttonRef.current);
-    }
-  }, [buttonRef.current]);
+  //   if (buttonRef.current) {
+  //     observer.observe(buttonRef.current);
+  //   }
+  // }, []);
 
   // useEffect(() => {
   //   if (more && loadmore) {

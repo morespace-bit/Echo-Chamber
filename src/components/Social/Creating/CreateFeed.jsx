@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { db } from "../../Firebase/config";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
@@ -6,6 +6,7 @@ function CreateFeed({ userData, setImageUpload, u_id, getPost }) {
   const [content, setContent] = useState(null);
   const [url, setUrl] = useState("");
   const [loding, setLoding] = useState(false);
+  const inputRef = useRef(null);
 
   // function to upload to cloudniary
 
@@ -55,6 +56,10 @@ function CreateFeed({ userData, setImageUpload, u_id, getPost }) {
     }
   }
 
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
+
   return (
     <div className="fixed top-30 w-full flex justify-center items-center z-50">
       {/* Card container */}
@@ -74,6 +79,7 @@ function CreateFeed({ userData, setImageUpload, u_id, getPost }) {
         {/* Text input */}
         <div className="flex flex-row justify-start w-full">
           <input
+            ref={inputRef}
             onChange={(e) => setContent(e.target.value)}
             type="text"
             placeholder={`What's on your mind, ${userData?.username}`}
