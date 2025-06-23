@@ -272,6 +272,9 @@ export default function Feed() {
             <div
               key={i?.id}
               className="flex p-6 bg-white dark:bg-gray-700 mb-5 rounded-xl shadow-xl max-h-200 max-w-150 flex-col"
+              onClick={() => {
+                setImageUpload(fasle);
+              }}
             >
               <Link to={`/SocialPage/profile/${i.Uid}`}>
                 <div className="mb-4 flex items-center gap-4 group">

@@ -12,6 +12,7 @@ function SNavBar() {
   const [userData, setUserData] = useState(null);
   const [u_id, setUId] = useState("");
   const [noti, setNoti] = useState(false);
+  const [mode, setMode] = useState({});
 
   const navigate = useNavigate();
 
@@ -192,14 +193,26 @@ function SNavBar() {
             <img
               src="/night-mode.png"
               alt="Dark"
-              className="w-8 hover:bg-gray-400 dark:hover:bg-gray-600 rounded cursor-pointer"
-              onClick={dark}
+              className={`w-8   rounded cursor-pointer ${
+                mode[1] ? "bg-blue-500 rounded-xl p-2" : ""
+              }`}
+              onClick={() => {
+                dark();
+                setMode({ 1: true });
+                console.log(mode);
+              }}
             />
             <img
               src="/light.png"
               alt="Light"
-              className="w-8 hover:bg-gray-400 dark:hover:bg-gray-600 rounded cursor-pointer"
-              onClick={light}
+              className={`w-8  dark:hover:bg-gray-600 rounded cursor-pointer ${
+                mode[2] ? "bg-blue-500 rounded-xl p-2" : ""
+              }`}
+              onClick={() => {
+                light();
+                setMode({ 2: true });
+                console.log(mode);
+              }}
             />
           </div>
         </div>
@@ -276,14 +289,26 @@ function SNavBar() {
             <img
               src="/night-mode.png"
               alt="Dark"
-              className="w-8 hover:bg-gray-400 dark:hover:bg-gray-600 rounded cursor-pointer"
-              onClick={dark}
+              className={`w-8   rounded cursor-pointer ${
+                mode[1] ? "bg-blue-500 rounded-xl p-2" : ""
+              }`}
+              onClick={() => {
+                dark();
+                setMode({ 1: true });
+                console.log(mode);
+              }}
             />
             <img
               src="/light.png"
               alt="Light"
-              className="w-8 hover:bg-gray-400 dark:hover:bg-gray-600 rounded cursor-pointer"
-              onClick={light}
+              className={`w-8  dark:hover:bg-gray-600 rounded cursor-pointer ${
+                mode[2] ? "bg-blue-500 rounded-xl p-2" : ""
+              }`}
+              onClick={() => {
+                light();
+                setMode({ 2: true });
+                console.log(mode);
+              }}
             />
           </div>
         </div>
