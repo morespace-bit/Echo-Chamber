@@ -1,6 +1,36 @@
-import { motion } from "framer-motion";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 
 function Hero() {
+  useGSAP(() => {
+    gsap.from("#image", {
+      y: 250,
+      duration: 1,
+      ease: "back.inOut",
+    });
+
+    gsap.fromTo(
+      "#btn",
+      {
+        x: 250,
+        scale: 0.8,
+        rotation: 360,
+        borderRadius: "50%",
+        backgroundColor: "hotpink",
+      },
+      {
+        x: 0,
+        scale: 1.1,
+        rotation: 0,
+        borderRadius: "12px",
+        backgroundColor: "#00d4ff", // Bright neon blue
+
+        duration: 1.5,
+        ease: "elastic.out(1, 0.5)", // Adds a springy bounce at the end
+      }
+    );
+  }, []);
+
   return (
     <>
       <div
@@ -10,19 +40,12 @@ function Hero() {
         <div className="absolute bg-blue-600/60 inset-0"></div>
 
         {/* the text content and discover button  */}
-        <motion.div
+        <div
           className="flex absolute bottom-30 flex-col md:px-30 md:bottom-40"
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
+          id="para"
         >
           {/* text and echo-chamber community */}
-          <motion.div
-            className="flex flex-col text-left"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
-          >
+          <div className="flex flex-col text-left">
             <p className="text-4xl text-white font-bold font-sans">
               Echo-Chamber. Community
             </p>
@@ -32,48 +55,34 @@ function Hero() {
             <p className="text-[17px] font-semibold text-white font-sans">
               A non-political place!
             </p>
-          </motion.div>
+          </div>
 
           {/* how many people connected */}
-          <motion.div
-            className="flex mt-8 flex-col text-left"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.6 }}
-          >
+          <div className="flex mt-8 flex-col text-left">
             <p className="text-3xl text-white font-semibold">10,24,553</p>
             <p className="mt-1 font-semibold text-white">Connected peoples</p>
             <p className="mt-1 font-semibold text-white">Enjoying peace</p>
-          </motion.div>
+          </div>
 
-          <motion.button
+          <button
             className="py-3 text-left mt-8 border-1 w-40 px-7 border-white rounded-2xl text-white font-semibold cursor-pointer hover:bg-cyan-500 hover:scale-105 duration-150 ease-in-out"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.9, duration: 0.4 }}
+            id="btn"
           >
             Discover Now
-          </motion.button>
-        </motion.div>
+          </button>
+        </div>
 
-        <motion.div
-          className="absolute right-40 top-40 hidden md:block"
-          initial={{ opacity: 0, x: 100 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 1.1, type: "spring", stiffness: 60 }}
-        >
+        <div className="absolute right-40 top-40 hidden md:block" id="image">
           <div className="flex">
             <img src="/hello.png" alt=" " className="w-200 " />
-            <motion.p
+            <p
               className="absolute text-7xl bottom-110 right-80 font-black text-white translate-10"
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.3, duration: 0.5 }}
+              id="hello"
             >
               Hello!
-            </motion.p>
+            </p>
           </div>
-        </motion.div>
+        </div>
       </div>
     </>
   );
