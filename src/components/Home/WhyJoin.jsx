@@ -8,7 +8,7 @@ export default function WhyJoin() {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         viewport={{ once: true }}
-        className="h-150 mt-30 flex  flex-col md:flex-row md:justify-between gap-5 md:px-30 "
+        className="h-250 md:h-150 mt-30 flex  flex-col md:flex-row md:justify-between gap-5 md:px-30 "
         id="community"
       >
         {/* left container */}
