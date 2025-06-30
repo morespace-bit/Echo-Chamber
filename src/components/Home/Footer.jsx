@@ -8,7 +8,7 @@ export default function Footer() {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
       viewport={{ once: true }}
-      className="mt-153 h-180 bg-blue-300 flex rounded-t-2xl  flex-col overflow-x-hidden px-4 md:mt-0"
+      className="h-180 bg-blue-300 flex rounded-t-2xl  flex-col overflow-x-hidden px-4 md:mt-0"
     >
       {/* the noise image */}
       <div className="py-5  flex justify-center overflow-hidden w-full md:px-3">
