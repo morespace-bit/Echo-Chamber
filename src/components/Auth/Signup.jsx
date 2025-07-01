@@ -33,10 +33,8 @@ export default function Signup() {
     });
 
     if (res.ok) {
-      setSuccessMsg(msg.message);
-      setTimeout(() => {
-        setSuccessMsg("");
-      }, 4000);
+      const token = msg.token;
+      localStorage.setItem("token", token);
     } else {
       setErrorMsg(msg.message);
       setTimeout(() => {
@@ -44,6 +42,7 @@ export default function Signup() {
       }, 4000);
     }
     setloding(false);
+    navigate("/profilesetup", { replace: true });
   }
 
   return (
