@@ -44,10 +44,7 @@ export default function Who() {
         className="bg-white min-h-120 flex flex-col md:flex-row relative z-[-1] gap-2 items-center"
         id="about"
       >
-        <div
-          id="text-section"
-          className="flex flex-col gap-4 md:w-140 md:pl-40"
-        >
+        <div id="text-section" className="flex flex-col gap-4 md:w-140 ">
           {/* text for who we are */}
           <div className="flex px-4  flex-col text-left mt-8 md:mt-40">
             <p className="font-semibold text-blue-500 md:text-xl">Who We are</p>

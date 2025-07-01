@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom";
-import { auth, googleProvider } from "../Firebase/config.js";
-import { login, logout } from "../../store/Features/authSlice.js";
-import { useDispatch, useSelector } from "react-redux";
+
 import {
   signInWithPopup,
   signInWithRedirect,
@@ -9,64 +7,53 @@ import {
 } from "firebase/auth";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
 
 export default function Signup() {
-  const [email, setEmail] = useState("");
-  const [pass, setPass] = useState("");
-  const dispatch = useDispatch();
-
+  const [user, setUser] = useState({});
+  const [successMsg, setSuccessMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+  const [loding, setloding] = useState(false);
   const navigate = useNavigate();
 
-  //  google auth
-  async function google() {
-    try {
-      const result = await signInWithPopup(auth, googleProvider);
-      const info = result.user;
-      const user = info.uid;
-      dispatch(login(user));
-      navigate("/userdata", { replace: true });
-    } catch (err) {
-      console.log(err);
-    }
-  }
+  // function to sign up
+  async function signUp() {
+    setloding(true);
+    const res = await fetch("http://localhost:3000/api/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
 
-  // user with email and password
-  async function createUser() {
-    try {
-      const result = await createUserWithEmailAndPassword(auth, email, pass);
-      const info = result.user;
-      const user = info.uid;
-      dispatch(login(user));
-      navigate("/userdata");
-    } catch (err) {
-      console.error(err);
+      body: JSON.stringify(user),
+    });
+    const msg = await res.json();
+    setUser({
+      email: "",
+      password: "",
+    });
+
+    if (res.ok) {
+      setSuccessMsg(msg.message);
+      setTimeout(() => {
+        setSuccessMsg("");
+      }, 4000);
+    } else {
+      setErrorMsg(msg.message);
+      setTimeout(() => {
+        setErrorMsg("");
+      }, 4000);
     }
+    setloding(false);
   }
 
   return (
     <>
       {/* main container */}
-      <motion.div
-        className="bg-rose-50 flex items-center justify-center min-h-screen"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-      >
+      <div className="bg-rose-50 flex items-center justify-center min-h-screen relative">
         {/* card container */}
-        <motion.div
-          className="bg-white flex flex-col relative space-y-10 shadow-2xl rounded-2xl m-6 md:pl-15 md:flex-row md:space-x-6"
-          initial={{ y: 100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-        >
+        <div className="bg-white flex flex-col relative space-y-10 shadow-2xl rounded-2xl m-6 md:pl-15 md:flex-row md:space-x-6">
           {/* left part container */}
-          <motion.div
-            className="flex flex-col space-y-5 md:pt-15"
-            initial={{ x: -50, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
+          <div className="flex flex-col space-y-5 md:pt-15">
             <div className="space-y-3">
               <h1 className="text-3xl font-black px-6 font-sans tracking-wide mt-4">
                 Sign Up
@@ -77,72 +64,62 @@ export default function Signup() {
               </p>
             </div>
             {/* Input type or email */}
-            <div className="px-6">
-              <input
-                type="text"
-                placeholder="Enter your Email"
-                className="px-4 py-5 border border-gray-500 rounded-xs w-full"
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
-              />
-            </div>
-            <div className="px-6">
-              <input
-                type="password"
-                placeholder="Enter your password"
-                className="px-4 py-5 border border-gray-500 rounded-xs w-full"
-                onChange={(e) => {
-                  setPass(e.target.value);
-                }}
-              />
-            </div>
+            <form
+              className="flex flex-col gap-5"
+              onSubmit={(e) => {
+                e.preventDefault();
+                signUp();
+              }}
+            >
+              <div className="px-6">
+                <input
+                  required
+                  type="email"
+                  placeholder="Enter your Email"
+                  className="px-4 py-5 border border-gray-500 rounded-xs w-full"
+                  value={user.email}
+                  onChange={(e) => {
+                    setUser((pre) => {
+                      return {
+                        ...pre,
+                        email: e.target.value,
+                      };
+                    });
+                  }}
+                />
+              </div>
+              <div className="px-6">
+                <input
+                  required
+                  type="password"
+                  value={user.password}
+                  placeholder="Enter your password"
+                  className="px-4 py-5 border border-gray-500 rounded-xs w-full"
+                  onChange={(e) => {
+                    setUser((pre) => {
+                      return {
+                        ...pre,
+                        password: e.target.value,
+                      };
+                    });
+                  }}
+                />
+              </div>
 
-            {/* Forget password and Next */}
-            <div className="flex flex-col space-y-5 md:flex-row md:space-y-0 justify-center items-center px-6 md:justify-between">
-              <p className="text-blue-800 md:justify-end">Forget Password</p>
-              <button
-                onClick={createUser}
-                className="px-4 cursor-pointer py-5 w-full md:w-50 border border-gray-500 rounded-xs  bg-sky-700 text-white  hover:shadow-2xl shadow-blue-800/50"
-              >
-                Next
-              </button>
-            </div>
+              {/* Forget password and Next */}
+              <div className="flex flex-col space-y-5 md:flex-row md:space-y-0 justify-center items-center px-6 md:justify-between">
+                <p className="text-blue-800 md:justify-end">Forget Password</p>
+                <button
+                  type="submit"
+                  className="px-4 cursor-pointer py-5 w-full md:w-50 border border-gray-500 rounded-xs  bg-sky-700 text-white  hover:shadow-2xl shadow-blue-800/50"
+                >
+                  {loding ? "Processing" : "Next"}
+                </button>
+              </div>
+            </form>
 
             <div className="mx-6 border-b-2 border-gray-300"></div>
-            <div className="px-6 flex justify-center item">
-              <p className="font-thin">or sign in with</p>
-            </div>
-            {/* Social media method */}
-            <motion.div
-              className="flex flex-col md:flex-row px-6 space-y-6 mb-10 md:space-y-0  md:justify-around"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6 }}
-            >
-              <button
-                className="flex 
-              cursor-pointer
-              justify-center items-center space-x-4 border-2 border-gray-300 py-2 hover:shadow-2xl duration-150 ease-in-out md:px-8"
-              >
-                <img
-                  src={"/facebook.png"}
-                  alt="facebook-icon"
-                  className="w-10"
-                />
-                <p>Facebook</p>
-              </button>
 
-              <button
-                onClick={google}
-                className="flex 
-                cursor-pointer
-                justify-center items-center space-x-4 border-2 border-gray-300 py-2 hover:shadow-2xl duration-150 ease-in-out md:px-8 shadow-xl shadow-blue-500"
-              >
-                <img src={"/google.png"} alt="google-icon" className="w-10" />
-                <p>Google</p>
-              </button>
-            </motion.div>
             <Link to="/login" replace={true}>
               <div className="flex justify-center items-center">
                 <button className="bg-sky-700 rounded p-4 hover:bg-blue-800 duration-75 ease-in capitalize cursor-pointer text-white">
@@ -150,17 +127,27 @@ export default function Signup() {
                 </button>
               </div>
             </Link>
-          </motion.div>
-          <motion.div
-            className=" hidden md:block "
-            initial={{ x: 100, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.7 }}
-          >
-            <img src={"/water.jpg"} alt="" className="h-170" />
-          </motion.div>
-        </motion.div>
-      </motion.div>
+          </div>
+          <div className=" hidden md:block ">
+            <img src={"/home/signup.png"} alt="" className="h-120" />
+          </div>
+        </div>
+      </div>
+
+      {/* success message container  */}
+
+      {successMsg && (
+        <div className="absolute top-15 right-5 bg-green-300 py-2 px-4 rounded-xl md:right-15">
+          <p className="font-semibold ">User already exists</p>
+        </div>
+      )}
+
+      {/* error message container */}
+      {errorMsg && (
+        <div className="absolute top-15 right-5 bg-red-300 py-2 px-4 rounded-xl md:right-15">
+          <p className="font-semibold ">{errorMsg}</p>
+        </div>
+      )}
     </>
   );
 }

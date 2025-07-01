@@ -1,8 +1,7 @@
 import HomeNav from "./HomeNav";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { auth, db } from "../Firebase/config";
-import { collection, getDocs } from "firebase/firestore";
+import faqs from "../../global/faqs";
 import { motion } from "framer-motion";
 import { AnimatePresence } from "framer-motion";
 import ReackMarkdown from "react-markdown";
@@ -11,7 +10,7 @@ import { GoogleGenAI } from "@google/genai";
 
 export default function Support() {
   const [isOpen, setIsOpen] = useState(false);
-  const [qs, setQs] = useState([]);
+
   const [o, setO] = useState({});
   const [userQ, setUserQ] = useState("");
   const [loding, setLoding] = useState(false);
@@ -35,18 +34,6 @@ export default function Support() {
     setLoding(false);
   }
 
-  // function to get the questions form firebaser database
-  async function getQuestions() {
-    const qRef = collection(db, "faqs");
-
-    const res = await getDocs(qRef);
-    let data = res.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-    setQs(data);
-    console.log(data);
-  }
-
-  // function to open the text answer
-
   function open(id) {
     setO((pre) => {
       return {
@@ -56,9 +43,6 @@ export default function Support() {
     });
   }
 
-  useEffect(() => {
-    getQuestions();
-  }, []);
   return (
     <>
       {/* main container */}
@@ -175,7 +159,7 @@ export default function Support() {
               Frequently Asked Questions
             </p>
             <div className="space-y-4">
-              {qs.map((q) => (
+              {faqs.map((q) => (
                 <div key={q.id} className="flex flex-col">
                   <div
                     className="border-2 border-gray-300 rounded-lg p-5 cursor-pointer hover:bg-gray-100 transition duration-200"
@@ -187,7 +171,7 @@ export default function Support() {
                     {/* Question */}
                     <div className="flex justify-between items-center">
                       <p className="text-lg font-semibold text-gray-800">
-                        {q.q}
+                        {q.question}
                       </p>
                       <p className="text-2xl text-gray-600">
                         {o[q.id] ? "-" : "+"}
@@ -205,7 +189,7 @@ export default function Support() {
                           transition={{ duration: 0.4, ease: "easeInOut" }}
                           style={{ overflow: "hidden" }}
                         >
-                          <p className="text-gray-600 mt-3">{q.a}</p>
+                          <p className="text-gray-600 mt-3">{q.answer}</p>
                         </motion.div>
                       )}
                     </AnimatePresence>

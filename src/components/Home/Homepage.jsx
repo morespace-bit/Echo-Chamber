@@ -3,14 +3,19 @@ import HomeNav from "./HomeNav";
 import WhyJoin from "./WhyJoin";
 import Who from "./Who";
 import Hero from "./Hero";
+import EchoChamber from "./EchoChamber";
 
 function Homepage() {
   return (
     <>
       <HomeNav />
+
       <Hero />
-      <Who />
-      <WhyJoin />
+      <div className="md:px-30">
+        <EchoChamber />
+        <Who />
+        <WhyJoin />
+      </div>
     </>
   );
 }

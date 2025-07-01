@@ -32,7 +32,7 @@ export default function WhyJoin() {
       <div
         ref={containerRef}
         id="community"
-        className="why-main h-150 mt-30 flex flex-col md:flex-row md:justify-between gap-5 md:px-30"
+        className="why-main h-150 mt-30 flex flex-col md:flex-row md:justify-between gap-5 "
       >
         {/* left container */}
         <div>
