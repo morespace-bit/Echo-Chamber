@@ -16,7 +16,7 @@ export default function WhyJoin() {
         opacity: 0,
         y: 100,
         duration: 1,
-        ease: "power4.out",
+        ease: "power1.out",
         scrollTrigger: {
           trigger: el,
           start: "top 85%",

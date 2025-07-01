@@ -25,7 +25,7 @@ export default function Who() {
           scale: 1,
           rotationX: 0,
           duration: 1.2,
-          ease: "back.out(1.7)",
+          ease: "power1.inOut",
           scrollTrigger: {
             trigger: div,
             start: "top 85%",
