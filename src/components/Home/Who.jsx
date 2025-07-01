@@ -8,7 +8,7 @@ export default function Who() {
         id="about"
       >
         <motion.div
-          className="flex flex-col gap-4 md:w-140 md:pl-40"
+          className="flex flex-col gap-4 md:w-140"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}

@@ -9,10 +9,13 @@ function Homepage() {
   return (
     <>
       <HomeNav />
+
       <Hero />
-      <EchoChamber />
-      <Who />
-      <WhyJoin />
+      <div className="md:px-25">
+        <EchoChamber />
+        <Who />
+        <WhyJoin />
+      </div>
     </>
   );
 }
