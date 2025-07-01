@@ -23,13 +23,37 @@ function SNavBar() {
     localStorage.setItem("onoff", "true");
   }
 
+  // function to get the user data such as id usernamd and userprofile form backend
+
+  async function getData() {
+    const token = localStorage.getItem("token");
+
+    const res = await fetch("http://localhost:3000/api/getProfile", {
+      method: "GET",
+      headers: {
+        Authorization: token,
+      },
+    });
+    const msg = await res.json();
+    if (res.ok) {
+      console.log(msg);
+      console.log("Data fetched successfully");
+      console.log(msg.data);
+      setUserData(msg.data);
+    } else {
+      console.log("Error in data fetching");
+    }
+  }
+
   useEffect(() => {
     const value = localStorage.getItem("onoff");
     console.log(value);
     if (value === "true") {
       dark();
     }
-  });
+
+    getData();
+  }, []);
 
   return (
     <>
@@ -75,7 +99,7 @@ function SNavBar() {
             title="Account"
           >
             <img
-              src={userData?.Photo}
+              src={userData?.profile}
               alt=""
               className="object-cover w-full h-full cursor-pointer"
             />
@@ -95,7 +119,7 @@ function SNavBar() {
               title="Account"
             >
               <img
-                src={userData?.Photo}
+                src={userData?.profile}
                 alt=""
                 className="object-cover w-full h-full cursor-pointer"
               />
@@ -111,7 +135,7 @@ function SNavBar() {
           </div>
 
           {/* profile button */}
-          <Link to={`/SocialPage/profile/${u_id}`}>
+          <Link to={`/SocialPage/profile/`}>
             <button className="mt-2 bg-blue-200 dark:bg-blue-800 text-black dark:text-white p-2 rounded w-full cursor-pointer hover:bg-blue-700 dark:hover:bg-blue-600 transition">
               View profile
             </button>
@@ -137,10 +161,7 @@ function SNavBar() {
 
           {/* signout section */}
           <div className="border-b border-gray-400 dark:border-gray-600 w-full mt-4"></div>
-          <div
-            className="flex flex-row gap-2 group mt-3 cursor-pointer"
-            onClick={signout}
-          >
+          <div className="flex flex-row gap-2 group mt-3 cursor-pointer">
             <img src="/signout.png" alt="" className="w-5" />
             <p className="text-gray-500 dark:text-gray-300 group-hover:text-blue-800 dark:group-hover:text-blue-400">
               Sign out
@@ -189,7 +210,7 @@ function SNavBar() {
               title="Account"
             >
               <img
-                src={userData?.Photo}
+                src={userData?.profile}
                 alt="User Avatar"
                 className="object-cover w-full h-full cursor-pointer"
               />
@@ -203,7 +224,7 @@ function SNavBar() {
           </div>
 
           {/* profile button */}
-          <Link to={`/SocialPage/profile/${u_id}`} className="w-full">
+          <Link to={`/SocialPage/profile/`} className="w-full">
             <button
               onClick={() => {
                 setOpen((pre) => !pre);
@@ -233,10 +254,7 @@ function SNavBar() {
 
           {/* signout section */}
           <div className="border-b border-gray-400 dark:border-gray-600 w-full" />
-          <div
-            className="flex items-center gap-2 group cursor-pointer"
-            onClick={signout}
-          >
+          <div className="flex items-center gap-2 group cursor-pointer">
             <img src="/signout.png" alt="Sign out" className="w-5" />
             <p className="text-gray-500 dark:text-gray-300 group-hover:text-blue-800 dark:group-hover:text-blue-400">
               Sign out
