@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { auth, googleProvider } from "../Firebase/config.js";
-import { login, logout } from "../../store/Features/authSlice.js";
-import { useDispatch, useSelector } from "react-redux";
+
 import {
   signInWithPopup,
   signInWithRedirect,
@@ -14,7 +13,6 @@ import { motion } from "framer-motion";
 export default function Signup() {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
-  const dispatch = useDispatch();
 
   const navigate = useNavigate();
 

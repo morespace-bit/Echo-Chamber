@@ -30,6 +30,7 @@ export default function Support() {
       model: "gemini-2.0-flash",
       contents: `${role} ${user}`,
     });
+    console.log(`${role} ${user}`);
     Setresponse(response.text);
     console.log(response.text);
     setLoding(false);

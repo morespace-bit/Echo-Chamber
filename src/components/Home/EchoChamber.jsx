@@ -32,7 +32,7 @@ export default function EchoChamber() {
               <p className=" text-xl font-[inter]">
                 Connect with vibes and peace
               </p>
-              <img src={"/forpeace.png"} alt="" className="w-13 mt-3" />
+              <img src={"/forpeace.png"} alt="" className="w-15 mt-3" />
             </div>
           </div>
 
