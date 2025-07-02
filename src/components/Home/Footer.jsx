@@ -8,7 +8,7 @@ export default function Footer() {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
       viewport={{ once: true }}
-      className="mt-153 h-180 bg-blue-300 flex rounded-t-2xl  flex-col overflow-x-hidden px-4 md:mt-0"
+      className="h-180 bg-blue-300 flex rounded-t-2xl  flex-col overflow-x-hidden px-4 md:mt-0"
     >
       {/* the noise image */}
       <div className="py-5  flex justify-center overflow-hidden w-full md:px-3">
@@ -18,7 +18,7 @@ export default function Footer() {
             whileInView={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.3 }}
             viewport={{ once: true }}
-            className="text-4xl p-3 font-[1000] font-[Open sans] text-zinc-700 md:w-250 md:text-5xl"
+            className="text-3xl p-3 font-[1000] font-[Open sans] text-zinc-700 md:w-250 md:text-5xl text-center"
           >
             Help us build a better online space. Your support empowers real
             conversations, meaningful connections, and a more peaceful digital
@@ -34,7 +34,7 @@ export default function Footer() {
         viewport={{ once: true }}
         className="w-full px-1"
       >
-        <h2 className="text-5xl  font-black text-white font-[Inter] md:text-8xl md:tracking-normal">
+        <h2 className="text-5xl  font-black text-white font-[Inter] md:text-8xl md:tracking-normal w-full text-center">
           EchoChamber.
         </h2>
       </motion.div>
@@ -51,7 +51,7 @@ export default function Footer() {
           <p>Privacy Policy</p>
           <p>Terms of Services</p>
         </div>
-        <div className="">
+        <div className="text-center w-full">
           <p>&copy; EchoChamber. All right reserved. Nirmal Chhetri</p>
         </div>
       </motion.div>

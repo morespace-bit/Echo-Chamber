@@ -30,6 +30,7 @@ function ProfileSetup() {
         body: data,
       }
     );
+
     const uploaded = await res.json();
     setUser((pre) => ({ ...pre, profile: uploaded.url }));
     setLoding(false);
@@ -52,9 +53,13 @@ function ProfileSetup() {
     });
 
     const msg = await res.json();
-    console.log(msg.message);
-    setBackendloding(false);
-    navigate;
+    if (res.ok) {
+      console.log(msg.message);
+      setBackendloding(false);
+      navigate("/SocialPage/feed", { replace: true });
+    } else {
+      console.log("Server went brrrr");
+    }
   }
 
   return (

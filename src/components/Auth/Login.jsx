@@ -6,9 +6,11 @@ export default function Login() {
     email: "",
     password: "",
   });
+  const [loding, setLoding] = useState(false);
   const navigate = useNavigate();
   const [errorMsg, setErrorMsg] = useState("");
   async function login() {
+    setLoding(true);
     const res = await fetch("http://localhost:3000/api/login", {
       method: "POST",
       headers: {
@@ -18,12 +20,14 @@ export default function Login() {
     });
 
     const msg = await res.json();
+    setLoding(false);
     setUser({
       email: "",
       password: "",
     });
     if (res.ok) {
       localStorage.setItem("token", msg.token);
+      navigate("/SocialPage/feed", { replace: true });
     } else {
       setErrorMsg(msg.message);
       setTimeout(() => {
@@ -99,7 +103,7 @@ export default function Login() {
                 cursor-pointer
                 w-full md:w-50 border border-gray-500 rounded-xs  bg-sky-700 text-white  hover:shadow-2xl shadow-blue-800/50"
                 >
-                  Next
+                  {loding ? "Processing" : "Next"}
                 </button>
               </div>
             </form>

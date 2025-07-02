@@ -35,6 +35,7 @@ export default function Signup() {
     if (res.ok) {
       const token = msg.token;
       localStorage.setItem("token", token);
+      navigate("/profilesetup", { replace: true });
     } else {
       setErrorMsg(msg.message);
       setTimeout(() => {
@@ -42,7 +43,6 @@ export default function Signup() {
       }, 4000);
     }
     setloding(false);
-    navigate("/profilesetup", { replace: true });
   }
 
   return (

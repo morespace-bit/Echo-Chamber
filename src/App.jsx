@@ -7,7 +7,7 @@ import Homepage from "./components/Home/Homepage.jsx";
 import Support from "./components/Home/Support.jsx";
 import ProfileSetup from "./components/Social/profile/ProfileSetup.jsx";
 import SocialPage from "./components/Social/page/SocialPage.jsx";
-import Feed from "./components/Social/feed/Feed.jsx";
+import Feed from "./components/Social/Feed.jsx";
 function App() {
   return (
     <Routes>

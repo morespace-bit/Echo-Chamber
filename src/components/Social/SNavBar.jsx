@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, replace, useNavigate } from "react-router-dom";
+import Noti from "./Noti";
 
 function SNavBar() {
   const [isOpen, setOpen] = useState(false);
