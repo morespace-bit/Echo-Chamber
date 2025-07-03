@@ -3,32 +3,40 @@ import gsap from "gsap";
 
 function Hero() {
   useGSAP(() => {
-    gsap.from("#image", {
-      y: 250,
-      duration: 1,
-      ease: "back.inOut",
+    // Animate text section
+    gsap.from("#para", {
+      y: 50,
+      opacity: 0,
+      duration: 1.2,
+      ease: "power2.out",
+      delay: 0.3,
     });
 
-    gsap.fromTo(
-      "#btn",
-      {
-        x: 250,
-        scale: 0.8,
-        rotation: 360,
-        borderRadius: "50%",
-        backgroundColor: "hotpink",
-      },
-      {
-        x: 0,
-        scale: 1.1,
-        rotation: 0,
-        borderRadius: "12px",
-        backgroundColor: "#00d4ff", // Bright neon blue
+    // Animate image and hello text
+    gsap.from("#image", {
+      x: 100,
+      opacity: 0,
+      duration: 1,
+      ease: "power2.out",
+      delay: 0.5,
+    });
 
-        duration: 1.5,
-        ease: "elastic.out(1, 0.5)", // Adds a springy bounce at the end
-      }
-    );
+    gsap.from("#hello", {
+      scale: 0,
+      opacity: 0,
+      duration: 1.2,
+      ease: "back.out(1.7)",
+      delay: 0.8,
+    });
+
+    // Button subtle pop-in
+    gsap.from("#btn", {
+      scale: 0.8,
+      opacity: 0,
+      duration: 0.8,
+      ease: "back.out(1.7)",
+      delay: 1,
+    });
   }, []);
 
   return (

@@ -8,32 +8,30 @@ export default function Who() {
   const containerRef = useRef(null);
 
   useGSAP(() => {
-    const divs = gsap.utils.toArray(containerRef.current.children);
+    const elements = gsap.utils.toArray(containerRef.current.children);
 
-    divs.forEach((div, index) => {
-      gsap.fromTo(
-        div,
-        {
-          y: 150,
-          opacity: 0,
-          scale: 0.8,
-          rotationX: 45,
+    elements.forEach((el) => {
+      gsap.from(el, {
+        opacity: 0,
+        y: 50,
+        duration: 0.8,
+        ease: "power1.out",
+        scrollTrigger: {
+          trigger: el,
+          start: "top 80%",
         },
-        {
-          y: 0,
-          opacity: 1,
-          scale: 1,
-          rotationX: 0,
-          duration: 1.2,
-          ease: "power1.inOut",
-          scrollTrigger: {
-            trigger: div,
-            start: "top 85%",
-            end: "top 30%",
-            scrub: true,
-          },
-        }
-      );
+      });
+    });
+
+    gsap.from("#bottom-text", {
+      opacity: 0,
+      y: 50,
+      duration: 0.8,
+      ease: "power1.out",
+      scrollTrigger: {
+        trigger: "#bottom-text",
+        start: "bottom 10%",
+      },
     });
   }, []);
 
@@ -77,7 +75,10 @@ export default function Who() {
           <img src="/thewhy.jpg" alt="" className="w-200" />
         </div>
 
-        <p className="absolute text-2xl text-blue-500 font-mono bg-violet-300 rounded-xl right-40 bottom-40 hidden md:block">
+        <p
+          id="bottom-text"
+          className="absolute text-2xl text-blue-500 font-mono bg-violet-300 rounded-xl right-40 bottom-40 hidden md:block"
+        >
           Enjoying non-toxic platform
         </p>
       </div>

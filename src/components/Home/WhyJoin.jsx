@@ -21,7 +21,7 @@ export default function WhyJoin() {
           trigger: el,
           start: "top 85%",
           end: "top 50%",
-          scrub: true, // scroll controls forward and reverse
+          // scroll controls forward and reverse
         },
       });
     });
