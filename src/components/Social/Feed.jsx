@@ -12,6 +12,9 @@ export default function Feed() {
   const [loadmore, setLoadmore] = useState(false);
   const [more, setMore] = useState(true);
 
+  // this is done to make the day js library work
+  dayjs.extend(relativeTime);
+
   // function to get the user data such as username and profile pic and id
   async function getData() {
     const token = localStorage.getItem("token");
@@ -192,7 +195,7 @@ export default function Feed() {
 
                   <div className="flex flex-col group-hover:scale-105">
                     <p className="tracking-widest">{i?.author.username}</p>
-                    <p className="text-xs">some data</p>
+                    <p className="text-xs">{dayjs(i.createdAt).fromNow()}</p>
                   </div>
                 </div>
               </Link>

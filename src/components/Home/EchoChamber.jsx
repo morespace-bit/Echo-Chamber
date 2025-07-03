@@ -1,8 +1,41 @@
+import { useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(useGSAP);
+
 export default function EchoChamber() {
+  const sectionRef = useRef(null);
+
+  useGSAP(
+    () => {
+      const cards = gsap.utils.toArray(".card");
+
+      cards.forEach((card) => {
+        gsap.from(card, {
+          opacity: 0,
+          y: 50,
+          duration: 1,
+          scrollTrigger: {
+            trigger: card,
+            start: "top 80%",
+            // toggleActions: "play none none none",
+          },
+        });
+      });
+    },
+    { scope: sectionRef }
+  );
+
   return (
     <>
       {/* main container  */}
-      <div className="h-205 w-full flex flex-col md:h-140 md:mt-20">
+      <div
+        className="h-205 w-full flex flex-col md:h-140 md:mt-20"
+        ref={sectionRef}
+      >
         {/* the why us section  */}
 
         <div className="flex flex-col justify-center items-center w-full pt-15 pb-8">
@@ -20,7 +53,7 @@ export default function EchoChamber() {
           <div className="flex flex-col justify-center items-center gap-5 md:flex-row w-full">
             {/* the card of 1m + */}
 
-            <div className="flex flex-col bg-cyan-100 p-10 rounded-xl  flex-1">
+            <div className="card flex flex-col bg-cyan-100 p-10 rounded-xl  flex-1">
               <p className="font-[inter] font-black text-6xl text-cyan-500 text-left">
                 1M+
               </p>
@@ -29,7 +62,7 @@ export default function EchoChamber() {
               </p>
             </div>
 
-            <div className="flex flex-col bg-cyan-100 p-10 rounded-xl flex-1 ">
+            <div className="card flex flex-col bg-cyan-100 p-10 rounded-xl flex-1 ">
               <p className="font-[inter] font-black text-6xl text-cyan-500 text-left">
                 PEACE
               </p>
@@ -40,7 +73,7 @@ export default function EchoChamber() {
           </div>
 
           {/* the last and big card  */}
-          <div className="flex flex-row bg-cyan-100 p-10 rounded-xl items-center justify-between">
+          <div className="card flex flex-row bg-cyan-100 p-10 rounded-xl items-center justify-between">
             <div className="flex flex-col">
               <p className="font-[inter] font-black text-6xl text-cyan-500 text-left">
                 VIBES{" "}
