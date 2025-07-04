@@ -1,7 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function HomeNav() {
+  // function to check if the use is already loged in or not if yes then to route to home page of social page
+
+  const navigate = useNavigate();
+
+  async function verify() {
+    const token = localStorage.getItem("token");
+    console.log(token);
+
+    const res = await fetch("http://localhost:3000/api/verify", {
+      method: "GET",
+      headers: {
+        Authorization: token,
+      },
+    });
+
+    if (res.ok) {
+      navigate("/socialPage/feed");
+    }
+  }
+
+  useEffect(() => {
+    verify();
+  }, []);
+
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>

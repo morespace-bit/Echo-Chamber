@@ -18,6 +18,7 @@ export default function Feed() {
   // function to get the user data such as username and profile pic and id
   async function getData() {
     const token = localStorage.getItem("token");
+    console.log(token);
 
     const res = await fetch("http://localhost:3000/api/getProfile", {
       method: "GET",
