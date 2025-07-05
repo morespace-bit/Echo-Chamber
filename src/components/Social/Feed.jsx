@@ -8,9 +8,10 @@ export default function Feed() {
   const [userData, setUserData] = useState(null);
   const [imageUpload, setImageUpload] = useState(false);
   const [textUpload, setTextUpload] = useState(false);
-  const [post, setPost] = useState(null);
+  const [post, setPost] = useState([]);
   const [loadmore, setLoadmore] = useState(false);
   const [more, setMore] = useState(true);
+  const [postLikes, setPostLikes] = useState({});
 
   // this is done to make the day js library work
   dayjs.extend(relativeTime);
@@ -18,7 +19,6 @@ export default function Feed() {
   // function to get the user data such as username and profile pic and id
   async function getData() {
     const token = localStorage.getItem("token");
-    console.log(token);
 
     const res = await fetch("http://localhost:3000/api/getProfile", {
       method: "GET",
@@ -45,10 +45,67 @@ export default function Feed() {
     if (res.ok) {
       console.log("Data fetched succesfully of post post ");
       setPost(msg.data);
+
       console.log(msg.data);
     } else {
       console.log("Error in data fetching");
     }
+  }
+
+  // function for liking and unliking the post
+
+  async function likeUnlikePost(id) {
+    if (postLikes[id]) {
+      const token = localStorage.getItem("token");
+      const res = await fetch(`http://localhost:3000/api/unlike/${id}`, {
+        method: "POST",
+        headers: {
+          Authorization: token,
+        },
+      });
+
+      const msg = await res.json();
+      if (res.ok) {
+        console.log(msg.updatedLike);
+        getPost();
+        // setPost((pre) => {
+        //   return {
+        //     ...pre,
+        //     likes: msg.likes,
+        //   };
+        // });
+      }
+    } else {
+      const token = localStorage.getItem("token");
+      const res = await fetch(`http://localhost:3000/api/like/${id}`, {
+        method: "POST",
+        headers: {
+          Authorization: token,
+        },
+      });
+
+      const msg = await res.json();
+      if (res.ok) {
+        getPost();
+        // setPost((pre) => {
+        //   return {
+        //     ...pre,
+        //     likes: msg.likes,
+        //   };
+        // });
+      }
+    }
+  }
+
+  // handle ui change of the like and unlike function
+
+  function likeUi(id) {
+    setPostLikes((pre) => {
+      return {
+        ...pre,
+        [id]: !pre[id],
+      };
+    });
   }
 
   useEffect(() => {
@@ -173,12 +230,12 @@ export default function Feed() {
           </div>
 
           {/* the actual post starts from here */}
-          {post?.map((i) => (
+          {post.map((i) => (
             <div
               key={i?.id}
               className="flex p-6 bg-white dark:bg-gray-700 mb-5 rounded-xl shadow-xl max-h-200 max-w-150 flex-col"
               onClick={() => {
-                setImageUpload(fasle);
+                setImageUpload(false);
               }}
             >
               <Link to={`/SocialPage/profile/`}>
@@ -214,15 +271,19 @@ export default function Feed() {
               </div>
               <div className="border-b-2 border-gray-400 dark:border-gray-600 flex justify-center items-center mt-2"></div>
               <div className="flex flex-row px-2 py-2 justify-around">
-                <div className="flex flex-row gap-2 items-center cursor-pointer">
-                  {/* <img
-                    src={
-                      i.likedBy.includes(u_id) ? "/red-love.png" : "/love.png"
-                    }
+                <div
+                  className="flex flex-row gap-2 items-center cursor-pointer"
+                  onClick={() => {
+                    likeUnlikePost(i.id);
+                    likeUi(i.id);
+                  }}
+                >
+                  <img
+                    src={postLikes[i.id] ? "/red-love.png" : "/love.png"}
                     alt=""
                     className="h-6 hover:shadow-4xl hover:shadow-rose-500 duration-75 ease-in active:scale-95 hover:scale-120"
-                  /> */}
-                  <p>Likes {i?.Likes}</p>
+                  />
+                  <p>Likes {i?.likes}</p>
                 </div>
                 <div
                   className="flex flex-row gap-2 items-center cursor-pointer hover:shadow-4xl hover:shadow-rose-500 duration-75 ease-in active:scale-95 hover:scale-105"
