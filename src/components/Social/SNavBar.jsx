@@ -11,21 +11,26 @@ function SNavBar() {
 
   const navigate = useNavigate();
   // function to change to light mode
-  let onoff = null;
+  let themeState = false;
   function light() {
-    onoff = false;
+    themeState = false;
     document.documentElement.classList.remove("dark");
-    localStorage.setItem("onoff", "false");
+    localStorage.setItem("themeState", "false");
   }
 
   function dark() {
-    onoff = false;
+    themeState = false;
     document.documentElement.classList.add("dark");
-    localStorage.setItem("onoff", "true");
+    localStorage.setItem("themeState", "true");
+  }
+
+  // function for the signout feature
+  function signOut() {
+    navigate("/");
+    localStorage.removeItem("token");
   }
 
   // function to get the user data such as id usernamd and userprofile form backend
-
   async function getData() {
     const token = localStorage.getItem("token");
 
@@ -47,9 +52,8 @@ function SNavBar() {
   }
 
   useEffect(() => {
-    const value = localStorage.getItem("onoff");
-    console.log(value);
-    if (value === "true") {
+    const themeState = localStorage.getItem("onoff");
+    if (themeState === "true") {
       dark();
     }
 
@@ -162,7 +166,10 @@ function SNavBar() {
 
           {/* signout section */}
           <div className="border-b border-gray-400 dark:border-gray-600 w-full mt-4"></div>
-          <div className="flex flex-row gap-2 group mt-3 cursor-pointer">
+          <div
+            className="flex flex-row gap-2 group mt-3 cursor-pointer"
+            onClick={signOut}
+          >
             <img src="/signout.png" alt="" className="w-5" />
             <p className="text-gray-500 dark:text-gray-300 group-hover:text-blue-800 dark:group-hover:text-blue-400">
               Sign out
@@ -255,7 +262,10 @@ function SNavBar() {
 
           {/* signout section */}
           <div className="border-b border-gray-400 dark:border-gray-600 w-full" />
-          <div className="flex items-center gap-2 group cursor-pointer">
+          <div
+            className="flex items-center gap-2 group cursor-pointer"
+            onClick={signOut}
+          >
             <img src="/signout.png" alt="Sign out" className="w-5" />
             <p className="text-gray-500 dark:text-gray-300 group-hover:text-blue-800 dark:group-hover:text-blue-400">
               Sign out

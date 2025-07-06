@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import CreateFeed from "./Creating/CreateFeed";
-
+import CreateFeedText from "./Creating/CreateFeedText";
 import { Link } from "react-router-dom";
 export default function Feed() {
   const [userData, setUserData] = useState(null);
@@ -345,7 +345,6 @@ export default function Feed() {
           <CreateFeedText
             userData={userData}
             setTextUpload={setTextUpload}
-            u_id={u_id}
             getPost={getPost}
           />
         )}
