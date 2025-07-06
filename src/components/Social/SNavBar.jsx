@@ -26,7 +26,7 @@ function SNavBar() {
 
   // function for the signout feature
   function signOut() {
-    navigate("/");
+    navigate("/", { replace: true });
     localStorage.removeItem("token");
   }
 
@@ -51,12 +51,29 @@ function SNavBar() {
     }
   }
 
+  // function to check if user has valid jwt token if not then redirect them to the home page
+
+  async function check() {
+    const token = localStorage.getItem("token");
+    const res = await fetch("http://localhost:3000/api/verify", {
+      method: "GET",
+      headers: {
+        Authorization: token,
+      },
+    });
+    console.log("This check function of social page worked");
+    if (!res.ok) {
+      navigate("/", { replace: true });
+    }
+  }
+
   useEffect(() => {
+    check();
     const themeState = localStorage.getItem("onoff");
     if (themeState === "true") {
       dark();
     }
-
+    console.log("Nav bar mounted");
     getData();
   }, []);
 
