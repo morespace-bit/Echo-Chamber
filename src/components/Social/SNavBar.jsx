@@ -69,7 +69,7 @@ function SNavBar() {
 
   useEffect(() => {
     check();
-    const themeState = localStorage.getItem("onoff");
+    const themeState = localStorage.getItem("themeState");
     if (themeState === "true") {
       dark();
     }
