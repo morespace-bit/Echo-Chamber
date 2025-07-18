@@ -157,7 +157,7 @@ function SNavBar() {
           </div>
 
           {/* profile button */}
-          <Link to={`/SocialPage/profile/`}>
+          <Link to={`/SocialPage/profile/${userData?.id}`}>
             <button className="mt-2 bg-blue-200 dark:bg-blue-800 text-black dark:text-white p-2 rounded w-full cursor-pointer hover:bg-blue-700 dark:hover:bg-blue-600 transition">
               View profile
             </button>
