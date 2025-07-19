@@ -302,7 +302,7 @@ export default function Feed() {
             >
               {/* the heading part of the post  */}
 
-              <Link to={`/SocialPage/profile/`}>
+              <Link to={`/SocialPage/profile/${i?.author.id}`}>
                 <div
                   className="mb-4 flex items-center gap-4 group w-40"
                   onMouseLeave={() => {
