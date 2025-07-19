@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 // import ProfileFeed from "./ProfileFeed";
 // import EditProfile from "./EditProfile";
 import { useParams } from "react-router-dom";
+import ProfileFeed from "./ProfileFeed";
 
 export default function Profile() {
   const [u_id, setUId] = useState("");
@@ -17,12 +18,15 @@ export default function Profile() {
   const { id } = useParams();
   console.log(id);
 
+  // function to get the user profile from backend and also the post
+
   async function getProfile() {
     const res = await fetch(`http://localhost:3000/api/getUserProfile/${id}`);
     const data = await res.json();
     if (data) {
       console.log(data);
       setUserData(data.data);
+      console.log(data.data.post);
     }
   }
 
@@ -141,7 +145,7 @@ export default function Profile() {
           </div>
         </div>
         {button[2] && <About userData={userData} />}
-        {button[1] && <ProfileFeed />}
+        {button[1] && <ProfileFeed post={userData.post} user={userData} />}
       </div>
     </>
   );
