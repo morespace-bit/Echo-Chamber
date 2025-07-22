@@ -336,7 +336,7 @@ export default function Feed() {
                 >
                   <img
                     src={
-                      i.likedBy.includes(u_id) ? "/red-love.png" : "/love.png"
+                      i.likedBy?.includes(u_id) ? "/red-love.png" : "/love.png"
                     }
                     alt=""
                     className="h-6 hover:shadow-4xl hover:shadow-rose-500 duration-75 ease-in active:scale-95 hover:scale-120"
