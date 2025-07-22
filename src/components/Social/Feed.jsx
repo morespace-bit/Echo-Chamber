@@ -295,7 +295,7 @@ export default function Feed() {
           {post.map((i) => (
             <div
               key={i?.id}
-              className="flex p-6 bg-white dark:bg-gray-700 mb-5 rounded-xl shadow-xl max-h-200 max-w-150 flex-col relative"
+              className="flex p-6 bg-white dark:bg-gray-700 mb-5 rounded-xl shadow-xl max-h-200 max-w-150 min-w-100 flex-col relative"
               onClick={() => {
                 setImageUpload(false);
               }}

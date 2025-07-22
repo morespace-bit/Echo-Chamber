@@ -32,7 +32,7 @@ export default function Profile() {
 
   useEffect(() => {
     getProfile();
-  }, []);
+  }, [id]);
 
   return (
     <>

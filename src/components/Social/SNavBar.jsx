@@ -249,7 +249,7 @@ function SNavBar() {
           </div>
 
           {/* profile button */}
-          <Link to={`/SocialPage/profile/`} className="w-full">
+          <Link to={`/SocialPage/profile/${userData.id}`} className="w-full">
             <button
               onClick={() => {
                 setOpen((pre) => !pre);
