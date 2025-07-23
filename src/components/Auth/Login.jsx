@@ -1,5 +1,6 @@
 import { Link, replace, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { BACKENDURL } from "../../global/config";
 
 export default function Login() {
   const [user, setUser] = useState({
@@ -11,7 +12,7 @@ export default function Login() {
   const [errorMsg, setErrorMsg] = useState("");
   async function login() {
     setLoding(true);
-    const res = await fetch("http://localhost:3000/api/login", {
+    const res = await fetch(`${BACKENDURL}/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

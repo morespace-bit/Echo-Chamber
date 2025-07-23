@@ -8,7 +8,6 @@ import Support from "./components/Home/Support.jsx";
 import ProfileSetup from "./components/Social/profile/ProfileSetup.jsx";
 import SocialPage from "./components/Social/page/SocialPage.jsx";
 import Feed from "./components/Social/Feed.jsx";
-import Forlogin from "./components/Animation/Forlogin.jsx";
 import Profile from "./components/Social/profile/Profile.jsx";
 function App() {
   return (
@@ -20,7 +19,7 @@ function App() {
       <Route path="signup" element={<Signup />} />
       <Route path="login" element={<Login />} />
       <Route path="profileSetup" element={<ProfileSetup />} />
-      <Route path="animation" element={<Forlogin />} />
+
       {/* nested routes for the social media page for the nav bar and the out let parts */}
       <Route path="socialPage" element={<SocialPage />}>
         <Route path="feed" element={<Feed />} />

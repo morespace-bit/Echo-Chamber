@@ -1,12 +1,8 @@
 import { Link } from "react-router-dom";
 
-import {
-  signInWithPopup,
-  signInWithRedirect,
-  createUserWithEmailAndPassword,
-} from "firebase/auth";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { BACKENDURL } from "../../global/config";
 
 export default function Signup() {
   const [user, setUser] = useState({});
@@ -18,7 +14,7 @@ export default function Signup() {
   // function to sign up
   async function signUp() {
     setloding(true);
-    const res = await fetch("http://localhost:3000/api/register", {
+    const res = await fetch(`${BACKENDURL}/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

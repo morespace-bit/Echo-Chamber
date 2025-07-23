@@ -4,11 +4,12 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import CreateFeed from "./Creating/CreateFeed";
 import CreateFeedText from "./Creating/CreateFeedText";
 import { Link } from "react-router-dom";
+import { BACKENDURL } from "../../global/config";
 export default function Feed() {
   const [userData, setUserData] = useState(null);
   const [imageUpload, setImageUpload] = useState(false);
   const [textUpload, setTextUpload] = useState(false);
-  const [post, setPost] = useState([]);
+  const [post, setPost] = useState(null);
   const [loadmore, setLoadmore] = useState(false);
   const [postLikes, setPostLikes] = useState({});
   const [postReport, setPostReport] = useState({});
@@ -23,7 +24,7 @@ export default function Feed() {
   async function getData() {
     const token = localStorage.getItem("token");
 
-    const res = await fetch("http://localhost:3000/api/getProfile", {
+    const res = await fetch(`${BACKENDURL}/getProfile`, {
       method: "GET",
       headers: {
         Authorization: token,
@@ -41,7 +42,7 @@ export default function Feed() {
   // function to get the post data
 
   async function getPost() {
-    const res = await fetch("http://localhost:3000/api/getAllPost", {
+    const res = await fetch(`${BACKENDURL}/getAllPost`, {
       method: "GET",
     });
     const msg = await res.json();
@@ -60,7 +61,7 @@ export default function Feed() {
   async function likeUnlikePost(id) {
     if (postLikes[id]) {
       const token = localStorage.getItem("token");
-      const res = await fetch(`http://localhost:3000/api/unlike/${id}`, {
+      const res = await fetch(`${BACKENDURL}/unlike/${id}`, {
         method: "POST",
         headers: {
           Authorization: token,
@@ -80,7 +81,7 @@ export default function Feed() {
       }
     } else {
       const token = localStorage.getItem("token");
-      const res = await fetch(`http://localhost:3000/api/like/${id}`, {
+      const res = await fetch(`${BACKENDURL}/like/${id}`, {
         method: "POST",
         headers: {
           Authorization: token,
@@ -126,7 +127,7 @@ export default function Feed() {
         setMsg("");
         setMsg(false);
       }, 4500);
-      const res = await fetch(`http://localhost:3000/api/addReport/${id}`, {
+      const res = await fetch(`${BACKENDURL}/addReport/${id}`, {
         method: "POST",
         headers: {
           Authorization: token,
@@ -138,7 +139,7 @@ export default function Feed() {
         console.log(msg.message + " " + msg.reports);
       }
     } else {
-      const res = await fetch(`http://localhost:3000/api/removeReport/${id}`, {
+      const res = await fetch(`${BACKENDURL}/removeReport/${id}`, {
         method: "POST",
         headers: {
           Authorization: token,
@@ -163,7 +164,7 @@ export default function Feed() {
     getPost();
   }, []);
 
-  if (post.length === 0) {
+  if (!post) {
     return (
       <>
         <div
@@ -248,7 +249,7 @@ export default function Feed() {
                 <img
                   src={userData?.profile}
                   alt=""
-                  className="object-cover w-full h-full cursor-pointer"
+                  className="object-center w-full h-full cursor-pointer"
                 />
               </div>
               <input
@@ -292,113 +293,123 @@ export default function Feed() {
           </div>
 
           {/* the actual post starts from here */}
-          {post.map((i) => (
-            <div
-              key={i?.id}
-              className="flex p-6 bg-white dark:bg-gray-700 mb-5 rounded-xl shadow-xl max-h-200 max-w-150 min-w-100 flex-col relative"
-              onClick={() => {
-                setImageUpload(false);
-              }}
-            >
-              {/* the heading part of the post  */}
-
-              <Link to={`/SocialPage/profile/${i?.author.id}`}>
-                <div
-                  className="mb-4 flex items-center gap-4 group w-40"
-                  onMouseLeave={() => {
-                    setViewProfile(false);
-                  }}
-                  onMouseEnter={() => {
-                    setViewProfile(true);
-                  }}
-                >
-                  {/* the view profile section */}
-
-                  {viewProfile && (
-                    <div>
-                      <p>View profile</p>
-                    </div>
-                  )}
-                  {viewProfile == false && (
-                    <div
-                      className="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-300 dark:border-gray-600 cursor-pointer group-hover:scale-110 active:scale-95"
-                      title="Visit profile"
-                    >
-                      <img
-                        src={i.author.profile}
-                        alt="profile-icon"
-                        className="object-cover h-full w-full"
-                      />
-                    </div>
-                  )}
-
-                  <div className="flex flex-col group-hover:scale-105">
-                    <p className="tracking-widest">{i?.author.username}</p>
-                    <p className="text-xs">{dayjs(i.createdAt).fromNow()}</p>
-                  </div>
-                </div>
-              </Link>
-              {/* the report image container */}
+          {post?.length != 0 ? (
+            post?.map((i) => (
               <div
-                className="flex flex-col justify-center items-center group cursor-pointer absolute top-2 right-2"
+                key={i?.id}
+                className="flex p-6 bg-white dark:bg-gray-700 mb-5 rounded-xl shadow-xl max-h-200 max-w-150 min-w-100 flex-col relative md:min-w-150"
                 onClick={() => {
-                  reportUi(i.id);
-                  reportPost(i.id);
+                  setImageUpload(false);
                 }}
               >
-                <img
-                  src={postReport[i.id] ? "/warning-red.png" : "/warning.png"}
-                  alt=""
-                  className="w-6 group-hover:bg-red-300 group-hover:scale-120 rounded-full transition-all"
-                />
-                <p className="text-xs group-hover:scale-120 transition-all">
-                  {postReport[i.id] ? "Reported" : "Report"}
-                </p>
-              </div>
+                {/* the heading part of the post  */}
 
-              <div className="flex justify-start items-start mb-4">
-                <p className="text-left">{i?.content}</p>
-              </div>
-              <div className="overflow-hidden rounded-xl">
-                {i?.imageUrl && (
-                  <img
-                    src={i?.imageUrl}
-                    className="rounded-xl w-auto h-auto "
-                  />
-                )}
-              </div>
-              <div className="border-b-2 border-gray-400 dark:border-gray-600 flex justify-center items-center mt-2"></div>
-              <div className="flex flex-row px-2 py-2 justify-around">
+                <Link to={`/SocialPage/profile/${i?.author.id}`}>
+                  <div
+                    className="mb-4 flex items-center gap-4 group w-40"
+                    onMouseLeave={() => {
+                      setViewProfile(false);
+                    }}
+                    onMouseEnter={() => {
+                      setViewProfile(true);
+                    }}
+                  >
+                    {/* the view profile section */}
+
+                    {viewProfile && (
+                      <div>
+                        <p>View profile</p>
+                      </div>
+                    )}
+                    {viewProfile == false && (
+                      <div
+                        className="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-300 dark:border-gray-600 cursor-pointer group-hover:scale-110 active:scale-95"
+                        title="Visit profile"
+                      >
+                        <div className="w-10 h-10 rounded-full overflow-hidden">
+                          <img
+                            src={i.author.profile}
+                            alt="profile-icon"
+                            className="object-cover h-full w-full"
+                          />
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="flex flex-col group-hover:scale-105">
+                      <p className="tracking-widest">{i?.author.username}</p>
+                      <p className="text-xs">{dayjs(i.createdAt).fromNow()}</p>
+                    </div>
+                  </div>
+                </Link>
+                {/* the report image container */}
                 <div
-                  className="flex flex-row gap-2 items-center cursor-pointer"
+                  className="flex flex-col justify-center items-center group cursor-pointer absolute top-2 right-2"
                   onClick={() => {
-                    likeUnlikePost(i.id);
-                    likeUi(i.id);
+                    reportUi(i.id);
+                    reportPost(i.id);
                   }}
                 >
                   <img
-                    src={postLikes[i.id] ? "/red-love.png" : "/love.png"}
+                    src={postReport[i.id] ? "/warning-red.png" : "/warning.png"}
                     alt=""
-                    className="h-6 hover:shadow-4xl hover:shadow-rose-500 duration-75 ease-in active:scale-95 hover:scale-120"
+                    className="w-6 group-hover:bg-red-300 group-hover:scale-120 rounded-full transition-all"
                   />
-                  <p>Likes {i?.likes}</p>
+                  <p className="text-xs group-hover:scale-120 transition-all">
+                    {postReport[i.id] ? "Reported" : "Report"}
+                  </p>
                 </div>
-                <div
-                  className="flex flex-row gap-2 items-center cursor-pointer hover:shadow-4xl hover:shadow-rose-500 duration-75 ease-in active:scale-95 hover:scale-105"
-                  onClick={() => {}}
-                >
-                  <img src={"/comments.png"} alt="" className="h-6 " />
-                  <p>Comments</p>
+
+                <div className="flex justify-start items-start mb-4">
+                  <p className="text-left">{i?.content}</p>
                 </div>
-              </div>
-              {/* <Comment
+
+                {/* the image is here */}
+                <div className="overflow-hidden rounded-xl">
+                  {i?.imageUrl && (
+                    <img
+                      src={i?.imageUrl}
+                      className="rounded-xl min-w-95 md:min-w-150 max-h-150 object-center "
+                    />
+                  )}
+                </div>
+                <div className="border-b-2 border-gray-400 dark:border-gray-600 flex justify-center items-center mt-2"></div>
+                <div className="flex flex-row px-2 py-2 justify-around">
+                  <div
+                    className="flex flex-row gap-2 items-center cursor-pointer"
+                    onClick={() => {
+                      likeUnlikePost(i.id);
+                      likeUi(i.id);
+                    }}
+                  >
+                    <img
+                      src={postLikes[i.id] ? "/red-love.png" : "/love.png"}
+                      alt=""
+                      className="h-6 hover:shadow-4xl hover:shadow-rose-500 duration-75 ease-in active:scale-95 hover:scale-120"
+                    />
+                    <p>Likes {i?.likes}</p>
+                  </div>
+                  <div
+                    className="flex flex-row gap-2 items-center cursor-pointer hover:shadow-4xl hover:shadow-rose-500 duration-75 ease-in active:scale-95 hover:scale-105"
+                    onClick={() => {}}
+                  >
+                    <img src={"/comments.png"} alt="" className="h-6 " />
+                    <p>Comments</p>
+                  </div>
+                </div>
+                {/* <Comment
                 userData={userData}
                 postId={i.id}
                 open={commentPost}
                 close={comment}
               /> */}
+              </div>
+            ))
+          ) : (
+            <div className="w-full justify-center items-center mt-5">
+              <p>no post yet</p>
             </div>
-          ))}
+          )}
 
           <button
             className="bg-black p-1 text-white hover:scale-105 cursor-pointer  "
@@ -408,7 +419,7 @@ export default function Feed() {
           </button>
           {/* The loder that indicates data being loaded */}
 
-          {loadmore && (
+          {/* {loadmore && (
             <div role="status" className="mt-2 mb-2">
               <svg
                 aria-hidden="true"
@@ -427,8 +438,8 @@ export default function Feed() {
                 />
               </svg>
               <span class="sr-only">Loading...</span>
-            </div>
-          )}
+            </div> */}
+          {/* )} */}
         </div>
 
         {textUpload && (

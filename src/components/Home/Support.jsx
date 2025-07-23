@@ -2,8 +2,6 @@ import HomeNav from "./HomeNav";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import faqs from "../../global/faqs";
-import { motion } from "framer-motion";
-import { AnimatePresence } from "framer-motion";
 import ReackMarkdown from "react-markdown";
 
 import { GoogleGenAI } from "@google/genai";
@@ -179,20 +177,9 @@ export default function Support() {
                     </div>
 
                     {/* Answer */}
-                    <AnimatePresence>
-                      {o[q.id] === true && (
-                        <motion.div
-                          key={q.id}
-                          initial={{ opacity: 0, height: 0, y: -10 }}
-                          animate={{ opacity: 1, height: "auto", y: 0 }}
-                          exit={{ opacity: 0, height: 0, y: -10 }}
-                          transition={{ duration: 0.4, ease: "easeInOut" }}
-                          style={{ overflow: "hidden" }}
-                        >
-                          <p className="text-gray-600 mt-3">{q.answer}</p>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+                    {o[q.id] === true && (
+                      <div className="text-gray-600 mt-3">{q.answer}</div>
+                    )}
                   </div>
                 </div>
               ))}

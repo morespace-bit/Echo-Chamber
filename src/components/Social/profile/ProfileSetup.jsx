@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { BACKENDURL } from "../../../global/config";
 
 function ProfileSetup() {
   const [loding, setLoding] = useState(false);
@@ -43,7 +44,7 @@ function ProfileSetup() {
     const token = localStorage.getItem("token");
     console.log(token);
     console.log(user);
-    const res = await fetch("http://localhost:3000/api/createProfile", {
+    const res = await fetch(`${BACKENDURL}/createProfile`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

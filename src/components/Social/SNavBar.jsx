@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link, replace, useNavigate } from "react-router-dom";
 import Noti from "./Noti";
+import { BACKENDURL } from "../../global/config";
 
 function SNavBar() {
   const [isOpen, setOpen] = useState(false);
   const [userData, setUserData] = useState(null);
+  const [search, setSearch] = useState("");
 
   const [noti, setNoti] = useState(false);
   const [mode, setMode] = useState({});
@@ -34,7 +36,7 @@ function SNavBar() {
   async function getData() {
     const token = localStorage.getItem("token");
 
-    const res = await fetch("http://localhost:3000/api/getProfile", {
+    const res = await fetch(`${BACKENDURL}/getProfile`, {
       method: "GET",
       headers: {
         Authorization: token,
@@ -55,7 +57,7 @@ function SNavBar() {
 
   async function check() {
     const token = localStorage.getItem("token");
-    const res = await fetch("http://localhost:3000/api/verify", {
+    const res = await fetch(`${BACKENDURL}/verify`, {
       method: "GET",
       headers: {
         Authorization: token,
@@ -65,6 +67,12 @@ function SNavBar() {
     if (!res.ok) {
       navigate("/", { replace: true });
     }
+  }
+
+  // function to get the search term and search
+
+  async function Search() {
+    const res = await fetch("");
   }
 
   useEffect(() => {
@@ -97,6 +105,10 @@ function SNavBar() {
             type="text"
             className="outline-none md:w-50 w-20 lg:w-90 bg-transparent text-black dark:text-white placeholder:text-gray-600 dark:placeholder:text-gray-300"
             placeholder="Search for vibes and peace"
+            value={search}
+            onChange={(e) => {
+              setSearch(e.target.value);
+            }}
           />
         </div>
 

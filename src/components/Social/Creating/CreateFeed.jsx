@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { BACKENDURL } from "../../../global/config";
 
 function CreateFeed({ userData, setImageUpload, getPost }) {
   const [post, setPost] = useState({
@@ -20,26 +19,30 @@ function CreateFeed({ userData, setImageUpload, getPost }) {
     data.append("upload_preset", "file-upload");
     data.append("coud_name", "dvxidzrno");
     setLoding(true);
-
-    const res = await fetch(
-      "https://api.cloudinary.com/v1_1/dvxidzrno/image/upload",
-      {
-        method: "POST",
-        body: data,
-      }
-    );
-    const upload = await res.json();
-    setPost((pre) => ({
-      ...pre,
-      imageUrl: upload.url,
-    }));
-    setLoding(false);
+    try {
+      const res = await fetch(
+        "https://api.cloudinary.com/v1_1/dvxidzrno/image/upload",
+        {
+          method: "POST",
+          body: data,
+        }
+      );
+      const upload = await res.json();
+      setPost((pre) => ({
+        ...pre,
+        imageUrl: upload.url,
+      }));
+      setLoding(false);
+      console.log(upload.url);
+    } catch (e) {
+      console.log("Error while uploading to couldinary", e);
+    }
   }
 
   // functoin to add to the backend
 
   async function uploadPost() {
-    setBackendloding(false);
+    setBackendloding(true);
     const token = localStorage.getItem("token");
     if (post.content.length == 0 || post.imageUrl.length == 0) {
       alert(
@@ -47,7 +50,7 @@ function CreateFeed({ userData, setImageUpload, getPost }) {
       );
       return;
     }
-    const res = await fetch("http://localhost:3000/api/createPost", {
+    const res = await fetch(`${BACKENDURL}/createPost`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

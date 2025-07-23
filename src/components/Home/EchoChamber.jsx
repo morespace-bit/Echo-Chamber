@@ -4,7 +4,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(ScrollTrigger);
-gsap.registerPlugin(useGSAP);
+// gsap.registerPlugin(useGSAP);
 
 export default function EchoChamber() {
   const sectionRef = useRef(null);
@@ -21,7 +21,6 @@ export default function EchoChamber() {
           scrollTrigger: {
             trigger: card,
             start: "top 80%",
-            // toggleActions: "play none none none",
           },
         });
       });

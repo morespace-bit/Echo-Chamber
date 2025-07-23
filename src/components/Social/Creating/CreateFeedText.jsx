@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { BACKENDURL } from "../../../global/config";
 
 function CreateFeedText({ userData, setTextUpload, getPost }) {
   const [content, setContent] = useState({
@@ -18,7 +19,7 @@ function CreateFeedText({ userData, setTextUpload, getPost }) {
     setLoding(true);
     const token = localStorage.getItem("token");
 
-    const res = await fetch("http://localhost:3000/api/createPost", {
+    const res = await fetch(`${BACKENDURL}/createPost`, {
       method: "POST",
 
       headers: {

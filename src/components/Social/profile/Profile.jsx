@@ -6,6 +6,8 @@ import { NavLink } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import ProfileFeed from "./ProfileFeed";
 
+import { BACKENDURL } from "../../../global/config";
+
 export default function Profile() {
   const [u_id, setUId] = useState("");
   const [userData, setUserData] = useState({});
@@ -21,7 +23,7 @@ export default function Profile() {
   // function to get the user profile from backend and also the post
 
   async function getProfile() {
-    const res = await fetch(`http://localhost:3000/api/getUserProfile/${id}`);
+    const res = await fetch(`${BACKENDURL}/getUserProfile/${id}`);
     const data = await res.json();
     if (data) {
       console.log(data);

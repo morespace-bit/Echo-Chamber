@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { useState } from "react";
+import { BACKENDURL } from "../../../global/config";
 
 export default function ProfileFeed({ post, user }) {
   const [postLikes, setPostLikes] = useState({});
@@ -10,7 +11,7 @@ export default function ProfileFeed({ post, user }) {
   async function likeUnlikePost(id) {
     if (postLikes[id]) {
       const token = localStorage.getItem("token");
-      const res = await fetch(`http://localhost:3000/api/unlike/${id}`, {
+      const res = await fetch(`${BACKENDURL}/unlike/${id}`, {
         method: "POST",
         headers: {
           Authorization: token,
@@ -30,7 +31,7 @@ export default function ProfileFeed({ post, user }) {
       }
     } else {
       const token = localStorage.getItem("token");
-      const res = await fetch(`http://localhost:3000/api/like/${id}`, {
+      const res = await fetch(`${BACKENDURL}/like/${id}`, {
         method: "POST",
         headers: {
           Authorization: token,
@@ -61,16 +62,21 @@ export default function ProfileFeed({ post, user }) {
     });
   }
 
+  if (post?.length == 0) {
+    return (
+      <div className="flex w-full justify-center items-center mt-5">
+        No post by user yet ..
+      </div>
+    );
+  }
+
   return (
     <>
       {/* the actual post starts from here */}
       {post?.map((i) => (
         <div
           key={i?.id}
-          className="flex p-6 bg-white dark:bg-gray-700 mb-5 rounded-xl shadow-xl max-h-200 max-w-150 flex-col relative mt-8"
-          onClick={() => {
-            setImageUpload(false);
-          }}
+          className="flex p-6 bg-white dark:bg-gray-700 mb-5 rounded-xl shadow-xl max-h-200 max-w-150 flex-col relative mt-8 md:min-w-150"
         >
           {/* the heading part of the post  */}
 
@@ -99,7 +105,10 @@ export default function ProfileFeed({ post, user }) {
           </div>
           <div className="overflow-hidden rounded-xl">
             {i?.imageUrl && (
-              <img src={i?.imageUrl} className="rounded-xl w-auto h-auto " />
+              <img
+                src={i?.imageUrl}
+                className="rounded-xl min-w-100 md:min-w-150 object-center max-w-150 "
+              />
             )}
           </div>
           <div className="border-b-2 border-gray-400 dark:border-gray-600 flex justify-center items-center mt-2"></div>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-
+import { BACKENDURL } from "../../global/config";
 function HomeNav() {
   // function to check if the use is already loged in or not if yes then to route to home page of social page
 
@@ -11,7 +11,7 @@ function HomeNav() {
     const token = localStorage.getItem("token");
     console.log(token);
 
-    const res = await fetch("http://localhost:3000/api/verify", {
+    const res = await fetch(`${BACKENDURL}/verify`, {
       method: "GET",
       headers: {
         Authorization: token,
